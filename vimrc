@@ -87,14 +87,13 @@ nmap <silent> <leader>u :SyntasticCheck rubocop<cr>
 nmap gmv :call RenameFile()<cr>
 nmap gl :colorscheme solarized<cr>
 nmap gd :colorscheme Tomorrow-Night<cr>
-nmap gr :%s///<cr>
+nmap gr :%s///g<cr>
 nmap gs :Gstatus<cr>
 nmap gp :Gpush<cr>
 nmap <silent> gq :s/'/"/g<cr>
 nmap <silent> gqq :s/"/'/g<cr>
 nmap <silent> gh :'<,'>Tab/\w:\z\s/r1l0l0<CR>
 vmap <silent> gh :Tab/\w:\z\s/r1l0l0<CR>
-nmap <silent> gds :%s///g<cr>
 nmap gn :%s///gn<cr>
 
 map `<up> <c-w><up>
