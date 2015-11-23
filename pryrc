@@ -1,2 +1,2 @@
-Pry.config.editor = '/Applications/MacVim.app/Contents/MacOS/Vim'
+Pry.config.editor = 'nvim'
 system('clear')
