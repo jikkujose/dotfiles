@@ -94,7 +94,6 @@ brew install lua
 brew install lua51
 brew install luarocks
 brew install lynx
-brew install macvim
 brew install mad
 brew install makedepend
 brew install md5sha1sum
