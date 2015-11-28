@@ -233,6 +233,9 @@ set history=100
 vmap <Tab> >gv
 vmap <S-Tab> <gv
 
+nmap gw :silent! !pandoc -c 'http://yegor256.github.io/tacit/tacit.min.css' -s % > /tmp/markdown_preview.html ; open /tmp/markdown_preview.html<cr>
+
+
 set wildmode=longest:full,full
 
 noremap , :set hlsearch! hlsearch?<CR>
