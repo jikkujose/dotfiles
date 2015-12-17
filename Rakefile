@@ -5,6 +5,7 @@ require 'open-uri'
 home = ENV['HOME']
 VIM_PLUG_URL = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 VIM_AUTOLOAD_DIRECTORY = "#{home}/.vim/autoload"
+DIRECTORY_REGEX = /\/(?<directory>\w+)(?:\.git)?$/
 file_map = File.read("./file_map.yml")
 
 files = YAML::load(file_map)
@@ -49,16 +50,35 @@ task :setup_vim do
   ].each do |directory|
     mkdir_p "#{home}/.vim/#{directory}"
   end
-
-  FileUtils.ln_sf "#{home}/.vim", "#{home}/.vim"
 end
 
 desc 'Download required projects'
 task :clone_dependencies => [:setup_vim] do
-  system("git clone git@github.com:zsh-users/antigen.git --depth 1 ~/antigen")
-  system("git clone git@github.com:JikkuJose/themes.git --depth 1 ~/themes")
-  system("git clone git@bitbucket.org:jikkujose/commands.git --depth 1 ~/commands")
-  File.open("#{VIM_AUTOLOAD_DIRECTORY}/plug.vim", 'w') { |f| f.write open(VIM_PLUG_URL).read }
+  %w[
+    git@github.com:zsh-users/antigen.git
+    git@github.com:JikkuJose/themes.git
+    git@bitbucket.org:jikkujose/commands.git
+  ].each do |link|
+    clone_git_project(link: link)
+  end
+
+  install_vim_plug
+end
+
+def clone_git_project(link:, directory: nil)
+  if directory.nil?
+    directory = "~/#{link.match(DIRECTORY_REGEX)[:directory]}"
+  end
+
+  system("git clone #{link} --depth 1 #{directory}")
+end
+
+def install_vim_plug
+  plug_vim = "#{VIM_AUTOLOAD_DIRECTORY}/plug.vim"
+
+  unless File.exist?(plug_vim)
+    File.open(plug_vim, 'w') { |f| f.write open(VIM_PLUG_URL).read }
+  end
 end
 
 task default: :link_dotfiles
