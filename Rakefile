@@ -1,7 +1,10 @@
 require 'fileutils'
 require 'yaml'
+require 'open-uri'
 
 home = ENV['HOME']
+VIM_PLUG_URL = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+VIM_AUTOLOAD_DIRECTORY = "#{home}/.vim/autoload"
 file_map = File.read("./file_map.yml")
 
 files = YAML::load(file_map)
@@ -36,12 +39,13 @@ end
 
 desc 'Setup Vim'
 task :setup_vim do
-  [
-    'undo',
-    'spell',
-    'colors',
-    'bundle',
-    'backup',
+  %w[
+    undo
+    spell
+    colors
+    bundle
+    backup
+    autoload
   ].each do |directory|
     mkdir_p "#{home}/.vim/#{directory}"
   end
@@ -54,7 +58,7 @@ task :clone_dependencies => [:setup_vim] do
   system("git clone git@github.com:zsh-users/antigen.git --depth 1 ~/antigen")
   system("git clone git@github.com:JikkuJose/themes.git --depth 1 ~/themes")
   system("git clone git@bitbucket.org:jikkujose/commands.git --depth 1 ~/commands")
-  system("git clone https://github.com/VundleVim/Vundle.vim.git --depth 1 ~/.vim/bundle/Vundle.vim")
+  File.open("#{VIM_AUTOLOAD_DIRECTORY}/plug.vim", 'w') { |f| f.write open(VIM_PLUG_URL).read }
 end
 
 task default: :link_dotfiles
