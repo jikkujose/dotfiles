@@ -45,3 +45,5 @@
   :destination: "~/.config/nvim"
 - :source: "~/dotfiles/vimrc"
   :destination: "~/.config/nvim/init.vim"
+- :source: "~/dotfiles/npmrc"
+  :destination: "~/.npmrc"
