@@ -66,3 +66,6 @@ alias wf="wolfram"
 alias ww='fzf_windows'
 alias xx="logout"
 alias xxx="logout"
+alias gdoc="open 'https://drive.google.com/open?id=1yFH4zSq0AJ9nnqneRyZ8uEzPPVmldqlV9asM3EDExgI'"
+alias gss="open 'https://drive.google.com/open?id=1WOSl0pNHUvPd94ASWkNezdZcrNR4pOHSGVotBq0Y9rI'"
+alias ginvoice="open 'https://drive.google.com/open?id=1rpLt4NE3FkSIOfiairt-yaqOjO8X6q3pFZ9LyvB_7-A'"
