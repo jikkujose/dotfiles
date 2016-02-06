@@ -209,6 +209,7 @@ nnoremap <F3> :NERDTreeToggle<cr>
 nnoremap <F2> :GundoToggle<CR>
 
 au BufRead,BufNewFile *.md set syntax=markdown
+au BufRead,BufNewFile *.sol set syntax=javascript
 au BufRead,BufNewFile *.ru set syntax=ruby
 au BufRead,BufNewFile Guardfile set syntax=ruby
 au BufRead,BufNewFile *autotest set syntax=ruby
