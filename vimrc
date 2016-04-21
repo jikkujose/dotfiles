@@ -184,7 +184,7 @@ map <silent> <Leader>c :TComment<CR>
 nnoremap <Leader>v :source ~/.vimrc<CR>
 
 " macros
-let @d="0idv 'A'F|hxxxi' ; echo '"
+let @d='0idv "A"'
 nnoremap <Leader>d @d
 
 let @g="0/httpsc2f/git@f/r:A.git"
