@@ -1,0 +1,2 @@
+set :timer, 15*60
+set :timer_break, 2*60

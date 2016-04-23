@@ -47,3 +47,5 @@
   :destination: "~/.config/nvim/init.vim"
 - :source: "~/dotfiles/npmrc"
   :destination: "~/.npmrc"
+- :source: "~/dotfiles/thymerc"
+  :destination: "~/.thymerc"
