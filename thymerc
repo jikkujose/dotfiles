@@ -1,2 +1,9 @@
+#! /usr/bin/env ruby
+
 set :timer, 15*60
-set :timer_break, 2*60
+set :timer_break, 5*60
+set :tmux, true
+
+after(:all) do |seconds_left|
+  `afplay /System/Library/Sounds/Submarine.aiff &`
+end
