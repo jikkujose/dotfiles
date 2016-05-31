@@ -192,6 +192,8 @@ let @g="0/httpsc2f/git@f/r:A.git"
 " nopaste when leaving insert mode
 au InsertLeave * set nopaste
 
+let g:python_host_prog = '/usr/bin/python'
+
 nnoremap U <c-r>
 
 function! g:CopyTheTextPlease()
