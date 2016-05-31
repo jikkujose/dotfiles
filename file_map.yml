@@ -51,3 +51,5 @@
   :destination: "~/.npmrc"
 - :source: "~/dotfiles/thymerc"
   :destination: "~/.thymerc"
+- :source: "~/dotfiles/eslintrc"
+  :destination: "~/.eslintrc"
