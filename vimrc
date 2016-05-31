@@ -153,6 +153,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'altercation/vim-colors-solarized'
   Plug 'ekalinin/Dockerfile.vim'
   Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+  Plug 'pangloss/vim-javascript'
 call plug#end()
 
 
