@@ -155,6 +155,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
   Plug 'pangloss/vim-javascript'
   Plug 'mxw/vim-jsx'
+  Plug 'editorconfig/editorconfig-vim'
 call plug#end()
 
 
@@ -268,6 +269,9 @@ nmap <C-l> :CtrlPLine<CR>
 nmap <C-b> :CtrlPBuffer<CR>
 
 set guifont=Monaco:h14
+
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+let g:EditorConfig_exec_path = '/usr/local/bin/editorconfig'
 
 let g:SuperTabDefaultCompletionType="context"
 
