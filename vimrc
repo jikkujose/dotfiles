@@ -273,6 +273,8 @@ set guifont=Monaco:h14
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 let g:EditorConfig_exec_path = '/usr/local/bin/editorconfig'
 
+let g:ctrlp_working_path_mode = '0'
+
 let g:SuperTabDefaultCompletionType="context"
 
 let g:ycm_server_keep_logfiles = 1
