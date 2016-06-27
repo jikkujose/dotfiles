@@ -153,6 +153,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'altercation/vim-colors-solarized'
   Plug 'ekalinin/Dockerfile.vim'
   Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+  Plug 'pangloss/vim-javascript'
+  Plug 'mxw/vim-jsx'
+  Plug 'editorconfig/editorconfig-vim'
 call plug#end()
 
 
@@ -184,13 +187,15 @@ map <silent> <Leader>c :TComment<CR>
 nnoremap <Leader>v :source ~/.vimrc<CR>
 
 " macros
-let @d="0idv 'A'F|hxxxi' ; echo '"
+let @d='0idv "A"'
 nnoremap <Leader>d @d
 
 let @g="0/httpsc2f/git@f/r:A.git"
 
 " nopaste when leaving insert mode
 au InsertLeave * set nopaste
+
+let g:python_host_prog = '/usr/bin/python'
 
 nnoremap U <c-r>
 
@@ -209,6 +214,7 @@ nnoremap <F3> :NERDTreeToggle<cr>
 nnoremap <F2> :GundoToggle<CR>
 
 au BufRead,BufNewFile *.md set syntax=markdown
+au BufRead,BufNewFile *.sol set syntax=javascript
 au BufRead,BufNewFile *.ru set syntax=ruby
 au BufRead,BufNewFile Guardfile set syntax=ruby
 au BufRead,BufNewFile *autotest set syntax=ruby
@@ -252,6 +258,9 @@ let g:ycm_key_list_previous_completion=[]
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
+let g:syntastic_javascript_checkers = ['eslint']
+let g:jsx_ext_required = 0
+
 let g:ctrlp_user_command = [
     \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
     \ 'find %s -type f'
@@ -260,6 +269,11 @@ nmap <C-l> :CtrlPLine<CR>
 nmap <C-b> :CtrlPBuffer<CR>
 
 set guifont=Monaco:h14
+
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+let g:EditorConfig_exec_path = '/usr/local/bin/editorconfig'
+
+let g:ctrlp_working_path_mode = '0'
 
 let g:SuperTabDefaultCompletionType="context"
 
