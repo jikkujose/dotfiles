@@ -4,6 +4,7 @@ source $HOME/antigen/antigen.zsh
 source `brew --prefix`/etc/profile.d/z.sh
 
 export LC_ALL="en_US.UTF-8"
+export EDITOR='nvim'
 
 antigen use oh-my-zsh
 
