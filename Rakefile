@@ -57,10 +57,12 @@ task :clone_dependencies => [:setup_vim] do
   %w[
     git@github.com:zsh-users/antigen.git
     git@github.com:JikkuJose/themes.git
-    git@bitbucket.org:jikkujose/commands.git
+    git@gitlab.com:JikkuJose/Commands.git
   ].each do |link|
     clone_git_project(link: link)
   end
+
+  clone_git_project(link: 'https://github.com/tmux-plugins/tpm', directory: '~/.tmux/plugins/tpm')
 
   install_vim_plug
 end
