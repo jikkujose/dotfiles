@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
 source $HOME/antigen/antigen.zsh
-source `brew --prefix`/etc/profile.d/z.sh
+source $HOME/z/z.sh
 
 export LC_ALL="en_US.UTF-8"
 export EDITOR='nvim'
