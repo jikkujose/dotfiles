@@ -16,6 +16,7 @@ alias d-hide="defaults write com.apple.finder CreateDesktop -bool false && killa
 alias d-show="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 alias d="cd ~/Desktop"
 alias dld="http --body --download --continue -o"
+alias largest-files="du -hs * | sort -r | head -5"
 alias docker-init_env='eval "$(docker-machine env default)"'
 alias dw="cd ~/Downloads"
 alias e="echo"
