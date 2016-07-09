@@ -69,6 +69,7 @@ alias v="vim"
 alias vd="source ~/Downloads/vd.sh"
 alias vv="set -o vi"
 alias wf="wolfram"
+alias wttr="curl -4s http://wttr.in | head -n 7"
 alias ww='fzf_windows'
 alias xx="logout"
 alias xxx="logout"
