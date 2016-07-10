@@ -18,3 +18,36 @@ constructor() {
 	${0}
 }
 endsnippet
+
+snippet rapidClass "Create a RN based Rapid class" b
+import React from 'react';
+
+import {
+  View,
+  Text
+} from 'react-native'
+
+export default class ${1:CLASS_NAME} extends React.Component {
+  render() {
+    return(
+      <View>
+        <Text>
+          Hello Rapid!${2}
+        </Text>
+      </View>
+    );
+  }
+}
+endsnippet
+
+snippet rapidArray "Create a rapid array" b
+        {
+          <array>.map(function(element, index) {
+            return(
+              <View key={index}>
+                {element}
+              </View>
+            )
+          })
+        }
+endsnippet

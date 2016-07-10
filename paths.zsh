@@ -1,5 +1,5 @@
 GOPATH="$HOME/Go"
+NODEPATH="/usr/local/Cellar/node/5.11.0/bin"
 PATH="/usr/local/bin:$PATH"
-PATH="/usr/local/heroku/bin:$PATH"
 PATH="$HOME/commands:$PATH"
-PATH="$HOME/.node/bin:$PATH"
+PATH="$NODEPATH:$PATH"
