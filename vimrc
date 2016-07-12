@@ -156,6 +156,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'pangloss/vim-javascript'
   Plug 'mxw/vim-jsx'
   Plug 'editorconfig/editorconfig-vim'
+  Plug 'JikkuJose/vim-visincr'
 call plug#end()
 
 
