@@ -4,17 +4,17 @@ Collection of my dotfiles. Adapted from many experienced developers.
 
 ## Instructions
 
- Much of the installation is automated via `rake`. Try `rake -T` to see available options.
+Much of the installation is automated via `rake`. Try `rake -T` to see available options.
 
- ## Branches
+## Branches
 
- Separate branch is maintained & reconciled periodically for Linux.
+Separate branch is maintained & reconciled periodically for Linux.
 
- ## Dependencies
+## Dependencies
 
- - > Ruby 2.2.0
- - chruby
+- > Ruby 2.2.0
+- chruby
 
- ### Note
+### Note
 
- Plugins are mostly managed outside.
+Plugins are mostly managed outside.
