@@ -5,6 +5,7 @@ source $HOME/z/z.sh
 
 export LC_ALL="en_US.UTF-8"
 export EDITOR='nvim'
+export NVM_DIR="$HOME/.nvm"
 
 antigen use oh-my-zsh
 
@@ -33,6 +34,8 @@ if [ -f ~/.private.zsh ]
 then
   source ~/.private.zsh
 fi
+
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
 set -o vi
 bindkey -v
