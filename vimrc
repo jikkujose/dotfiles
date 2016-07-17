@@ -76,6 +76,7 @@ autocmd FileType gitcommit setlocal spell
 autocmd FileType markdown setlocal spell
 
 nn <leader>s :setlocal spell! spell?<CR>
+nmap <leader>n :NERDTreeToggle %<CR>
 
 noremap <silent> <PageUp> <c-y>
 noremap <silent> <PageDown> <c-e>
