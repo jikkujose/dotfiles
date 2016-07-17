@@ -5,6 +5,7 @@ source `brew --prefix`/etc/profile.d/z.sh
 
 export LC_ALL="en_US.UTF-8"
 export EDITOR='nvim'
+export HOMEBREW_CASK_OPTS="--caskroom=/opt/homebrew-cask/Caskroom"
 
 antigen use oh-my-zsh
 
