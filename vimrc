@@ -77,6 +77,7 @@ autocmd FileType markdown setlocal spell
 
 nn <leader>s :setlocal spell! spell?<CR>
 nmap <leader>n :NERDTreeToggle %<CR>
+nmap <leader>g :GundoToggle <CR>
 
 noremap <silent> <PageUp> <c-y>
 noremap <silent> <PageDown> <c-e>
