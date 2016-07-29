@@ -8,6 +8,8 @@ HISTSIZE=120000
 HISTTIMEFORMAT='%b %d %H:%M:%S > '
 KEYTIMEOUT=1
 RUBYOPT=""
+ETHEREUM_FORKED="$HOME/Library/EthereumForked"
+ETHEREUM_CLASSIC="$HOME/Library/Ethereum"
 
 co="$HOME/Commands"
 css="(?<=\/)[^\/]*\.css((?=\")|\?.*?(?=\"))"
