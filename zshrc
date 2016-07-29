@@ -5,6 +5,7 @@ source `brew --prefix`/etc/profile.d/z.sh
 
 export LC_ALL="en_US.UTF-8"
 export EDITOR='nvim'
+export HOMEBREW_CASK_OPTS="--caskroom=/opt/homebrew-cask/Caskroom"
 
 antigen use oh-my-zsh
 
@@ -39,6 +40,6 @@ bindkey -v
 
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/opt/chruby/share/chruby/auto.sh
-chruby 2.2.2
+chruby 2.3.1
 
 clear
