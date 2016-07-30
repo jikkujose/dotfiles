@@ -1,5 +1,5 @@
 export GOPATH="$HOME/Go"
-NODEPATH="/usr/local/Cellar/node/5.11.0/bin"
+NODEPATH="/usr/local/Cellar/node/6.3.1/bin"
 BITCOIN_PATH="$HOME/bitcoin/bin"
 PATH="/usr/local/bin:$PATH"
 PATH="$HOME/commands:$PATH"
