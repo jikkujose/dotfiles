@@ -10,6 +10,7 @@ KEYTIMEOUT=1
 RUBYOPT=""
 ETHEREUM_FORKED="$HOME/Library/EthereumForked"
 ETHEREUM_CLASSIC="$HOME/Library/Ethereum"
+ETHEREUM_DEV="$HOME/Ethereum/test_datadir"
 
 co="$HOME/Commands"
 css="(?<=\/)[^\/]*\.css((?=\")|\?.*?(?=\"))"
