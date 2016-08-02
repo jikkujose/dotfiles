@@ -16,7 +16,6 @@ antigen bundles <<BUNDLES
   lein
   command-not-found
   zsh-users/zsh-syntax-highlighting
-  tarruda/zsh-autosuggestions
 BUNDLES
 
 antigen theme JikkuJose/themes jiks
