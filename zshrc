@@ -26,8 +26,8 @@ setopt interactivecomments
 
 source ~/.paths.zsh
 source ~/.variables.zsh
-source ~/.functions.zsh
 source ~/.aliases.zsh
+source ~/.functions.zsh
 
 if [ -f ~/.private.zsh ]
 then
