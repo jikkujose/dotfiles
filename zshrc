@@ -16,7 +16,6 @@ antigen bundles <<BUNDLES
   lein
   command-not-found
   zsh-users/zsh-syntax-highlighting
-  tarruda/zsh-autosuggestions
 BUNDLES
 
 antigen theme JikkuJose/themes jiks
@@ -27,8 +26,8 @@ setopt interactivecomments
 
 source ~/.paths.zsh
 source ~/.variables.zsh
-source ~/.functions.zsh
 source ~/.aliases.zsh
+source ~/.functions.zsh
 
 if [ -f ~/.private.zsh ]
 then

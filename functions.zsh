@@ -1,3 +1,27 @@
+geth_forked-console(){
+  if [[ -z $1 ]]; then
+    geth --jspath $HOME/Ethereum/scripts attach ipc:$ETHEREUM_FORKED/geth.ipc
+  else
+    geth --jspath $HOME/Ethereum/scripts --exec $1 attach ipc:$ETHEREUM_FORKED/geth.ipc
+  fi
+}
+
+geth_classic-console(){
+  if [[ -z $1 ]]; then
+    geth --jspath $HOME/Ethereum/scripts attach ipc:$ETHEREUM_CLASSIC/geth.ipc
+  else
+    geth --jspath $HOME/Ethereum/scripts --exec $1 attach ipc:$ETHEREUM_CLASSIC/geth.ipc
+  fi
+}
+
+geth_dev-console(){
+  if [[ -z $1 ]]; then
+    geth --jspath $HOME/Ethereum/scripts attach ipc:$ETHEREUM_DEV/geth.ipc
+  else
+    geth --jspath $HOME/Ethereum/scripts --exec $1 attach ipc:$ETHEREUM_DEV/geth.ipc
+  fi
+}
+
 function s () {
   ccat $1 | less
 }
