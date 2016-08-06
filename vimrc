@@ -260,6 +260,7 @@ let g:ycm_key_list_previous_completion=[]
 
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsSnippetDirectories = ['~/.vim/UltiSnips', 'UltiSnips']
 
 let g:syntastic_javascript_checkers = ['eslint']
 let g:jsx_ext_required = 0
