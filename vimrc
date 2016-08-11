@@ -96,6 +96,7 @@ nmap <silent> gq :s/'/"/g<cr>
 nmap <silent> gqq :s/"/'/g<cr>
 nmap <silent> gh :'<,'>Tab/\w:\z\s/r1l0l0<CR>
 vmap <silent> gh :Tab/\w:\z\s/r1l0l0<CR>
+vmap <leader>v :norm<space>
 nmap gn :%s///gn<cr>
 
 map `<up> <c-w><up>
