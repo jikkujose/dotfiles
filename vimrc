@@ -160,6 +160,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'mxw/vim-jsx'
   Plug 'editorconfig/editorconfig-vim'
   Plug 'JikkuJose/vim-visincr'
+  Plug 'metakirby5/codi.vim'
 call plug#end()
 
 
