@@ -11,6 +11,7 @@ antigen use oh-my-zsh
 
 antigen bundles <<BUNDLES
   git
+  uvaes/fzf-marks
   heroku
   pip
   lein
