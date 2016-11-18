@@ -12,9 +12,37 @@ export default class ${1:CLASS_NAME} extends React.Component {
 }
 endsnippet
 
+snippet rapidPicker "Create a RN based Rapid Picker" b
+<Picker
+  selectedValue={${1:DEFAULT_VALUE}}
+  onValueChange={(${2:VARIABLE}) => this.setState({${3:STATE_CHANGE_LOGIC}})}>
+  <Picker.Item label="${4:LABEL}" value="${5:VALUE}" />
+</Picker>
+endsnippet
+
+snippet rapidTab "Create a RN based Rapid Tab Bar" b
+<TabBarIOS
+  unselectedTintColor="${1:COLOR}"
+  tintColor="${2:COLOR}"
+  barTintColor="${3:COLOR}">
+  <TabBarIOS.Item
+    systemIcon="${4:ICON_TYPE}"
+    badge={${5:NUMBER}}
+    selected={${6:BOOLEAN}}
+    onPress={() => {
+      this.setState({
+      });
+    }}>
+    <Text>
+      ${7:TEXT}
+    </Text>
+  </TabBarIOS.Item>
+</TabBarIOS>
+endsnippet
+
 snippet es6Constructor "Constructor | es6" b
-constructor() {
-	super();
+constructor(props) {
+	super(props);
 	${0}
 }
 endsnippet
@@ -23,8 +51,10 @@ snippet rapidClass "Create a RN based Rapid class" b
 import React from 'react';
 
 import {
+	StyleSheet,
   View,
-  Text
+  Text,
+	Image
 } from 'react-native'
 
 export default class ${1:CLASS_NAME} extends React.Component {
