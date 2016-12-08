@@ -9,7 +9,7 @@ HISTTIMEFORMAT='%b %d %H:%M:%S > '
 KEYTIMEOUT=1
 RUBYOPT=""
 ETHEREUM_FORKED="$HOME/Library/EthereumForked"
-ETHEREUM_CLASSIC="$HOME/Library/Ethereum"
+ETHEREUM_CLASSIC="$HOME/Library/EthereumClassic"
 ETHEREUM_DEV="$HOME/Ethereum/test_datadir"
 
 co="$HOME/Commands"
