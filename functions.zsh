@@ -1,3 +1,9 @@
+google () {
+	words=("$@")
+	query=${(j.+.)words}
+	http "https://www.google.co.in/search?q=$query" | pup '#rhs_block' | lynx -dump -stdin | cleanse_lynx_debris
+}
+
 geth_forked-console(){
   if [[ -z $1 ]]; then
     geth --jspath $HOME/Ethereum/scripts attach ipc:$ETHEREUM_FORKED/geth.ipc
