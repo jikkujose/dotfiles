@@ -46,7 +46,7 @@ alias learnt="echo `date '+ %a %h %d %Y %r'` ' - ' $@ >> ~/Links/logs/learning.l
 alias ll="ls -lGurp"
 alias lll="ls -laGurp"
 alias logit="echo `date '+ %a %h %d %Y %r'` ' - ' $@"
-alias n="nvim"
+alias nn="nvim"
 alias p="pbpaste"
 alias pdf-join="'/System/Library/Automator/Combine PDF Pages.action/Contents/Resources/join.py' -o"
 alias pmt-dbg='PROMPT="☕️  @ dbg > "'
