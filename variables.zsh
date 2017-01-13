@@ -11,6 +11,7 @@ RUBYOPT=""
 ETHEREUM_FORKED="$HOME/Library/EthereumForked"
 ETHEREUM_CLASSIC="$HOME/Library/EthereumClassic"
 ETHEREUM_DEV="$HOME/Ethereum/test_datadir"
+ACHAL_VIDEO_ID="QDEwVekP84Y"
 
 co="$HOME/Commands"
 css="(?<=\/)[^\/]*\.css((?=\")|\?.*?(?=\"))"
