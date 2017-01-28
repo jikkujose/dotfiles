@@ -13,6 +13,8 @@ ETHEREUM_CLASSIC="$HOME/Library/EthereumClassic"
 ETHEREUM_DEV="$HOME/Ethereum/test_datadir"
 ACHAL_VIDEO_ID="QDEwVekP84Y"
 
+selector_pirate_bay="#searchResult td a:nth-child(2) attr{href}"
+
 co="$HOME/Commands"
 css="(?<=\/)[^\/]*\.css((?=\")|\?.*?(?=\"))"
 images="\.(jpg|png|tiff|tif)"
