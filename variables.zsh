@@ -14,6 +14,7 @@ ETHEREUM_DEV="$HOME/Ethereum/test_datadir"
 ACHAL_VIDEO_ID="QDEwVekP84Y"
 
 selector_pirate_bay="#searchResult td a:nth-child(2) attr{href}"
+selector_imdb_episodes=".info strong a text{}"
 
 co="$HOME/Commands"
 css="(?<=\/)[^\/]*\.css((?=\")|\?.*?(?=\"))"
