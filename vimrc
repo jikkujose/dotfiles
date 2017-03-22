@@ -130,7 +130,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'ervandew/supertab'
   Plug 'gregsexton/MatchTag'
   Plug 'honza/vim-snippets'
-  Plug 'kchmck/vim-coffee-script'
   Plug 'kien/ctrlp.vim'
   Plug 'othree/eregex.vim'
   Plug 'rking/ag.vim'
@@ -155,12 +154,14 @@ call plug#begin('~/.vim/plugged')
   Plug 'AndrewRadev/splitjoin.vim'
   Plug 'altercation/vim-colors-solarized'
   Plug 'ekalinin/Dockerfile.vim'
-  Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+  " Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
   Plug 'pangloss/vim-javascript'
   Plug 'mxw/vim-jsx'
   Plug 'editorconfig/editorconfig-vim'
   Plug 'JikkuJose/vim-visincr'
-  Plug 'metakirby5/codi.vim'
+  Plug 'fleischie/vim-styled-components'
+  Plug 'othree/yajs.vim'
+  Plug 'maxboisvert/vim-simple-complete'
 call plug#end()
 
 
@@ -285,3 +286,5 @@ let g:SuperTabDefaultCompletionType="context"
 
 let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
+
+let g:used_javascript_libs = 'react'
