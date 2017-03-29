@@ -161,9 +161,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'JikkuJose/vim-visincr'
   Plug 'fleischie/vim-styled-components'
   Plug 'othree/yajs.vim'
-  Plug 'maxboisvert/vim-simple-complete'
+  " Plug 'maxboisvert/vim-simple-complete'
+  Plug 'maralla/completor.vim'
 call plug#end()
-
 
 autocmd FileType ruby nmap <buffer> <leader>e <Plug>(xmpfilter-mark)
 autocmd FileType ruby xmap <buffer> <leader>e <Plug>(xmpfilter-mark)
@@ -202,6 +202,7 @@ let @g="0/httpsc2f/git@f/r:A.git"
 au InsertLeave * set nopaste
 
 let g:python_host_prog = '/usr/local/bin/python'
+let g:python3_host_prog = '/usr/local/bin/python3'
 
 nnoremap U <c-r>
 
@@ -288,3 +289,4 @@ let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
 
 let g:used_javascript_libs = 'react'
+let g:completor_node_binary = '/usr/local/bin/node'
