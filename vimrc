@@ -154,14 +154,12 @@ call plug#begin('~/.vim/plugged')
   Plug 'AndrewRadev/splitjoin.vim'
   Plug 'altercation/vim-colors-solarized'
   Plug 'ekalinin/Dockerfile.vim'
-  " Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
   Plug 'pangloss/vim-javascript'
   Plug 'mxw/vim-jsx'
   Plug 'editorconfig/editorconfig-vim'
   Plug 'JikkuJose/vim-visincr'
   Plug 'fleischie/vim-styled-components'
   Plug 'othree/yajs.vim'
-  " Plug 'maxboisvert/vim-simple-complete'
   Plug 'maralla/completor.vim'
 call plug#end()
 
