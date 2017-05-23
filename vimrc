@@ -231,6 +231,12 @@ inoremap <c-e> <esc>A
 cnoremap <c-a> <home>
 cnoremap <c-e> <end>
 
+" Move line
+nnoremap <silent> ,<Up>   :<C-u>move-2<CR>==
+nnoremap <silent> ,<Down> :<C-u>move+<CR>==
+xnoremap <silent> ,<Up>   :move-2<CR>gv=gv
+xnoremap <silent> ,<Down> :move'>+<CR>gv=gv
+
 " persist (g)undo tree between sessions
 set undofile
 set undodir=~/.vim/undo/
