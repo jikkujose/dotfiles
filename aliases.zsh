@@ -78,3 +78,4 @@ alias wttr="curl -4s http://wttr.in | head -n 7"
 alias ww='fzf_windows'
 alias xx="logout"
 alias xxx="logout"
+alias cors-less-chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --disable-web-security --user-data-dir /tmp"
