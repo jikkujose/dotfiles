@@ -1,3 +1,13 @@
 snippet simplePrint "Simple print using p" b
 p = function(stuffToPrint) { console.log(stuffToPrint); }
 endsnippet
+
+snippet reactFunctionalComponent "Functional component" b
+import React from 'react'
+
+export function ${1:NAME}({${2:PROPS}}) {
+	return(
+		${3:JSX}
+	);
+}
+endsnippet
