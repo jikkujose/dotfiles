@@ -28,11 +28,22 @@ endsnippet
 snippet reactStory "Storybook template" b
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import { MemoryRouter } from 'react-router'
 
-import { ${1:NAME} } from './${2:FILE}'
+import { ${1:NAME} } from './${2:NAME}'
 
 storiesOf('${4:NAME}', module)
   .addDecorator(story => <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>)
-  .add('Basic', () => <${3:NAME} />)
+  .add('Default', () => <${3:NAME} />)
+endsnippet
+
+snippet reactStyledComponent "Styled Components" b
+const ${1:NAME} = styled.div.attrs({
+  className: ''
+})\`\`
+endsnippet
+
+snippet reactPackageStyledComponents "Package: styled-components" b
+import styled from 'styled-components'
 endsnippet
