@@ -13,16 +13,19 @@ export function ${1:NAME}() {
 endsnippet
 
 snippet reactStorybookConfig "Storybook config" b
-import React from 'react'
+/* eslint-disable import/no-extraneous-dependencies, import/no-unresolved, import/extensions */
 
-import { storiesOf } from '@storybook/react'
-import { Component } from './Component
+import { configure } from '@storybook/react';
+import '../src/styles/tachyons.min.css'
+import '../src/styles/global.js'
 
-storiesOf('Component', module)
-  .addDecorator(story => <div style={{padding: 20}}>{story()}</div>)
-  .add('Without param', () => <Componentt>Newton</Componentt>)
-  .add('With param = 0.5', () => <Componentt param={0.5}>Newton</Componentt>)
-  .add('With param = 0', () => <Componentt param={0}>Newton</Componentt>)
+const req = require.context('../src/', true, /\.stories\.js$/)
+
+function loadStories() {
+  req.keys().forEach((filename) => req(filename))
+}
+
+configure(loadStories, module);
 endsnippet
 
 snippet reactStory "Storybook template" b
@@ -31,7 +34,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { MemoryRouter } from 'react-router'
 
-import { ${1:NAME} } from './${2:NAME}'
+import { ${1:NAME} } from './${2:index}'
 
 storiesOf('${4:NAME}', module)
   .addDecorator(story => <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>)
@@ -46,4 +49,8 @@ endsnippet
 
 snippet reactPackageStyledComponents "Package: styled-components" b
 import styled from 'styled-components'
+endsnippet
+
+snippet reactPackageNavLink "Package: NavLink from react-router-dom" b
+import { NavLink } from 'react-router-dom'
 endsnippet
