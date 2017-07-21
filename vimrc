@@ -186,6 +186,8 @@ nmap <silent> <leader>x :%s/\v\s#\s\=\>.*//<cr>
 
 nmap <silent> <leader>t :StripWhitespace<cr>
 
+nmap <leader>f :e %:h/
+
 map <silent> <Leader>c :TComment<CR>
 
 nnoremap <Leader>v :source ~/.vimrc<CR>
