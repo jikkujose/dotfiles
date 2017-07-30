@@ -161,6 +161,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'fleischie/vim-styled-components'
   Plug 'othree/yajs.vim'
   Plug 'maralla/completor.vim'
+  Plug 'prettier/vim-prettier', {
+        \ 'do': 'yarn install',
+        \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 call plug#end()
 
 autocmd FileType ruby nmap <buffer> <leader>e <Plug>(xmpfilter-mark)
@@ -215,6 +218,7 @@ endfunction
 vnoremap <leader>y :<c-u>call g:CopyTheTextPlease()<cr>
 
 noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
+noremap <leader>== :Prettier<CR>
 
 nnoremap <F3> :NERDTreeToggle<cr>
 
@@ -296,6 +300,8 @@ let g:ycm_server_log_level = 'debug'
 
 let g:used_javascript_libs = 'react'
 let g:completor_node_binary = '/usr/local/bin/node'
+
+let g:prettier#config#bracket_spacing = 'true'
 
 " Save current view settings on a per-window, per-buffer basis.
 function! AutoSaveWinView()
