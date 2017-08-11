@@ -49,6 +49,7 @@ alias lll="ls -laGurp"
 alias logit="echo `date '+ %a %h %d %Y %r'` ' - ' $@"
 alias nn="nvim"
 alias p="pbpaste"
+alias pc="glo | head -n 1"
 alias pdf-join="'/System/Library/Automator/Combine PDF Pages.action/Contents/Resources/join.py' -o"
 alias pmt-dbg='PROMPT="☕️  @ dbg > "'
 alias pmt-long="PROMPT='%{$reset_color%}[%{$fg[cyan]%}%2~%{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}] $ '"
