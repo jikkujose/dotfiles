@@ -302,6 +302,8 @@ let g:used_javascript_libs = 'react'
 let g:completor_node_binary = '/usr/local/bin/node'
 
 let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#semi = 'false'
+let g:prettier#config#trailing_comma = 'es5'
 
 " Save current view settings on a per-window, per-buffer basis.
 function! AutoSaveWinView()
