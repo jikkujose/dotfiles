@@ -219,6 +219,9 @@ vnoremap <leader>y :<c-u>call g:CopyTheTextPlease()<cr>
 
 noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
 noremap <leader>== :Prettier<CR>
+let g:prettier#config#single_quote = 'false'
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
 
 nnoremap <F3> :NERDTreeToggle<cr>
 
