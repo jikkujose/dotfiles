@@ -81,3 +81,4 @@ alias ww='fzf_windows'
 alias xx="logout"
 alias xxx="logout"
 alias cors-less-chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --disable-web-security --user-data-dir /tmp"
+alias qb="gs && ga . && gc -m 'Automated commit' && gp"
