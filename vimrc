@@ -164,6 +164,14 @@ call plug#begin('~/.vim/plugged')
   Plug 'prettier/vim-prettier', {
         \ 'do': 'yarn install',
         \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
+  Plug 'epilande/vim-react-snippets'
 call plug#end()
 
 autocmd FileType ruby nmap <buffer> <leader>e <Plug>(xmpfilter-mark)
@@ -309,6 +317,8 @@ let g:completor_node_binary = '/usr/local/bin/node'
 let g:prettier#config#bracket_spacing = 'true'
 let g:prettier#config#semi = 'false'
 let g:prettier#config#trailing_comma = 'es5'
+
+let g:deoplete#enable_at_startup = 1
 
 " Save current view settings on a per-window, per-buffer basis.
 function! AutoSaveWinView()
