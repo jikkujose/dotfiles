@@ -312,16 +312,16 @@ let g:ycm_server_log_level = 'debug'
 let g:used_javascript_libs = 'react'
 let g:completor_node_binary = '/usr/local/bin/node'
 
-g:prettier#config#print_width = 80
-g:prettier#config#tab_width = 2
-g:prettier#config#use_tabs = 'false'
-g:prettier#config#semi = 'false'
-g:prettier#config#single_quote = 'false'
-g:prettier#config#bracket_spacing = 'true'
-g:prettier#config#jsx_bracket_same_line = 'false'
-g:prettier#config#trailing_comma = 'es5'
-g:prettier#config#parser = 'babylon'
-g:prettier#config#config_precedence = 'prefer-file'
+let g:prettier#config#print_width = 80
+let g:prettier#config#tab_width = 2
+let g:prettier#config#use_tabs = 'false'
+let g:prettier#config#semi = 'false'
+let g:prettier#config#single_quote = 'false'
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#jsx_bracket_same_line = 'false'
+let g:prettier#config#trailing_comma = 'es5'
+let g:prettier#config#parser = 'babylon'
+let g:prettier#config#config_precedence = 'prefer-file'
 
 let g:deoplete#enable_at_startup = 1
 
