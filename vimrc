@@ -351,3 +351,9 @@ if v:version >= 700
     autocmd BufLeave * call AutoSaveWinView()
     autocmd BufEnter * call AutoRestoreWinView()
 endif
+
+function! OpenTemp()
+ruby << EOF
+  VIM.command(":e /tmp/scrap.txt") # open file
+EOF
+endfunction
