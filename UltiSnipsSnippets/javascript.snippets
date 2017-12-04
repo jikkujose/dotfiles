@@ -1,3 +1,11 @@
+snippet desc "Create describe block" b
+describe("Description", () => {
+	test("first case", () => {
+	expect("something").toEqual("something")
+	})
+})
+endsnippet
+
 snippet scc "Create styled-components" b
 const ${1:NAME} = styled.div.attrs({
 	className: "",
