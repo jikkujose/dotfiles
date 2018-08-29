@@ -172,6 +172,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'roxma/vim-hug-neovim-rpc'
   endif
   Plug 'epilande/vim-react-snippets'
+  Plug 'vim-scripts/svg.vim'
 call plug#end()
 
 autocmd FileType ruby nmap <buffer> <leader>e <Plug>(xmpfilter-mark)
