@@ -24,6 +24,7 @@ antigen theme JikkuJose/themes jiks
 antigen apply
 
 setopt interactivecomments
+setopt HIST_IGNORE_SPACE
 
 source ~/.paths.zsh
 source ~/.variables.zsh
