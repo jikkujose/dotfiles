@@ -42,7 +42,7 @@
 - :source: "~/dotfiles/peco_config.json"
   :destination: "~/.peco/config.json"
 - :source: "~/dotfiles/pgclirc"
-  :destination: "~/.pgclirc"
+  :destination: "~/.config/pgcli/config"
 - :source: "~/.vim"
   :destination: "~/.config/nvim"
 - :source: "~/dotfiles/vimrc"
