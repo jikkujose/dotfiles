@@ -163,7 +163,15 @@ call plug#begin('~/.vim/plugged')
   Plug 'maralla/completor.vim'
   Plug 'prettier/vim-prettier', {
         \ 'do': 'yarn install',
-        \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
+        \ 'for': [
+        \ 'javascript',
+        \ 'typescript',
+        \ 'css',
+        \ 'json',
+        \ 'markdown',
+        \ 'python',
+        \ 'ruby',
+        \ 'html' ] }
   if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   else
@@ -231,8 +239,7 @@ endfunction
 vnoremap <leader>y :<c-u>call g:CopyTheTextPlease()<cr>
 
 noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
-noremap <leader>== :Prettier<CR>
-autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
+autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql,*.rb PrettierAsync
 
 nnoremap <F3> :NERDTreeToggle<cr>
 
