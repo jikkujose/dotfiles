@@ -182,7 +182,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'epilande/vim-react-snippets'
   Plug 'mattn/emmet-vim'
   Plug 'vim-scripts/svg.vim'
-  Plug 'w0rp/ale'
+  " Plug 'w0rp/ale'
 call plug#end()
 
 autocmd FileType ruby nmap <buffer> <leader>e <Plug>(xmpfilter-mark)
