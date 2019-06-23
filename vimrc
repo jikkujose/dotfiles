@@ -170,7 +170,6 @@ call plug#begin('~/.vim/plugged')
         \ 'json',
         \ 'markdown',
         \ 'python',
-        \ 'ruby',
         \ 'html' ] }
   if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -239,7 +238,7 @@ endfunction
 vnoremap <leader>y :<c-u>call g:CopyTheTextPlease()<cr>
 
 noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
-autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql,*.rb PrettierAsync
+autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql, PrettierAsync
 
 nnoremap <F3> :NERDTreeToggle<cr>
 
