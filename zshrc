@@ -41,6 +41,6 @@ bindkey -v
 
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/opt/chruby/share/chruby/auto.sh
-chruby 2.5.1
+chruby 2.6.3
 
 clear
