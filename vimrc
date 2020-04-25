@@ -76,6 +76,7 @@ call plug#begin('~/.vim/plugged')
         \ 'html' ] }
   Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}}
   Plug 'HerringtonDarkholme/yats.vim'
+  Plug 'tpope/vim-endwise'
 call plug#end()
 
 autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx PrettierAsync
