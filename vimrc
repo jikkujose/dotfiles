@@ -77,11 +77,14 @@ call plug#begin('~/.vim/plugged')
   Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}}
   Plug 'HerringtonDarkholme/yats.vim'
   Plug 'tpope/vim-endwise'
+  Plug 'ruby-formatter/rufo-vim'
 call plug#end()
 
 autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx PrettierAsync
 
 " Configs
+"
+let g:rufo_auto_formatting = 1
 
 let g:coc_global_extensions = ['coc-tsserver']
 let g:python_host_prog = '/usr/local/bin/python2'
