@@ -78,6 +78,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'HerringtonDarkholme/yats.vim'
   Plug 'tpope/vim-endwise'
   Plug 'ruby-formatter/rufo-vim'
+  Plug 'reasonml-editor/vim-reason-plus'
 call plug#end()
 
 autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx PrettierAsync
@@ -87,8 +88,8 @@ autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx PrettierAsync
 let g:rufo_auto_formatting = 1
 
 let g:coc_global_extensions = ['coc-tsserver']
-let g:python_host_prog = '/usr/local/bin/python2'
-let g:python2_host_prog = '/usr/local/bin/python'
+let g:python_host_prog = '/usr/bin/python2'
+let g:python2_host_prog = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/local/bin/python3'
 
 let g:prettier#config#print_width = 80
