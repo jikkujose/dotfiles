@@ -87,3 +87,4 @@ alias nm_weight="find . -name 'node_modules' -type d -prune -print0 | xargs -0 d
 alias nm_delete="find . -name 'node_modules' -type d -prune -print0 | xargs -0 rm -rf"
 alias rp="echo 'Hello' | pbcopy"
 alias ws="du -chs"
+alias tb="nc termbin.com 9999"
