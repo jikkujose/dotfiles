@@ -89,7 +89,7 @@ let g:rufo_auto_formatting = 1
 
 let g:coc_global_extensions = ['coc-tsserver']
 let g:python_host_prog = '/usr/bin/python2'
-let g:python2_host_prog = '/usr/bin/python2'
+let g:python2_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
 
 let g:prettier#config#print_width = 80
