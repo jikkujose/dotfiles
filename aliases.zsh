@@ -88,3 +88,4 @@ alias nm_delete="find . -name 'node_modules' -type d -prune -print0 | xargs -0 r
 alias rp="echo 'Hello' | pbcopy"
 alias ws="du -chs"
 alias tb="nc termbin.com 9999"
+alias da="youtube-dl --extract-audio --audio-format mp3"
