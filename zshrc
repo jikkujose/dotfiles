@@ -44,3 +44,5 @@ source /usr/local/opt/chruby/share/chruby/auto.sh
 chruby 2.7.1
 
 clear
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
