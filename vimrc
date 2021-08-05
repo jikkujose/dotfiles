@@ -78,7 +78,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'HerringtonDarkholme/yats.vim'
   Plug 'tpope/vim-endwise'
   Plug 'ruby-formatter/rufo-vim'
-  Plug 'reasonml-editor/vim-reason-plus'
+  Plug 'vimwiki/vimwiki'
 call plug#end()
 
 autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx PrettierAsync
