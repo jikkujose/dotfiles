@@ -49,10 +49,11 @@ nmap <leader>f :e %:h/
 nmap <silent> <leader>t :StripWhitespace<cr>
 nmap <C-b> :CtrlPBuffer<CR>
 :nnoremap K i<CR><Esc>
-map `<up> <c-w><up>
-map `<down> <c-w><down>
-map `<left> <c-w><left>
-map `<right> <c-w><right>
+
+map <leader><up> <c-w><up>
+map <leader><down> <c-w><down>
+map <leader><left> <c-w><left>
+map <leader><right> <c-w><right>
 
 call plug#begin('~/.vim/plugged')
   Plug 'JikkuJose/lightline.vim'
