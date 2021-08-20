@@ -56,6 +56,7 @@ map <leader><left> <c-w><left>
 map <leader><right> <c-w><right>
 
 call plug#begin('~/.vim/plugged')
+  Plug 'vimwiki/vimwiki'
   Plug 'JikkuJose/lightline.vim'
   Plug 'kien/ctrlp.vim'
   Plug 'tomtom/tcomment_vim'
@@ -79,7 +80,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'HerringtonDarkholme/yats.vim'
   Plug 'tpope/vim-endwise'
   Plug 'ruby-formatter/rufo-vim'
-  Plug 'vimwiki/vimwiki'
+  Plug 'jremmen/vim-ripgrep'
 call plug#end()
 
 autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx PrettierAsync
@@ -122,6 +123,20 @@ function! s:check_back_space() abort
 endfunction
 
 let g:coc_snippet_next = '<tab>'
+
+let g:vimwiki_list = [{'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_key_mappings = {
+            \ 'all_maps': 1,
+            \ 'global': 1,
+            \ 'headers': 1,
+            \ 'text_objs': 1,
+            \ 'table_format': 1,
+            \ 'table_mappings': 0,
+            \ 'lists': 1,
+            \ 'links': 1,
+            \ 'html': 1,
+            \ 'mouse': 0,
+            \ }
 
 if executable('volta')
   let g:node_host_prog = trim(system("volta which neovim-node-host"))
