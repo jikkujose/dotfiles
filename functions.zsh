@@ -81,3 +81,7 @@ else
   tmux switch-client -t "$target_session:$target_window.$target_pane"
 fi
   }
+
+function v(){
+  osascript -e "set Volume $1"
+}
