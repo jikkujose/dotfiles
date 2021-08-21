@@ -90,4 +90,4 @@ alias ws="du -chs"
 alias tb="nc termbin.com 9999"
 alias da="youtube-dl --extract-audio --audio-format mp3"
 alias vlc="/Applications/VLC.app/Contents/MacOS/VLC"
-alias np='nvim --clean -n -c "set nobackup" -c "set noswapfile" -c "set noundofile"'
+alias np='nvim --clean -n -c "set nobackup noswapfile noundofile"'
