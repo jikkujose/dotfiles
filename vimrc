@@ -16,6 +16,7 @@ set colorcolumn=+1
 set dictionary+=/usr/share/dict/words
 set hlsearch
 set ignorecase
+set nobackup nowritebackup
 set rtp+=~/.fzf
 nmap gn :%s///gn<cr>
 nmap gr :%s///g<cr>
