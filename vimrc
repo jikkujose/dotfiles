@@ -81,9 +81,12 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-endwise'
   Plug 'ruby-formatter/rufo-vim'
   Plug 'jremmen/vim-ripgrep'
+  Plug 'TovarishFin/vim-solidity'
+  Plug 'wojciechkepka/vim-github-dark'
 call plug#end()
 
 autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx PrettierAsync
+au BufRead,BufNewFile *.md setlocal textwidth=80
 
 " Configs
 "
@@ -141,3 +144,5 @@ let g:vimwiki_key_mappings = {
 if executable('volta')
   let g:node_host_prog = trim(system("volta which neovim-node-host"))
 endif
+
+autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
