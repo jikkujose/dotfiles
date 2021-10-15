@@ -87,3 +87,4 @@ alias da="youtube-dl --extract-audio --audio-format mp3"
 alias vlc="/Applications/VLC.app/Contents/MacOS/VLC"
 alias np='nvim --clean -n -c "set nobackup noswapfile noundofile"'
 alias m="http --body https://am.i.mullvad.net/json  | jq .city"
+alias q="qrencode -t ASCII | sed \"s/#/█/g\""
