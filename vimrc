@@ -1,6 +1,5 @@
 let mapleader="\<Space>"
 let g:lightline = {'colorscheme': 'jiks'}
-colorscheme Tomorrow-Night
 
 set encoding=utf-8
 set incsearch
@@ -84,7 +83,12 @@ call plug#begin('~/.vim/plugged')
   Plug 'jremmen/vim-ripgrep'
   Plug 'TovarishFin/vim-solidity'
   Plug 'wojciechkepka/vim-github-dark'
+  Plug 'pangloss/vim-javascript'
+  Plug 'wojciechkepka/vim-github-dark'
+  Plug 'tomasiser/vim-code-dark'
 call plug#end()
+
+colorscheme codedark
 
 autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx PrettierAsync
 au BufRead,BufNewFile *.md setlocal textwidth=80
