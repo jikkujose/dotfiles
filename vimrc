@@ -82,13 +82,13 @@ call plug#begin('~/.vim/plugged')
   Plug 'ruby-formatter/rufo-vim'
   Plug 'jremmen/vim-ripgrep'
   Plug 'TovarishFin/vim-solidity'
-  Plug 'wojciechkepka/vim-github-dark'
   Plug 'pangloss/vim-javascript'
-  Plug 'wojciechkepka/vim-github-dark'
-  Plug 'tomasiser/vim-code-dark'
+  Plug 'tpope/vim-markdown'
+  Plug 'mustache/vim-mustache-handlebars'
+  Plug 'dart-lang/dart-vim-plugin'
 call plug#end()
 
-colorscheme codedark
+colorscheme Tomorrow-Night
 
 autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx PrettierAsync
 au BufRead,BufNewFile *.md setlocal textwidth=80
