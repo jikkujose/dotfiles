@@ -28,10 +28,6 @@ geth_dev-console(){
   fi
 }
 
-function s () {
-  ccat $1 | less
-}
-
 fo() {
   local file
   file=$(fzf --query="$1" --select-1 --exit-0)
@@ -84,4 +80,12 @@ fi
 
 function v(){
   osascript -e "set Volume $1"
+}
+
+take() {
+    mkdir -p "$@" && cd "$@"
+}
+
+function s() {
+  surge . "https://$1.surge.sh"
 }
