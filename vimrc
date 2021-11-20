@@ -90,7 +90,7 @@ call plug#end()
 
 colorscheme Tomorrow-Night
 
-autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx PrettierAsync
+autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx,*.rb PrettierAsync
 au BufRead,BufNewFile *.md setlocal textwidth=80
 
 " Configs
