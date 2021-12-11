@@ -65,17 +65,17 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-surround'
   Plug 'dockyard/vim-easydir'
   Plug 'ntpeters/vim-better-whitespace'
-  Plug 'prettier/vim-prettier', {
-        \ 'do': 'yarn install',
-        \ 'for': [
-        \ 'javascript',
-        \ 'tsx',
-        \ 'ruby',
-        \ 'typescript.tsx',
-        \ 'typescript',
-        \ 'css',
-        \ 'json',
-        \ 'html' ] }
+  " Plug 'prettier/vim-prettier', {
+  "       \ 'do': 'yarn install',
+  "       \ 'for': [
+  "       \ 'javascript',
+  "       \ 'tsx',
+  "       \ 'ruby',
+  "       \ 'typescript.tsx',
+  "       \ 'typescript',
+  "       \ 'css',
+  "       \ 'json',
+  "       \ 'html' ] }
   Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}}
   Plug 'HerringtonDarkholme/yats.vim'
   Plug 'tpope/vim-endwise'
@@ -90,7 +90,7 @@ call plug#end()
 
 colorscheme Tomorrow-Night
 
-autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx,*.rb PrettierAsync
+" autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx,*.rb,*.html PrettierAsync
 au BufRead,BufNewFile *.md setlocal textwidth=80
 
 " Configs
