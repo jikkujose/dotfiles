@@ -1,0 +1,16 @@
+require 'autotest/restart'
+require 'minitest/reporters'
+require 'autotest/clear'
+
+Autotest.add_hook :initialize do |autotest|
+  %w{.git .svn .hg .DS_Store ._* vendor tmp log doc}.each do |exception|
+    autotest.add_exception(exception)
+  end
+
+  autotest.add_mapping(/.rb$/) do |_, m|
+    autotest.files_matching(/^test\/test_helper.rb/)
+  end
+end
+
+reporter_options = { color: true, slow_count: 5 }
+Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new(reporter_options)]

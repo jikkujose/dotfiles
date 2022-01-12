@@ -1,0 +1,8 @@
+snippet bbr
+[remote "bitbucket"]
+  url = git@bitbucket.org:jikkujose/${1:repo_name}.git
+  fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+  remote = bitbucket
+  merge = refs/heads/master
+endsnippet
