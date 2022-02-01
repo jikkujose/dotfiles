@@ -10,7 +10,7 @@ set expandtab
 set shiftwidth=2
 set relativenumber
 set smartcase
-set cursorline
+" set cursorline
 set colorcolumn=+1
 set dictionary+=/usr/share/dict/words
 set hlsearch
@@ -86,9 +86,10 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-markdown'
   Plug 'mustache/vim-mustache-handlebars'
   Plug 'dart-lang/dart-vim-plugin'
+  Plug 'chriskempson/base16-vim'
 call plug#end()
 
-colorscheme Tomorrow-Night
+" colorscheme Tomorrow-Night
 
 " autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx,*.rb,*.html PrettierAsync
 au BufRead,BufNewFile *.md setlocal textwidth=80

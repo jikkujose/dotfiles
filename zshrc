@@ -55,3 +55,7 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 eval "$(starship init zsh)"
 
 export NODE_PATH=$(npm -g root)
+
+export HOST_IP="$(ip route |awk '/^default/{print $3}')"
+export PULSE_SERVER="tcp:$HOST_IP"
+#export DISPLAY="$HOST_IP:0.0"
