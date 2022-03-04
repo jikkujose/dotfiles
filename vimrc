@@ -11,7 +11,7 @@ set shiftwidth=2
 set relativenumber
 set smartcase
 " set cursorline
-set colorcolumn=+1
+" set colorcolumn=+1
 set dictionary+=/usr/share/dict/words
 set hlsearch
 set ignorecase
