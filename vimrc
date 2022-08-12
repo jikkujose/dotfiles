@@ -150,4 +150,20 @@ if executable('volta')
   let g:node_host_prog = trim(system("volta which neovim-node-host"))
 endif
 
+function! CocToggle()
+    if g:coc_enabled
+        CocDisable
+    else
+        CocEnable
+    endif
+endfunction
+command! CocToggle :call CocToggle()
+
 autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+
+
+function! SortLines() range
+    execute a:firstline . "," . a:lastline . 's/^\(.*\)$/\=strdisplaywidth( submatch(0) ) . " " . submatch(0)/'
+    execute a:firstline . "," . a:lastline . 'sort n'
+    execute a:firstline . "," . a:lastline . 's/^\d\+\s//'
+endfunction
