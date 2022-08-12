@@ -50,3 +50,10 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 eval "$(starship init zsh)"
 
 export NODE_PATH=$(npm -g root)
+
+# bun completions
+[ -s "/Users/jikkujose/.bun/_bun" ] && source "/Users/jikkujose/.bun/_bun"
+
+# Bun
+export BUN_INSTALL="/Users/jikkujose/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
