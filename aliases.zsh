@@ -97,3 +97,4 @@ alias yy="yt-dlp -f 22"
 alias m="cmus-remote -u"
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
+alias server="ruby -run -e httpd . -p 8080"

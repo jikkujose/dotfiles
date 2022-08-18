@@ -46,7 +46,7 @@ bindkey -v
 
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
-chruby 3.1.0
+chruby 3.1.2
 
 clear
 export VOLTA_HOME="$HOME/.volta"
