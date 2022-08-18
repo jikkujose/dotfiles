@@ -59,3 +59,5 @@ export NODE_PATH=$(npm -g root)
 export HOST_IP="$(ip route |awk '/^default/{print $3}')"
 export PULSE_SERVER="tcp:$HOST_IP"
 #export DISPLAY="$HOST_IP:0.0"
+
+switch_profile fbc
