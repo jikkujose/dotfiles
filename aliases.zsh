@@ -99,3 +99,4 @@ alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias server="ruby -run -e httpd . -p 8080"
 alias open="explorer.exe"
+alias docker="podman"
