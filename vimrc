@@ -80,12 +80,15 @@ call plug#begin('~/.vim/plugged')
   Plug 'HerringtonDarkholme/yats.vim'
   Plug 'tpope/vim-endwise'
   Plug 'ruby-formatter/rufo-vim'
-  Plug 'jremmen/vim-ripgrep'
+  " Plug 'jremmen/vim-ripgrep'
   Plug 'TovarishFin/vim-solidity'
   Plug 'pangloss/vim-javascript'
   Plug 'tpope/vim-markdown'
   Plug 'mustache/vim-mustache-handlebars'
   Plug 'dart-lang/dart-vim-plugin'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
+  Plug 'nvim-treesitter/nvim-treesitter'
 call plug#end()
 
 colorscheme Tomorrow-Night
@@ -149,6 +152,8 @@ let g:vimwiki_key_mappings = {
 if executable('volta')
   let g:node_host_prog = trim(system("volta which neovim-node-host"))
 endif
+
+let g:loaded_perl_provider = 0
 
 function! CocToggle()
     if g:coc_enabled
