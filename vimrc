@@ -10,8 +10,6 @@ set expandtab
 set shiftwidth=2
 set relativenumber
 set smartcase
-" set cursorline
-" set colorcolumn=+1
 set dictionary+=/usr/share/dict/words
 set hlsearch
 set ignorecase
@@ -87,10 +85,13 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-markdown'
   Plug 'mustache/vim-mustache-handlebars'
   Plug 'dart-lang/dart-vim-plugin'
-  Plug 'chriskempson/base16-vim'
+  " Plug 'chriskempson/base16-vim'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
+  Plug 'morhetz/gruvbox'
 call plug#end()
 
-" colorscheme Tomorrow-Night
+colorscheme Tomorrow-Night-Bright
 
 " autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx,*.rb,*.html PrettierAsync
 au BufRead,BufNewFile *.md setlocal textwidth=80
@@ -112,7 +113,6 @@ let g:prettier#config#single_quote = 'false'
 let g:prettier#config#bracket_spacing = 'true'
 let g:prettier#config#jsx_bracket_same_line = 'false'
 let g:prettier#config#trailing_comma = 'es5'
-" let g:prettier#config#parser = 'babylon'
 let g:prettier#config#config_precedence = 'prefer-file'
 
 let g:ctrlp_user_command = [
