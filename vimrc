@@ -16,6 +16,7 @@ set ignorecase
 set nobackup nowritebackup
 set rtp+=~/.fzf
 nmap gn :%s///gn<cr>
+nmap gt :Telescope<cr>
 nmap gr :%s///g<cr>
 
 function! g:CopyToClipboard()
