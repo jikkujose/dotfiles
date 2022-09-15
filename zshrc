@@ -10,23 +10,6 @@ source `brew --prefix`/etc/profile.d/z.sh
 
 export LC_ALL="en_US.UTF-8"
 export EDITOR='nvim'
-# export HOMEBREW_CASK_OPTS="--caskroom=/opt/homebrew-cask/Caskroom"
-
-# antigen use oh-my-zsh
-
-# antigen bundles <<BUNDLES
-#   git
-#   uvaes/fzf-marks
-#   heroku
-#   pip
-#   lein
-#   command-not-found
-#   zsh-users/zsh-syntax-highlighting
-# BUNDLES
-#
-# antigen theme JikkuJose/themes jiks
-#
-# antigen apply
 
 setopt interactivecomments
 setopt HIST_IGNORE_SPACE
@@ -59,6 +42,21 @@ export NODE_PATH=$(npm -g root)
 
 export HOST_IP="$(ip route |awk '/^default/{print $3}')"
 export PULSE_SERVER="tcp:$HOST_IP"
-#export DISPLAY="$HOST_IP:0.0"
 
 switch_profile null
+
+# # >>> conda initialize >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/home/polar/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/home/polar/miniconda3/etc/profile.d/conda.sh" ]; then
+#         . "/home/polar/miniconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/home/polar/miniconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# # <<< conda initialize <<<
+#
