@@ -89,3 +89,7 @@ take() {
 function sss() {
   surge . "https://$1.surge.sh"
 }
+
+function open() {
+  explorer.exe `wslpath -w "$1"`
+}
