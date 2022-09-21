@@ -1,9 +1,9 @@
 #!/usr/bin/zsh
 
-# Start tmux by default
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  exec tmux
-fi
+# # Start tmux by default
+# if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+#   exec tmux
+# fi
 
 # source $HOME/antigen/antigen.zsh
 source `brew --prefix`/etc/profile.d/z.sh
