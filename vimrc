@@ -172,3 +172,5 @@ function! SortLines() range
     execute a:firstline . "," . a:lastline . 'sort n'
     execute a:firstline . "," . a:lastline . 's/^\d\+\s//'
 endfunction
+
+hi CursorLineNr    term=bold cterm=bold ctermfg=012 gui=bold
