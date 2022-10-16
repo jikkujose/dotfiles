@@ -65,17 +65,17 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-surround'
   Plug 'dockyard/vim-easydir'
   Plug 'ntpeters/vim-better-whitespace'
-  Plug 'prettier/vim-prettier', {
-        \ 'do': 'yarn install',
-        \ 'for': [
-        \ 'javascript',
-        \ 'tsx',
-        \ 'ruby',
-        \ 'typescript.tsx',
-        \ 'typescript',
-        \ 'css',
-        \ 'json',
-        \ 'html' ] }
+  " Plug 'prettier/vim-prettier', {
+  "       \ 'do': 'yarn install',
+  "       \ 'for': [
+  "       \ 'javascript',
+  "       \ 'tsx',
+  "       \ 'ruby',
+  "       \ 'typescript.tsx',
+  "       \ 'typescript',
+  "       \ 'css',
+  "       \ 'json',
+  "       \ 'html' ] }
   Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}}
   Plug 'HerringtonDarkholme/yats.vim'
   Plug 'tpope/vim-endwise'
@@ -90,6 +90,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
   Plug 'morhetz/gruvbox'
+  Plug 'psf/black', { 'branch': 'stable' }
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 colorscheme Tomorrow-Night-Bright
@@ -106,15 +108,15 @@ let g:python_host_prog = '/usr/bin/python2'
 let g:python2_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
 
-let g:prettier#config#print_width = 80
-let g:prettier#config#tab_width = 2
-let g:prettier#config#use_tabs = 'false'
-let g:prettier#config#semi = 'false'
-let g:prettier#config#single_quote = 'false'
-let g:prettier#config#bracket_spacing = 'true'
-let g:prettier#config#jsx_bracket_same_line = 'false'
-let g:prettier#config#trailing_comma = 'es5'
-let g:prettier#config#config_precedence = 'prefer-file'
+" let g:prettier#config#print_width = 80
+" let g:prettier#config#tab_width = 2
+" let g:prettier#config#use_tabs = 'false'
+" let g:prettier#config#semi = 'false'
+" let g:prettier#config#single_quote = 'false'
+" let g:prettier#config#bracket_spacing = 'true'
+" let g:prettier#config#jsx_bracket_same_line = 'false'
+" let g:prettier#config#trailing_comma = 'es5'
+" let g:prettier#config#config_precedence = 'prefer-file'
 
 let g:ctrlp_user_command = [
     \ '.git', 'cd %s && git ls-files . -co --exclude-standard',

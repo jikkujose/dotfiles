@@ -93,3 +93,7 @@ function sss() {
 function open() {
   explorer.exe `wslpath -w "$1"`
 }
+
+td () {
+	wget -O- -q "https://textdb.dev/api/data/$1"
+}
