@@ -41,7 +41,7 @@ nnoremap <leader><leader> <C-^>
 nnoremap U <c-r>
 map <silent> <Leader>c :TComment<CR>
 map <silent> <Leader>a :PrettierAsync<CR>
-vnoremap <leader>y :<c-u>call g:CopyToClipboard()<cr>
+" vnoremap <leader>y :<c-u>call g:CopyToClipboard()<cr>
 noremap <leader>w :w<CR>
 noremap , :set hlsearch! hlsearch?<CR>
 noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
@@ -157,3 +157,14 @@ if executable('volta')
 endif
 
 autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+
+func! GetSelectedText()
+  normal gv"xy
+  let result = getreg("x")
+  return result
+endfunc
+
+if !has("gui_running") && executable("clip.exe")
+  vnoremap <leader>y :call system('clip.exe', GetSelectedText())<CR>
+  nnoremap YY ^"xyg$:call system('clip.exe', GetSelectedText())<CR>
+endif
