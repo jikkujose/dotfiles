@@ -93,6 +93,6 @@ alias gd="git diff"
 alias hd="head"
 alias gco="git checkout"
 alias "..."="cd ../.."
-alias yy="yt-dlp -f 137+140"
+alias yy="yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'"
 alias m="cmus-remote -u"
 alias wg-quick-show-current='ls /var/run/wireguard | ag name | sed -e "s/.name//"'
