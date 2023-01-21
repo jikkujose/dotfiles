@@ -1,0 +1,55 @@
+snippet manifest "Simple Manifest" b
+{
+  "name": "Ask",
+  "version": "0.8",
+  "manifest_version": 2,
+  "description": "Ask",
+  "short_name": "Ask",
+  "theme_color": "#fde68a",
+  "background_color": "#fde68a",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "https://i.imgur.com/gu0ZlzL.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "https://i.imgur.com/61GvJF5.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "https://i.imgur.com/dURj31a.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
+endsnippet
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt

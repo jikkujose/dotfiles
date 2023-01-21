@@ -1,3 +1,74 @@
+snippet pwa "PWA Starter" b
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Rapid</title>
+    <meta name="description" content="Rapid" />
+    <meta tag="meta" property="og:title" content="Rapid" />
+    <meta tag="meta" property="og:site_name" content="Rapid" />
+    <meta tag="meta" property="og:url" content="PAGE_URL" />
+    <meta tag="meta" property="og:description" content="Rapid" />
+    <meta tag="meta" property="og:type" content="product" />
+
+    <meta name="theme-color" content="#000" />
+
+    <link tag="link" rel="manifest" href="manifest.json" />
+    <link rel="canonical" href="PAGE_URL" />
+
+    <link
+      tag="link"
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="https://i.imgur.com/61GvJF5.png"
+    />
+    <link
+      tag="link"
+      rel="apple-touch-icon"
+      type="image/png"
+      sizes="180x180"
+      href="https://i.imgur.com/gu0ZlzL.png"
+    />
+    <link
+      tag="link"
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="https://i.imgur.com/dURj31a.png"
+    />
+    <meta
+      tag="meta"
+      property="og:image"
+      content="https://i.imgur.com/7NDUolV.png"
+    />
+    <link tag="link" rel="mask-icon" href="imgur_svg" color="#000" />
+
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <style>
+      [x-cloak] {
+        display: none !important;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+    />
+  </head>
+  <body>
+    <div class="w-full h-screen flex justify-center">
+      <div class="max-w-2xl bg-gray-100 flex-grow"></div>
+    </div>
+  </body>
+</html>
+endsnippet
+
+
 snippet html "Basic Snippet" b
 <!doctype html>
 
