@@ -1,8 +1,10 @@
 # dotfiles
 
-my collection of configs. Inspired from several developers' configs.
+Refresh of my dotfiles.
 
-## Note
+## Notes
 
-- Primarily for mac
-- There is a `linux` branch, but its not as well maintained & may lag by a few commits.
+- After 10 years, the repo had started showing its age.
+- This is an attempt to almost purge everything and rebuild.
+- Primarily to improve stability of nvim
+- Planning to do a refresh every year from now.
