@@ -1,3 +1,21 @@
+snippet tb_app "Description" b
+class Birdy < Sinatra::Application
+  namespace "/birdy" do
+    get "/info/?" do
+      content_type :json
+
+      { error: nil, payload: { name: "Birdy", description: "Tweet Rewriter!" } }.to_json
+    end
+
+    get "/status/?" do
+      content_type :json
+
+      { error: nil, payload: { message: "All Okay!" } }.to_json
+    end
+  end
+end
+endsnippet
+
 snippet source "Source location for Ruby Gems" b
 source 'https://rubygems.org'
 

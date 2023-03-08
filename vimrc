@@ -76,22 +76,22 @@ call plug#begin('~/.vim/plugged')
   "       \ 'css',
   "       \ 'json',
   "       \ 'html' ] }
-  Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}}
-  Plug 'HerringtonDarkholme/yats.vim'
+  " Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}}
+  " Plug 'HerringtonDarkholme/yats.vim'
   Plug 'tpope/vim-endwise'
   Plug 'ruby-formatter/rufo-vim'
   Plug 'jremmen/vim-ripgrep'
-  Plug 'TovarishFin/vim-solidity'
+  " Plug 'TovarishFin/vim-solidity'
   Plug 'jonsmithers/vim-html-template-literals'
   Plug 'pangloss/vim-javascript'
   " Plug 'Quramy/vim-js-pretty-template'
   Plug 'tpope/vim-markdown'
-  Plug 'mustache/vim-mustache-handlebars'
-  Plug 'dart-lang/dart-vim-plugin'
+  " Plug 'mustache/vim-mustache-handlebars'
+  " Plug 'dart-lang/dart-vim-plugin'
   " Plug 'chriskempson/base16-vim'
-  Plug 'nvim-lua/plenary.nvim'
-  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
-  Plug 'morhetz/gruvbox'
+  " Plug 'nvim-lua/plenary.nvim'
+  " Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
+  " Plug 'morhetz/gruvbox'
   Plug 'psf/black', { 'branch': 'stable' }
   " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'tikhomirov/vim-glsl'
@@ -99,7 +99,6 @@ call plug#end()
 
 colorscheme Tomorrow-Night-Bright
 
-" autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx,*.rb,*.html PrettierAsync
 au BufRead,BufNewFile *.md setlocal textwidth=80
 
 " Configs
@@ -110,7 +109,6 @@ let g:coc_global_extensions = ['coc-tsserver']
 let g:python_host_prog = '/usr/bin/python2'
 let g:python2_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
-" let g:htl_all_templates
 
 " let g:prettier#config#print_width = 80
 " let g:prettier#config#tab_width = 2
