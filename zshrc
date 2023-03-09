@@ -39,6 +39,7 @@ export PULSE_SERVER="tcp:$HOST_IP"
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   source ~/dotfiles/aliases-linux.zsh
 elif [[ "$OSTYPE" == "darwin"* ]]; then
+  source ~/dotfiles/functions-mac.zsh
 else
 fi
 

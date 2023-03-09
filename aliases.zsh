@@ -12,6 +12,9 @@ alias uf="p | c"
 alias fu="c | p"
 alias rp="echo 'Hello' | c"
 
+alias sp="switch_profile"
+alias wp="which_profile"
+
 alias d="cd ~/Desktop"
 alias dw="cd ~/Downloads/"
 
