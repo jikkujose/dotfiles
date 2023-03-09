@@ -38,7 +38,8 @@ alias lll="ls -laGurp"
 
 alias np='unshare -rn nvim --clean -n -c "set nobackup noswapfile noundofile"'
 alias nn="nvim"
-alias nz="XDG_CONFIG_HOME=~/.config-lazy.vim nvim"
+alias nz="XDG_CONFIG_HOME=~/.config-lazy.vim unshare -rn nvim"
+alias nz-i="XDG_CONFIG_HOME=~/.config-lazy.vim nvim"
 
 alias r="ruby"
 alias rr="rerun -c ruby"

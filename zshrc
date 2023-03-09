@@ -1,32 +1,9 @@
 #!/usr/bin/zsh
 
-# # Start tmux by default
-# if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-#   exec tmux
-# fi
-
-# source $HOME/antigen/antigen.zsh
 source `brew --prefix`/etc/profile.d/z.sh
 
 export LC_ALL="en_US.UTF-8"
 export EDITOR='nvim'
-# export HOMEBREW_CASK_OPTS="--caskroom=/opt/homebrew-cask/Caskroom"
-
-# antigen use oh-my-zsh
-
-# antigen bundles <<BUNDLES
-#   git
-#   uvaes/fzf-marks
-#   heroku
-#   pip
-#   lein
-#   command-not-found
-#   zsh-users/zsh-syntax-highlighting
-# BUNDLES
-#
-# antigen theme JikkuJose/themes jiks
-#
-# antigen apply
 
 setopt interactivecomments
 setopt HIST_IGNORE_SPACE
@@ -58,4 +35,11 @@ export NODE_PATH=$(npm -g root)
 
 export HOST_IP="$(ip route |awk '/^default/{print $3}')"
 export PULSE_SERVER="tcp:$HOST_IP"
-#export DISPLAY="$HOST_IP:0.0"
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  source ~/dotfiles/aliases-linux.zsh
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+else
+fi
+
+
