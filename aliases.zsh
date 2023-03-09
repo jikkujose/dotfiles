@@ -42,7 +42,7 @@ alias lll="ls -laGurp"
 alias np='unshare -rn nvim --clean -n -c "set nobackup noswapfile noundofile"'
 alias nn="nvim"
 alias nz="XDG_CONFIG_HOME=~/.config-lazy.vim unshare -rn nvim"
-alias nz-i="XDG_CONFIG_HOME=~/.config-lazy.vim nvim"
+alias nzi="XDG_CONFIG_HOME=~/.config-lazy.vim nvim"
 
 alias r="ruby"
 alias rr="rerun -c ruby"
@@ -59,7 +59,6 @@ alias xxx="logout"
 alias cat="batcat"
 alias nm_weight="find . -name 'node_modules' -type d -prune -print0 | xargs -0 du -chs"
 alias nm_delete="find . -name 'node_modules' -type d -prune -print0 | xargs -0 rm -rf"
-
 
 alias tb="nc termbin.com 9999"
 alias city="curl https://am.i.mullvad.net/city"
