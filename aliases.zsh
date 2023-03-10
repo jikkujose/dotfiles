@@ -6,17 +6,12 @@ alias ag="ag -i"
 alias bs="source ~/.zshrc"
 alias e="echo"
 
-alias c="pbcopy"
-alias p="pbpaste"
 alias uf="p | c"
 alias fu="c | p"
 alias rp="echo 'Hello' | c"
 
 alias sp="switch_profile"
 alias wp="which_profile"
-
-alias d="cd ~/Desktop"
-alias dw="cd ~/Downloads/"
 
 alias ee="set -o emacs"
 alias vv="set -o vi"
