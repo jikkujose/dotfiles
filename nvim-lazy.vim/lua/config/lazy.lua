@@ -6,8 +6,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
-require("luasnip.loaders.from_snipmate").lazy_load({ paths = { vim.fn.expand("~/dotfiles/snippets/") } })
-
 require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
@@ -16,7 +14,6 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.coding.copilot" },
     { import = "lazyvim.plugins.extras.lang.typescript" },
     { import = "lazyvim.plugins.extras.lang.json" },
-    -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
     -- import/override with your plugins
     { import = "plugins" },
   },
