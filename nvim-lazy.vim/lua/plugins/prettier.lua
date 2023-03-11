@@ -7,7 +7,7 @@ return {
         opts.sources,
         nls.builtins.formatting.prettierd.with({
           env = {
-            PRETTIERD_DEFAULT_CONFIG = vim.fn.expand("~/.config/prettierrc.json"),
+            PRETTIERD_DEFAULT_CONFIG = vim.fn.expand("~/dotfiles/prettierrc.json"),
           },
         })
       )
