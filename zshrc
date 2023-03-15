@@ -3,6 +3,8 @@
 source `brew --prefix`/etc/profile.d/z.sh
 
 export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+export LANGUAGE="en_US.UTF-8"
 export EDITOR='nvim'
 
 setopt interactivecomments
@@ -43,5 +45,3 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   source ~/dotfiles/functions-mac.zsh
 else
 fi
-
-
