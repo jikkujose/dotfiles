@@ -45,3 +45,8 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   source ~/dotfiles/functions-mac.zsh
 else
 fi
+
+# pnpm
+export PNPM_HOME="/home/polar/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
