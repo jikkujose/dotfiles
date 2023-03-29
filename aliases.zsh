@@ -46,6 +46,7 @@ alias rrr="cd ~/Ruby/scrap"
 alias rm="rm -i"
 alias rmrf="rm -rfi"
 
+alias pf="ps aux | ag"
 alias sl="df -h / | tail -n 1 | ruby -e \"puts STDIN.read.split(' ')[3].split('G')[0] + ' GB'\""
 alias ta="tmux attach"
 alias tt="tree -N -I 'node_modules|dist'"
