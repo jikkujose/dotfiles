@@ -32,6 +32,7 @@ require("lazy").setup({
         "tohtml",
         "tutor",
         "zipPlugin",
+        "folke/noice.nvim",
       },
     },
   },
