@@ -91,7 +91,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'nvim-treesitter/nvim-treesitter'
 call plug#end()
 
-colorscheme Tomorrow-Night
+colorscheme Tomorrow-Night-Bright
 
 " autocmd BufWritePre *.js,*.json,*.css,*.ts,*.tsx,*.rb,*.html PrettierAsync
 au BufRead,BufNewFile *.md setlocal textwidth=80
