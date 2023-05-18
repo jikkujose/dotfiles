@@ -1,4 +1,7 @@
 #!/usr/bin/zsh
+#
+alias d="cd ~/Desktop"
+alias dw="cd ~/Downloads/"
 
 alias ..="cd .."
 alias "..."="cd ../.."
@@ -35,9 +38,9 @@ alias ll="ls -lGurp"
 alias lll="ls -laGurp"
 
 alias np='unshare -rn nvim --clean -n -c "set nobackup noswapfile noundofile"'
-alias nn="nvim"
-alias nz="XDG_CONFIG_HOME=~/.config-lazy.vim unshare -rn nvim"
-alias nzi="XDG_CONFIG_HOME=~/.config-lazy.vim nvim"
+alias nn="NVIM_APPNAME=legacy nvim"
+alias nz="NVIM_APPNAME=lazy unshare -rn nvim"
+alias nzi="NVIM_APPNAME=lazy nvim"
 
 alias r="ruby"
 alias rr="rerun -c ruby"
