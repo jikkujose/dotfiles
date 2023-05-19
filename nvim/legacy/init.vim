@@ -20,13 +20,6 @@ set rtp+=~/.fzf
 nmap gn :%s///gn<cr>
 nmap gr :%s///g<cr>
 
-function! g:CopyToClipboard()
-  let old_z = @z
-  normal! gv"zy
-  call system('pbcopy', @z)
-  let @z = old_z
-endfunction
-
 function! RenameFile()
   let old_name = expand('%')
   let new_name = input('New file name: ', expand('%'), 'file')
@@ -41,7 +34,6 @@ nmap gmv :call RenameFile()<cr>
 nnoremap <leader><leader> <C-^>
 nnoremap U <c-r>
 map <silent> <Leader>c :TComment<CR>
-vnoremap <leader>y :<c-u>call g:CopyToClipboard()<cr>
 noremap <leader>w :w<CR>
 noremap , :set hlsearch! hlsearch?<CR>
 noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
@@ -100,7 +92,7 @@ au BufRead,BufNewFile *.md setlocal textwidth=80
 "
 let g:rufo_auto_formatting = 1
 
-let g:coc_global_extensions = ['coc-tsserver', 'coc-prettier']
+let g:coc_global_extensions = ['coc-prettier']
 let g:python_host_prog = '/usr/bin/python2'
 let g:python2_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
@@ -174,3 +166,11 @@ function! SortLines() range
 endfunction
 
 hi CursorLineNr    term=bold cterm=bold ctermfg=012 gui=bold
+
+let path = expand("$HOME") . "/.config/" . expand("$NVIM_APPNAME")
+
+if has('mac')
+  exec 'source' path . '/init-mac.vim'
+else
+  exec 'source' path . '/init-linux.vim'
+endif
