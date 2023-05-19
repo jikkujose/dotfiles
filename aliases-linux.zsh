@@ -1,5 +1,4 @@
-# alias c='xsel --clipboard --input'
-# alias p='xsel --clipboard --output'
+export DISPLAY=:1
 
-# alias d="cd /mnt/c/Users/Admin/Desktop"
-# alias dw="cd /mnt/c/Users/Admin/Downloads/"
+alias c='xclip -selection clipboard'
+alias p='xclip -o -selection clipboard'

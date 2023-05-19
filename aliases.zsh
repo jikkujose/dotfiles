@@ -38,9 +38,9 @@ alias ll="ls -lGurp"
 alias lll="ls -laGurp"
 
 alias np='unshare -rn nvim --clean -n -c "set nobackup noswapfile noundofile"'
-alias nn="NVIM_APPNAME=legacy nvim"
-alias nz="NVIM_APPNAME=lazy unshare -rn nvim"
-alias nzi="NVIM_APPNAME=lazy nvim"
+alias nn="NVIM_APPNAME=nvim/legacy nvim"
+alias nz="NVIM_APPNAME=nvim/lazy unshare -rn nvim"
+alias nzi="NVIM_APPNAME=nvim/lazy nvim"
 
 alias r="ruby"
 alias rr="rerun -c ruby"
