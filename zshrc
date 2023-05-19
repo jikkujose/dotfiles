@@ -23,6 +23,8 @@ fi
 set -o vi
 bindkey -v
 
+. "$HOME/.asdf/asdf.sh"
+
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 chruby 3.1.0
@@ -72,3 +74,4 @@ unset __conda_setup
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
