@@ -16,7 +16,7 @@ set dictionary+=/usr/share/dict/words
 set hlsearch
 set ignorecase
 set nobackup nowritebackup
-set rtp+=~/.fzf
+
 nmap gn :%s///gn<cr>
 nmap gr :%s///g<cr>
 
@@ -49,6 +49,7 @@ map <leader><right> <c-w><right>
 
 call plug#begin('~/.vim/plugged')
   Plug 'vimwiki/vimwiki'
+  Plug 'glench/vim-jinja2-syntax'
   Plug 'JikkuJose/lightline.vim'
   Plug 'kien/ctrlp.vim'
   Plug 'tomtom/tcomment_vim'
@@ -57,29 +58,14 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-surround'
   Plug 'dockyard/vim-easydir'
   Plug 'ntpeters/vim-better-whitespace'
-  " Plug 'prettier/vim-prettier', {
-  "       \ 'do': 'yarn install',
-  "       \ 'for': [
-  "       \ 'javascript',
-  "       \ 'tsx',
-  "       \ 'ruby',
-  "       \ 'typescript.tsx',
-  "       \ 'typescript',
-  "       \ 'css',
-  "       \ 'json',
-  "       \ 'html' ] }
-  Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}}
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'HerringtonDarkholme/yats.vim'
   Plug 'tpope/vim-endwise'
   Plug 'ruby-formatter/rufo-vim'
-  " Plug 'jremmen/vim-ripgrep'
-  Plug 'TovarishFin/vim-solidity'
   Plug 'pangloss/vim-javascript'
   Plug 'tpope/vim-markdown'
   Plug 'mustache/vim-mustache-handlebars'
-  Plug 'dart-lang/dart-vim-plugin'
   Plug 'nvim-lua/plenary.nvim'
-  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
   Plug 'nvim-treesitter/nvim-treesitter'
 call plug#end()
 
@@ -95,18 +81,7 @@ let g:rufo_auto_formatting = 1
 let g:coc_global_extensions = ['coc-prettier']
 let g:python_host_prog = '/usr/bin/python2'
 let g:python2_host_prog = '/usr/bin/python'
-let g:python3_host_prog = '/usr/local/bin/python3'
-
-let g:prettier#config#print_width = 80
-let g:prettier#config#tab_width = 2
-let g:prettier#config#use_tabs = 'false'
-let g:prettier#config#semi = 'false'
-let g:prettier#config#single_quote = 'false'
-let g:prettier#config#bracket_spacing = 'true'
-let g:prettier#config#jsx_bracket_same_line = 'false'
-let g:prettier#config#trailing_comma = 'es5'
-let g:prettier#config#parser = 'babylon'
-let g:prettier#config#config_precedence = 'prefer-file'
+let g:python3_host_prog = '~/miniconda3/bin/python3'
 
 let g:ctrlp_user_command = [
     \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
@@ -158,14 +133,13 @@ command! CocToggle :call CocToggle()
 
 autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
-
 function! SortLines() range
     execute a:firstline . "," . a:lastline . 's/^\(.*\)$/\=strdisplaywidth( submatch(0) ) . " " . submatch(0)/'
     execute a:firstline . "," . a:lastline . 'sort n'
     execute a:firstline . "," . a:lastline . 's/^\d\+\s//'
 endfunction
 
-hi CursorLineNr    term=bold cterm=bold ctermfg=012 gui=bold
+highlight CursorLineNr term=bold cterm=bold ctermfg=012 gui=bold
 
 let path = expand("$HOME") . "/.config/" . expand("$NVIM_APPNAME")
 
