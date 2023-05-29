@@ -1,52 +1,95 @@
+vim.g.mapleader = " "
+
+vim.g.lightline = {colorscheme = 'jiks'}
+
+vim.o.encoding = "utf-8"
+vim.o.incsearch = true
+vim.o.compatible = false
+vim.o.laststatus = 2
+vim.o.tabstop = 2
+vim.o.expandtab = true
+vim.o.shiftwidth = 2
+vim.o.relativenumber = true
+vim.o.smartcase = true
+vim.o.cursorline = true
+vim.o.colorcolumn = "+1"
+vim.o.dictionary = vim.o.dictionary .. ",/usr/share/dict/words"
+vim.o.hlsearch = true
+vim.o.ignorecase = true
+vim.o.backup = false
+vim.o.writebackup = false
+
+vim.api.nvim_set_keymap('n', 'gn', ':%s///gn<cr>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', 'gr', ':%s///g<cr>', {noremap = true, silent = true})
+
+vim.api.nvim_set_keymap('n', '<leader><leader>', '<C-^>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', 'U', '<c-r>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('', '<leader>c', ':TComment<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>w', ':w<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', ',', ':set hlsearch! hlsearch?<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>p', ':set paste<CR>:put *<CR>:set nopaste<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>f', ':e %:h/', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>t', ':StripWhitespace<cr>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<C-b>', ':CtrlPBuffer<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', 'K', 'i<CR><Esc>', {noremap = true, silent = true})
+
+vim.api.nvim_set_keymap('', '<leader><up>', '<c-w><up>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('', '<leader><down>', '<c-w><down>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('', '<leader><left>', '<c-w><left>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('', '<leader><right>', '<c-w><right>', {noremap = true, silent = true})
+
+vim.g.rufo_auto_formatting = 1
+vim.g.coc_global_extensions = {'coc-prettier'}
+vim.g.python_host_prog = '/usr/bin/python2'
+vim.g.python2_host_prog = '/usr/bin/python'
+vim.g.python3_host_prog = '~/miniconda3/bin/python3'
+
+vim.g.ctrlp_user_command = {
+  '.git',
+  'cd %s && git ls-files . -co --exclude-standard',
+  'find %s -type f'
+}
+
+vim.g.ctrlp_working_path_mode = '0'
+
+vim.g.vimwiki_list = {{syntax = 'markdown', ext = '.md'}}
+
+vim.g.vimwiki_key_mappings = {
+  all_maps = 1,
+  global = 1,
+  headers = 1,
+  text_objs = 1,
+  table_format = 1,
+  table_mappings = 0,
+  lists = 1,
+  links = 1,
+  html = 1,
+  mouse = 0
+}
+
+vim.g.loaded_perl_provider = 0
+
+function _G.RenameFile()
+  local old_name = vim.fn.expand('%')
+  local new_name = vim.fn.input('New file name: ', vim.fn.expand('%'), 'file')
+  if new_name ~= '' and new_name ~= old_name then
+    vim.cmd(':saveas ' .. new_name)
+    vim.cmd(':silent !rm ' .. old_name)
+    vim.cmd('redraw!')
+  end
+end
+
+vim.api.nvim_set_keymap('n', 'gmv', ':lua RenameFile()<cr>', {noremap = true, silent = true})
+
+if vim.fn.executable('volta') == 1 then
+  vim.g.node_host_prog = vim.fn.system("volta which neovim-node-host"):gsub("^%s*(.-)%s*$", "%1")
+end
+
+
+
+
 vim.cmd[[
-  let mapleader="\<Space>"
-  let g:lightline = {'colorscheme': 'jiks'}
-
-  set encoding=utf-8
-  set incsearch
-  set nocompatible
-  set laststatus=2
-  set tabstop=2
-  set expandtab
-  set shiftwidth=2
-  set relativenumber
-  set smartcase
-  set cursorline
-  set colorcolumn=+1
-  set dictionary+=/usr/share/dict/words
-  set hlsearch
-  set ignorecase
-  set nobackup nowritebackup
-
-  nmap gn :%s///gn<cr>
-  nmap gr :%s///g<cr>
-
-  function! RenameFile()
-    let old_name = expand('%')
-    let new_name = input('New file name: ', expand('%'), 'file')
-    if new_name != '' && new_name != old_name
-      exec ':saveas ' . new_name
-      exec ':silent !rm ' . old_name
-      redraw!
-    endif
-  endfunction
-
-  nmap gmv :call RenameFile()<cr>
-  nnoremap <leader><leader> <C-^>
-  nnoremap U <c-r>
-  map <silent> <Leader>c :TComment<CR>
-  noremap <leader>w :w<CR>
-  noremap , :set hlsearch! hlsearch?<CR>
-  noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
-  nmap <leader>f :e %:h/
-  nmap <silent> <leader>t :StripWhitespace<cr>
-  nmap <C-b> :CtrlPBuffer<CR>
-  :nnoremap K i<CR><Esc>
-
-  map <leader><up> <c-w><up>
-  map <leader><down> <c-w><down>
-  map <leader><left> <c-w><left>
-  map <leader><right> <c-w><right>
+colorscheme Tomorrow-Night-Bright
 
 call plug#begin('~/.fresh/plugged')
   Plug 'vimwiki/vimwiki'
@@ -70,25 +113,8 @@ call plug#begin('~/.fresh/plugged')
   Plug 'nvim-treesitter/nvim-treesitter'
 call plug#end()
 
-colorscheme Tomorrow-Night-Bright
-
 autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.json,*.md,*.html,*.vue silent! CocCommand prettier.formatFile
 au BufRead,BufNewFile *.md setlocal textwidth=80
-
-" Configs
-"
-let g:rufo_auto_formatting = 1
-
-let g:coc_global_extensions = ['coc-prettier']
-let g:python_host_prog = '/usr/bin/python2'
-let g:python2_host_prog = '/usr/bin/python'
-let g:python3_host_prog = '~/miniconda3/bin/python3'
-
-let g:ctrlp_user_command = [
-    \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
-    \ 'find %s -type f'
-    \ ]
-let g:ctrlp_working_path_mode = '0'
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -103,51 +129,15 @@ inoremap <silent><expr> <TAB>
 
 let g:coc_snippet_next = '<tab>'
 
-let g:vimwiki_list = [{'syntax': 'markdown', 'ext': '.md'}]
-let g:vimwiki_key_mappings = {
-            \ 'all_maps': 1,
-            \ 'global': 1,
-            \ 'headers': 1,
-            \ 'text_objs': 1,
-            \ 'table_format': 1,
-            \ 'table_mappings': 0,
-            \ 'lists': 1,
-            \ 'links': 1,
-            \ 'html': 1,
-            \ 'mouse': 0,
-            \ }
-
-if executable('volta')
-  let g:node_host_prog = trim(system("volta which neovim-node-host"))
-endif
-
-let g:loaded_perl_provider = 0
-
-function! CocToggle()
-    if g:coc_enabled
-        CocDisable
-    else
-        CocEnable
-    endif
-endfunction
-command! CocToggle :call CocToggle()
-
 autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
-function! SortLines() range
-    execute a:firstline . "," . a:lastline . 's/^\(.*\)$/\=strdisplaywidth( submatch(0) ) . " " . submatch(0)/'
-    execute a:firstline . "," . a:lastline . 'sort n'
-    execute a:firstline . "," . a:lastline . 's/^\d\+\s//'
-endfunction
-
 highlight CursorLineNr term=bold cterm=bold ctermfg=012 gui=bold
-
-let path = stdpath('config')
-
-
-if has('mac')
-  exec 'source' path . '/init-mac.vim'
-else
-  exec 'source' path . '/init-linux.vim'
-endif
 ]]
+
+local path = vim.fn.stdpath('config')
+
+if vim.fn.has('mac') == 1 then
+  vim.cmd('source ' .. path .. '/init-mac.vim')
+else
+  vim.cmd('source ' .. path .. '/init-linux.vim')
+end
