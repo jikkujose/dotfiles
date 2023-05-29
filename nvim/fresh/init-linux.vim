@@ -1,0 +1,1 @@
+xmap <leader>y "+y
