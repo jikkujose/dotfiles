@@ -85,13 +85,8 @@ if vim.fn.executable('volta') == 1 then
   vim.g.node_host_prog = vim.fn.system("volta which neovim-node-host"):gsub("^%s*(.-)%s*$", "%1")
 end
 
-
-
-
-vim.cmd[[
-colorscheme Tomorrow-Night-Bright
-
-call plug#begin('~/.fresh/plugged')
+local Plug = vim.fn['plug#']
+vim.call('plug#begin', '~/.fresh/plugged')
   Plug 'vimwiki/vimwiki'
   Plug 'glench/vim-jinja2-syntax'
   Plug 'JikkuJose/lightline.vim'
@@ -102,7 +97,6 @@ call plug#begin('~/.fresh/plugged')
   Plug 'tpope/vim-surround'
   Plug 'dockyard/vim-easydir'
   Plug 'ntpeters/vim-better-whitespace'
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'HerringtonDarkholme/yats.vim'
   Plug 'tpope/vim-endwise'
   Plug 'ruby-formatter/rufo-vim'
@@ -111,7 +105,12 @@ call plug#begin('~/.fresh/plugged')
   Plug 'mustache/vim-mustache-handlebars'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-treesitter/nvim-treesitter'
-call plug#end()
+  Plug('neoclide/coc.nvim', {['branch'] = 'release'})
+vim.call('plug#end')
+
+
+vim.cmd[[
+colorscheme Tomorrow-Night-Bright
 
 autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.json,*.md,*.html,*.vue silent! CocCommand prettier.formatFile
 au BufRead,BufNewFile *.md setlocal textwidth=80
