@@ -1,0 +1,1 @@
+../../legacy/autoload/plug.vim
