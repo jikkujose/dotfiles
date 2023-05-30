@@ -6,9 +6,16 @@
   "semi": false,
   "singleQuote": false,
   "bracketSpacing": true,
-  "jsxBracketSameLine": false,
   "trailingComma": "es5",
   "parser": "babel",
   "endOfLine": "lf",
-  "arrowParens": "avoid"
+  "arrowParens": "avoid",
+  "overrides": [
+    {
+      "files": "*.html",
+      "options": {
+        "parser": "html"
+      }
+    }
+  ]
 }

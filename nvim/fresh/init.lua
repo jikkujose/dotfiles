@@ -38,8 +38,6 @@ vim.api.nvim_set_keymap('', '<leader><down>', '<c-w><down>', {noremap = true, si
 vim.api.nvim_set_keymap('', '<leader><left>', '<c-w><left>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('', '<leader><right>', '<c-w><right>', {noremap = true, silent = true})
 
-vim.g.rufo_auto_formatting = 1
--- vim.g.coc_global_extensions = {'coc-prettier'}
 vim.g.python_host_prog = '/usr/bin/python2'
 vim.g.python2_host_prog = '/usr/bin/python'
 vim.g.python3_host_prog = '~/miniconda3/bin/python3'
@@ -99,7 +97,6 @@ vim.call('plug#begin', '~/.fresh/plugged')
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'HerringtonDarkholme/yats.vim'
   Plug 'tpope/vim-endwise'
-  Plug 'ruby-formatter/rufo-vim'
   Plug 'pangloss/vim-javascript'
   Plug 'tpope/vim-markdown'
   Plug 'mustache/vim-mustache-handlebars'
@@ -112,7 +109,7 @@ vim.call('plug#end')
 vim.cmd[[
 colorscheme Tomorrow-Night-Bright
 
-autocmd BufWritePre,InsertLeave *.js,*.jsx,*.ts,*.tsx,*.css,*.json,*.md,*.html Neoformat
+autocmd BufWritePre,InsertLeave *.js,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.md,*.html silent! Neoformat
 
 au BufRead,BufNewFile *.md setlocal textwidth=80
 
