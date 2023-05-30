@@ -37,9 +37,8 @@ eval "$(starship init zsh)"
 
 export NODE_PATH=$(npm -g root)
 
-export HOST_IP="$(ip route |awk '/^default/{print $3}')"
-
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  source ~/dotfiles/zshrc-linux
   source ~/dotfiles/aliases-linux.zsh
   source ~/dotfiles/functions-linux.zsh
 elif [[ "$OSTYPE" == "darwin"* ]]; then
