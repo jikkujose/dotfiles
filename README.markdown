@@ -9,10 +9,6 @@ Refresh of my dotfiles.
 - Primarily to improve stability of nvim
 - Planning to do a refresh every year from now.
 
-## Nvim Profile
-
-`fresh`
-
 ## Todo
 
 - [x] Move to lua
@@ -20,8 +16,8 @@ Refresh of my dotfiles.
 - [ ] Setup old snippets
 - [ ] Write docs to setup
 - [ ] Implement scripts to symlink
-- [ ] Explore Null-LS
-- [ ] Remove hacks
+- [ ] Dockerize nvim
+- [x] Remove hacks
 - [ ] Separate init.lua
 - [ ] Optimize performance
 - [ ] Mimic mac like fonts in Linux
