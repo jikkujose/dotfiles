@@ -39,7 +39,7 @@ vim.api.nvim_set_keymap('', '<leader><left>', '<c-w><left>', {noremap = true, si
 vim.api.nvim_set_keymap('', '<leader><right>', '<c-w><right>', {noremap = true, silent = true})
 
 vim.g.rufo_auto_formatting = 1
-vim.g.coc_global_extensions = {'coc-prettier'}
+-- vim.g.coc_global_extensions = {'coc-prettier'}
 vim.g.python_host_prog = '/usr/bin/python2'
 vim.g.python2_host_prog = '/usr/bin/python'
 vim.g.python3_host_prog = '~/miniconda3/bin/python3'
@@ -107,6 +107,28 @@ vim.call('plug#begin', '~/.fresh/plugged')
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug('neoclide/coc.nvim', {['branch'] = 'release'})
 vim.call('plug#end')
+
+-- HTML prettier hack
+
+function _G.prettify()
+  -- save current cursor position
+  local cur_pos = vim.fn.getpos(".")
+
+  -- run prettier and get the output
+  local output = vim.fn.system('prettier --parser html --loglevel silent ' .. vim.fn.expand('%'))
+
+  -- delete all lines in the current buffer
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, {})
+
+  -- replace buffer contents with the output
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.fn.split(output, '\n'))
+
+  -- restore cursor position
+  vim.fn.setpos(".", cur_pos)
+end
+
+vim.cmd("command! PrettierHTML lua _G.prettify()")
+vim.cmd("autocmd BufWritePre *.html silent! PrettierHTML")
 
 
 vim.cmd[[
