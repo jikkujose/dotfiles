@@ -105,36 +105,15 @@ vim.call('plug#begin', '~/.fresh/plugged')
   Plug 'mustache/vim-mustache-handlebars'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-treesitter/nvim-treesitter'
+  Plug 'sbdchd/neoformat'
   Plug('neoclide/coc.nvim', {['branch'] = 'release'})
 vim.call('plug#end')
-
--- HTML prettier hack
-
-function _G.prettify()
-  -- save current cursor position
-  local cur_pos = vim.fn.getpos(".")
-
-  -- run prettier and get the output
-  local output = vim.fn.system('prettier --parser html --loglevel silent ' .. vim.fn.expand('%'))
-
-  -- delete all lines in the current buffer
-  vim.api.nvim_buf_set_lines(0, 0, -1, false, {})
-
-  -- replace buffer contents with the output
-  vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.fn.split(output, '\n'))
-
-  -- restore cursor position
-  vim.fn.setpos(".", cur_pos)
-end
-
-vim.cmd("command! PrettierHTML lua _G.prettify()")
-vim.cmd("autocmd BufWritePre *.html silent! PrettierHTML")
-
 
 vim.cmd[[
 colorscheme Tomorrow-Night-Bright
 
-autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.json,*.md,*.html,*.vue silent! CocCommand prettier.formatFile
+autocmd BufWritePre,InsertLeave *.js,*.jsx,*.ts,*.tsx,*.css,*.json,*.md,*.html Neoformat
+
 au BufRead,BufNewFile *.md setlocal textwidth=80
 
 function! s:check_back_space() abort
