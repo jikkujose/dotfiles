@@ -1,1 +1,0 @@
-xmap <leader>y "+y
