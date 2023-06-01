@@ -134,7 +134,7 @@ highlight CursorLineNr term=bold cterm=bold ctermfg=012 gui=bold
 local path = vim.fn.stdpath('config')
 
 if vim.fn.has('mac') == 1 then
-  vim.cmd('source ' .. path .. '/init-mac.vim')
+  vim.cmd('source ' .. path .. '/init/mac.vim')
 else
-  vim.cmd('source ' .. path .. '/init-linux.vim')
+  vim.cmd('source ' .. path .. '/init/linux.vim')
 end
