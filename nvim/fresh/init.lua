@@ -85,6 +85,7 @@ end
 
 local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.fresh/plugged')
+  Plug 'dstein64/vim-startuptime'
   Plug 'vimwiki/vimwiki'
   Plug 'glench/vim-jinja2-syntax'
   Plug 'JikkuJose/lightline.vim'
