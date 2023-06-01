@@ -7,15 +7,6 @@
   "singleQuote": false,
   "bracketSpacing": true,
   "trailingComma": "es5",
-  "parser": "babel",
   "endOfLine": "lf",
-  "arrowParens": "avoid",
-  "overrides": [
-    {
-      "files": "*.html",
-      "options": {
-        "parser": "html"
-      }
-    }
-  ]
+  "arrowParens": "avoid"
 }
