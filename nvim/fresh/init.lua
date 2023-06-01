@@ -99,7 +99,6 @@ vim.call('plug#begin', '~/.fresh/plugged')
   Plug 'tpope/vim-endwise'
   Plug 'pangloss/vim-javascript'
   Plug 'tpope/vim-markdown'
-  Plug 'mustache/vim-mustache-handlebars'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'sbdchd/neoformat'
