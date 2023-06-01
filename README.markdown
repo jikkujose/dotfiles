@@ -21,3 +21,4 @@ Refresh of my dotfiles.
 - [ ] Separate init.lua
 - [ ] Optimize performance
 - [ ] Mimic mac like fonts in Linux
+- [ ] Teak tmux session label length
