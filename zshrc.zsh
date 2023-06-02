@@ -27,17 +27,19 @@ clear
 
 eval "$(starship init zsh)"
 
-export NODE_PATH=$(npm -g root)
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   source ~/dotfiles/zshrc/linux.zsh
   source ~/dotfiles/aliases/linux.zsh
   source ~/dotfiles/functions/linux.zsh
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  source ~/dotfiles/aliases-mac.zsh
-  source ~/dotfiles/functions-mac.zsh
+  source ~/dotfiles/aliases/mac.zsh
+  source ~/dotfiles/zshrc/mac.zsh
+  source ~/dotfiles/functions/mac.zsh
 else
 fi
+
+export NODE_PATH=$(npm -g root)
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
