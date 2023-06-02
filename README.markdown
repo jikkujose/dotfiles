@@ -11,6 +11,8 @@ Refresh of my dotfiles.
 
 ## Todo
 
+### nvim
+
 - [x] Move to lua
 - [x] Fix formatting (JS, HTML, CSS & Ruby)
 - [ ] Setup old snippets
@@ -22,3 +24,7 @@ Refresh of my dotfiles.
 - [ ] Optimize performance
 - [ ] Mimic mac like fonts in Linux
 - [ ] Teak tmux session label length
+
+### Ubuntu
+
+- [ ] Get empty workspace to left
