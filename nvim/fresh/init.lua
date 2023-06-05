@@ -87,7 +87,6 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.fresh/plugged')
   Plug 'dstein64/vim-startuptime'
   Plug 'vimwiki/vimwiki'
-  Plug 'glench/vim-jinja2-syntax'
   Plug 'JikkuJose/lightline.vim'
   Plug 'kien/ctrlp.vim'
   Plug 'tomtom/tcomment_vim'
@@ -107,6 +106,8 @@ vim.call('plug#begin', '~/.fresh/plugged')
 vim.call('plug#end')
 
 vim.cmd[[
+command! W w
+
 colorscheme Tomorrow-Night-Bright
 
 autocmd BufWritePre,InsertLeave *.js,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.md,*.html silent! Neoformat
