@@ -1,3 +1,11 @@
+snippet vercel_api_hanlder "Vercel API handler" b
+export default function handler(req, res) {
+  const name = req.query.name || "World"
+  res.status(200).json({ text: name })
+}
+endsnippet
+
+
 snippet divblock "jsx div block with className" b
 <div className="">
 $0
