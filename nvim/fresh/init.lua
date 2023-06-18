@@ -1,3 +1,4 @@
+local home = os.getenv("HOME")
 vim.g.mapleader = " "
 
 vim.g.lightline = {colorscheme = 'jiks'}
@@ -42,7 +43,8 @@ vim.api.nvim_set_keymap('', '<leader><right>', '<c-w><right>', {noremap = true, 
 
 vim.g.python_host_prog = '/usr/bin/python2'
 vim.g.python2_host_prog = '/usr/bin/python'
-vim.g.python3_host_prog = '~/miniconda3/bin/python3'
+vim.g.python3_host_prog = home .. "/.asdf/shims/python3"
+
 
 vim.g.ctrlp_user_command = {
   '.git',
