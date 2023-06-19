@@ -1,7 +1,5 @@
 #!/usr/bin/zsh
 
-source `brew --prefix`/etc/profile.d/z.sh
-
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 export LANGUAGE="en_US.UTF-8"
