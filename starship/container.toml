@@ -18,3 +18,6 @@ style = 'bold yellow'
 
 [container]
 disabled = true
+
+[git-branch]
+symbol = ""
