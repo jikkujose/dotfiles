@@ -1,0 +1,15 @@
+add_newline = false
+
+[character]
+success_symbol = '[➜](bold green)'
+
+[ruby]
+symbol = ' '
+format = '[$symbol$version](bold red) '
+
+[nodejs]
+format = '[$symbol$version](bold green) '
+
+[directory]
+format = '[$path]($style)[$read_only]($read_only_style) '
+style = 'bold blue'

@@ -23,7 +23,7 @@ bindkey -v
 
 clear
 
-source ~/dotfiles/zshrc/prompt.zsh
+eval "$(starship init zsh)"
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   source ~/dotfiles/zshrc/linux.zsh
