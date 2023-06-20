@@ -23,8 +23,6 @@ bindkey -v
 
 clear
 
-eval "$(starship init zsh)"
-
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   source ~/dotfiles/zshrc/linux.zsh
   source ~/dotfiles/aliases/linux.zsh
@@ -45,3 +43,4 @@ export NODE_PATH=$(npm -g root)
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+eval "$(starship init zsh)"
