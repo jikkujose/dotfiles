@@ -19,5 +19,5 @@ style = 'bold yellow'
 [container]
 disabled = true
 
-[git-branch]
+[git_branch]
 symbol = ""
