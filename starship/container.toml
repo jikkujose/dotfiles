@@ -1,0 +1,20 @@
+add_newline = false
+
+[character]
+success_symbol = '[\$](bold green)'
+error_symbol = '[!](bold red)'
+
+[ruby]
+disabled = true
+format = '[$symbol$version](bold red) '
+
+[nodejs]
+disabled = true
+format = '[$symbol$version](bold green) '
+
+[directory]
+format = '[$path]($style)[$read_only]($read_only_style) '
+style = 'bold yellow'
+
+[container]
+disabled = true
