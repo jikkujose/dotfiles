@@ -1,16 +1,19 @@
 autoload -Uz vcs_info
-zstyle ':vcs_info:git:*' actionformats '%F{white}(%F{cyan}%b%F{white})%F{reset}'
-zstyle ':vcs_info:git:*' formats '%F{white}(%F{cyan}%b %F{reset}|%F{red} ✗ %F{reset}%F{white})%F{reset}'
-zstyle ':vcs_info:*' enable git
-precmd() { vcs_info }
 setopt PROMPT_SUBST
-PROMPT=$'\n%F{yellow}%~ ${vcs_info_msg_1_}${vcs_info_msg_0_}%F{reset}\n $ '
-
-zstyle ':vcs_info:*' check-for-changes true
-+vi-git() {
-    if (( $#BUFFER == 0 )); then
-        git diff --quiet --ignore-submodules HEAD &>/dev/null
-        [[ $? == 0 ]] && hook_com[staged]=''
+precmd() {
+    vcs_info
+    if [ -d .git ] || git rev-parse --is-inside-work-tree 2>/dev/null | grep -q 'true'; then
+        if git diff-index --quiet HEAD --; then
+            # No changes
+            zstyle ':vcs_info:git:*' formats '%F{white}(%F{cyan}%b%F{white})%F{reset}'
+        else
+            # Changes
+            zstyle ':vcs_info:git:*' formats '%F{white}(%F{cyan}%b %F{reset}|%F{red}✗%F{white})%F{reset}'
+        fi
+    else
+        zstyle ':vcs_info:*' formats ''
     fi
 }
-zstyle -e ':vcs_info:git+set-message:*' hooks 'reply=(vi-git)'
+zstyle ':vcs_info:*' enable git
+PROMPT=$'\n%F{yellow}%~ ${vcs_info_msg_0_}${vcs_info_msg_1_}%F{reset}\n $ '
+
