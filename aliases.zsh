@@ -66,5 +66,7 @@ alias python="python3"
 alias lora="~/Projects/gpt4all/chat/gpt4all-lora-quantized-linux-x86  -m ~/Projects/gpt4all/chat/gpt4all-lora-unfiltered-quantized.bin"
 alias server="ruby -rwebrick -e 'port = ARGV[0] || 8000; WEBrick::HTTPServer.new(:Port => port.to_i, :DocumentRoot => Dir.pwd).start' --"
 
-alias gpt3="http --body 'https://oai.toolbomber.com/gpt3'"
-alias gpt4="http --body 'https://oai.toolbomber.com/gpt4'"
+alias gpt3-post="https https://oai.toolbomber.com/gpt3"
+alias gpt4-post="https https://oai.toolbomber.com/gpt4"
+
+alias pp="xargs -0 echo -e"
