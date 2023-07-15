@@ -19,7 +19,7 @@ vim.o.hlsearch = true
 vim.o.ignorecase = true
 vim.o.backup = false
 vim.o.writebackup = false
-vim.o.spell = true
+-- vim.o.spell = true
 vim.o.spelllang = "en_gb"
 
 vim.api.nvim_set_keymap('n', 'gn', ':%s///gn<cr>', {noremap = true, silent = true})
