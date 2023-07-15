@@ -114,7 +114,7 @@ command! W w
 
 colorscheme Tomorrow-Night-Bright
 
-autocmd BufWritePre,InsertLeave *.js,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.md,*.html silent! Neoformat
+autocmd BufWritePre,InsertLeave *.js,*.mjs,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.md,*.html silent! Neoformat
 
 au BufRead,BufNewFile *.md setlocal textwidth=80
 
