@@ -1,0 +1,17 @@
+snippet tsconfig "for simple html" b
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "es2020",
+    "outDir": "./public/js",
+    "rootDir": "./ts",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["ts/**/*.ts"],
+  "exclude": ["node_modules", "public/js/**/*.js"]
+}
+endsnippet
