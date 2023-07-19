@@ -33,6 +33,7 @@ alias gco="git checkout"
 
 alias grep="grep -i --extended-regex "
 alias h="http --follow"
+alias hb="http --body --follow"
 alias l="ls -Gurp"
 alias ll="ls -lGurp"
 alias lll="ls -laGurp"
