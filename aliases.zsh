@@ -71,4 +71,4 @@ alias gpt3-post="https https://oai.toolbomber.com/gpt3"
 alias gpt4-post="https https://oai.toolbomber.com/gpt4"
 
 alias pp="xargs -0 echo -e"
-alias gallery="npx gallery-server --folder ."
+alias gallery="npx gallery-server --no-footer -p 2323 -t 2323 --folder ."
