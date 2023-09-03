@@ -6,6 +6,7 @@ autoload -Uz compinit && compinit
 export HOST_IP="$(ip route |awk '/^default/{print $3}')"
 
 # >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/media/whiterabbit/68927B1F927AF0C4/Symlinks/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -17,3 +18,5 @@ else
     fi
 fi
 unset __conda_setup
+# <<< conda initialize <<<
+
