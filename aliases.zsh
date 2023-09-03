@@ -33,12 +33,15 @@ alias gco="git checkout"
 
 alias grep="grep -i --extended-regex "
 alias h="http --follow"
+alias hb="http --body --follow"
 alias l="ls -Gurp"
 alias ll="ls -lGurp"
 alias lll="ls -laGurp"
 
 alias np='unshare -rn nvim --clean -n -c "set nobackup noswapfile noundofile"'
-alias nn="nvim"
+alias np='unshare -rn nvim --clean -n -c "set nobackup noswapfile noundofile"'
+alias nn="unshare -rn nvim"
+alias ncode="nvim"
 
 alias r="ruby"
 alias rr="rerun -c ruby"
@@ -70,3 +73,4 @@ alias gpt3-post="https https://oai.toolbomber.com/gpt3"
 alias gpt4-post="https https://oai.toolbomber.com/gpt4"
 
 alias pp="xargs -0 echo -e"
+alias gallery="npx gallery-server --no-footer -p 2323 -t 2323 --folder ."

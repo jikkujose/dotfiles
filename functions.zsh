@@ -13,3 +13,7 @@ gpt3() {
 gpt4() {
   https --body "https://oai.toolbomber.com/gpt4" prompt="$*" | xargs -0 echo -e
 }
+
+rl() {
+  ruby -ne "puts \$_.$1"
+}

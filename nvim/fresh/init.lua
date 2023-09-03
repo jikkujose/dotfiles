@@ -19,7 +19,7 @@ vim.o.hlsearch = true
 vim.o.ignorecase = true
 vim.o.backup = false
 vim.o.writebackup = false
-vim.o.spell = true
+-- vim.o.spell = true
 vim.o.spelllang = "en_gb"
 
 vim.api.nvim_set_keymap('n', 'gn', ':%s///gn<cr>', {noremap = true, silent = true})
@@ -107,6 +107,7 @@ vim.call('plug#begin', '~/.fresh/plugged')
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'sbdchd/neoformat'
   Plug('neoclide/coc.nvim', {['branch'] = 'release'})
+  -- Plug('Exafunction/codeium.vim', {['branch'] = 'main' })
 vim.call('plug#end')
 
 vim.cmd[[
@@ -114,7 +115,7 @@ command! W w
 
 colorscheme Tomorrow-Night-Bright
 
-autocmd BufWritePre,InsertLeave *.js,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.md,*.html silent! Neoformat
+autocmd BufWritePre,InsertLeave *.js,*.mjs,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.md,*.html silent! Neoformat
 
 au BufRead,BufNewFile *.md setlocal textwidth=80
 

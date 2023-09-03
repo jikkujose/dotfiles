@@ -1,30 +1,28 @@
 snippet manifest "PWA manifest" b
 {
-  "name": "My Progressive Web App",
-  "short_name": "MyPWA",
-  "description": "An example of a Progressive Web App",
+  "name": "TODO",
+  "version": "0.1",
+  "manifest_version": 2,
+  "short_name": "TODO",
+  "description": "TODO",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#28282e",
+  "theme_color": "#28282e",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/images/icons-192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "/images/icons-512.png",
+      "src": "https://i.imgur.com/dURj31a.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "scope": "/",
-  "serviceworker": {
-    "src": "sw.js",
-    "scope": "/",
-    "update_via_cache": "none"
-  }
+  "scope": "/"
+}
+endsnippet
+
+snippet vercel "vercel.json" b
+{
+  "devCommand": "tsc --watch"
 }
 endsnippet
