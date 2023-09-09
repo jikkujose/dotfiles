@@ -1,3 +1,22 @@
+snippet vercel_handler "Vercel Ruby Handler" b
+require "uri"
+
+Handler = Proc.new do |request, response|
+  text = request.query["text"] || "Hello World"
+  decoded_text = URI.decode_www_form_component(text)
+
+  response.status = 200
+  response["Content-Type"] = "text/text; charset=utf-8"
+
+  response["Access-Control-Allow-Origin"] = "*"
+  response["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+  response["Access-Control-Allow-Headers"] = "Content-Type"
+
+  response.body = "Hello #{text}"
+end
+endsnippet
+
+
 snippet source "Source location for Ruby Gems" b
 source 'https://rubygems.org'
 
