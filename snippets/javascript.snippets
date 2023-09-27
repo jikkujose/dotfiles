@@ -1,7 +1,24 @@
+snippet alpine_store_init "Alpine Store Init" b
+document.addEventListener("alpine:init", () => {
+  Alpine.store("app", {})
+})
+endsnippet
+
 snippet vercel_api_hanlder "Vercel API handler" b
 export default function handler(req, res) {
-  const name = req.query.name || "World"
-  res.status(200).json({ text: name })
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+  // Handle preflight requests (OPTIONS method)
+  if (req.method === 'OPTIONS') {
+    res.status(204).end();
+    return;
+  }
+
+  res.status(200).json({ status: "CORS OKAY"});
 }
 endsnippet
 
