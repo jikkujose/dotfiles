@@ -1,6 +1,29 @@
+snippet animation "StoryMotion Animation" b
+document.querySelector("#sb-video-player").innerHTML = \`
+      <div id="scene" class="relative bg-yellow-300 w-full h-full c">
+        <div class="bg-white w-48 h-48 rounded-lg"></div>
+      </div>
+    \`
+const timeline = anime
+  .timeline({
+    autoplay: false,
+  })
+  .add({
+    targets: "#scene div",
+    rotate: "1turn",
+    easing: "easeInQuad",
+    duration: 2000,
+  })
+endsnippet
+
+
 snippet alpine_store_init "Alpine Store Init" b
 document.addEventListener("alpine:init", () => {
-  Alpine.store("app", {})
+  Alpine.store("global", {
+    specs: ["display_size"],
+  })
+
+  window.$S = Alpine.store("global")
 })
 endsnippet
 
