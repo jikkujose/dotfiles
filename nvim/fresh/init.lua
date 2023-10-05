@@ -133,6 +133,7 @@ inoremap <silent><expr> <TAB>
 let g:coc_snippet_next = '<tab>'
 
 autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+nnoremap <leader>x :%!tidy -xml -q --show-errors 0 --show-warnings 0 --indent-attributes 1<CR>
 
 highlight CursorLineNr term=bold cterm=bold ctermfg=012 gui=bold
 ]]
