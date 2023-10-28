@@ -18,13 +18,16 @@ endsnippet
 
 
 snippet alpine_store_init "Alpine Store Init" b
-document.addEventListener("alpine:init", () => {
-  Alpine.store("global", {
-    specs: ["display_size"],
-  })
+import Alpine from "https://cdn.skypack.dev/alpinejs@3.10.2"
 
-  window.$S = Alpine.store("global")
+Alpine.store("app", {
+  message: "Hola!",
+  handleClick() {
+    this.message = "Rapid Ready!"
+  },
 })
+
+Alpine.start()
 endsnippet
 
 snippet vercel_api_hanlder "Vercel API handler" b

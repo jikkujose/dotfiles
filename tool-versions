@@ -3,3 +3,4 @@ ruby 3.0.0
 python 3.11.0
 rust 1.70.0
 deno 1.35.1
+golang 1.21.3

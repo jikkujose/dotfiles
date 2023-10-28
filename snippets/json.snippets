@@ -1,23 +1,54 @@
 snippet manifest "PWA manifest" b
 {
-  "name": "TODO",
-  "version": "0.1",
-  "manifest_version": 2,
   "short_name": "TODO",
-  "description": "TODO",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#28282e",
-  "theme_color": "#28282e",
-  "orientation": "portrait",
+  "name": "TODO",
   "icons": [
     {
-      "src": "./assets/logo.png",
+      "src": "/images/icons-vector.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/images/icons-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/icons-512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "scope": "/"
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#3367D6",
+  "description": "TODO",
+  "shortcuts": [
+    {
+      "name": "TODO",
+      "short_name": "TODO",
+      "description": "TODO",
+      "url": "/TODO?source=pwa",
+      "icons": [{ "src": "/images/TODO.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/TODO.png",
+      "type": "image/png",
+      "sizes": "540x720",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/images/TODO.jpg",
+      "type": "image/jpg",
+      "sizes": "720x540",
+      "form_factor": "wide"
+    }
+  ]
 }
 endsnippet
 
