@@ -112,10 +112,11 @@ vim.call('plug#end')
 
 vim.g.neoformat_javascript_prettier = {
   exe = "prettier",
-  args = {"--config", vim.fn.expand("~/.prettierrc"), "--write", "%"},
-  replace = 1,
-  stdin = 0
+  args = {"--config", vim.fn.expand("~/.prettierrc"), '--stdin-filepath', '"%:p"'},
+  stdin = 1,
+  try_node_exe = 1
 }
+
 
 vim.g.neoformat_enabled_javascript = {"prettier"}
 
