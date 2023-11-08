@@ -110,6 +110,16 @@ vim.call('plug#begin', '~/.fresh/plugged')
   -- Plug('Exafunction/codeium.vim', {['branch'] = 'main' })
 vim.call('plug#end')
 
+vim.g.neoformat_javascript_prettier = {
+  exe = "prettier",
+  args = {"--config", vim.fn.expand("~/.prettierrc"), "--write", "%"},
+  replace = 1,
+  stdin = 0
+}
+
+vim.g.neoformat_enabled_javascript = {"prettier"}
+
+
 vim.cmd[[
 command! W w
 
