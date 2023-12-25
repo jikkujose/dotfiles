@@ -27,11 +27,14 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   source ~/dotfiles/zshrc/linux.zsh
   source ~/dotfiles/aliases/linux.zsh
   source ~/dotfiles/functions/linux.zsh
+
+  if [[ -e ~/.wsl ]]; then
+    source ~/dotfiles/aliases/wsl.zsh
+  fi
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   source ~/dotfiles/aliases/mac.zsh
   source ~/dotfiles/zshrc/mac.zsh
   source ~/dotfiles/functions/mac.zsh
-else
 fi
 
 export NODE_PATH=$(npm -g root)
