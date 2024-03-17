@@ -23,6 +23,19 @@ bindkey -v
 
 clear
 
+export NODE_PATH=$(npm -g root)
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="$HOME/miniconda3/bin:$PATH"
+export PATH="$HOME/.asdf/shims:$PATH"
+
+eval "$(starship init zsh)"
+
+
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   source ~/dotfiles/zshrc/linux.zsh
   source ~/dotfiles/aliases/linux.zsh
@@ -36,16 +49,3 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   source ~/dotfiles/zshrc/mac.zsh
   source ~/dotfiles/functions/mac.zsh
 fi
-
-export NODE_PATH=$(npm -g root)
-
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-eval "$(starship init zsh)"
-
-source ~/conda.zsh
