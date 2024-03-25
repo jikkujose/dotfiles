@@ -4,3 +4,4 @@ python 3.11.0
 rust 1.70.0
 deno 1.35.1
 golang 1.21.3
+bun 1.0.35
