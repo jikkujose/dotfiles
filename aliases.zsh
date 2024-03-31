@@ -56,7 +56,7 @@ alias ta="tmux attach"
 alias tt="tree -N -I 'node_modules|dist|_site'"
 alias xx="logout"
 alias xxx="logout"
-alias cat="batcat"
+alias cat="batcat -p"
 alias nm_weight="find . -name 'node_modules' -type d -prune -print0 | xargs -0 du -chs"
 alias nm_delete="find . -name 'node_modules' -type d -prune -print0 | xargs -0 rm -rf"
 
