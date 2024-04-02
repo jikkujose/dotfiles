@@ -11,3 +11,4 @@ RUBYOPT=""
 
 OLLAMA_HOST="0.0.0.0"
 OLLAMA_BASE_URL="http://localhost:11434"
+DISPLAY=:1
