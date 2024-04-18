@@ -19,3 +19,11 @@ jina() {
     local url="https://r.jina.ai/$1"
     curl -s "$url"
 }
+
+q () {
+  jina "$1" | llm -p quick | tabularize
+}
+
+qq () {
+  xclip -o -selection clipboard | llm -p quick | tabularize
+}
