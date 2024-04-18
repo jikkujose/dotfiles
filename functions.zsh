@@ -9,3 +9,13 @@ function sss() {
 rl() {
   ruby -ne "puts \$_.$1"
 }
+
+jina() {
+    if [ -z "$1" ]; then
+        echo "Usage: l2t <URL_TO_EXTRACT>"
+        return 1
+    fi
+
+    local url="https://r.jina.ai/$1"
+    curl -s "$url"
+}
