@@ -62,7 +62,6 @@ alias nm_delete="find . -name 'node_modules' -type d -prune -print0 | xargs -0 r
 
 alias tb="nc termbin.com 9999"
 alias city="curl https://am.i.mullvad.net/city"
-alias q="qrencode -t ASCII | sed \"s/#/█/g\""
 alias yy="yt-dlp -f 22"
 alias br="bun run"
 alias python="python3"
