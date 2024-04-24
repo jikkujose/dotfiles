@@ -21,9 +21,9 @@ jina() {
 }
 
 q () {
-  jina "$1" | llm -i li -p quick | tabularize
+  jina "$1" | llm -i li -p json | tabularize
 }
 
 qq () {
-  xclip -o -selection clipboard | llm -i li -p quick | tabularize
+  xclip -o -selection clipboard | llm -i li -p json | tabularize
 }
