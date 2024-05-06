@@ -1,3 +1,13 @@
+snippet runner "Add Runner" b
+class Runner
+  def self.run!
+  end
+end
+
+Runner.run! if __FILE__ == $PROGRAM_NAME
+endsnippet
+
+
 snippet vercel_handler "Vercel Ruby Handler" b
 require "uri"
 
