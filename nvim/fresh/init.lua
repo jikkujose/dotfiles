@@ -107,7 +107,6 @@ vim.call('plug#begin', '~/.fresh/plugged')
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'sbdchd/neoformat'
   Plug('neoclide/coc.nvim', {['branch'] = 'release'})
-  -- Plug('Exafunction/codeium.vim', {['branch'] = 'main' })
 vim.call('plug#end')
 
 vim.g.neoformat_javascript_prettier = {
