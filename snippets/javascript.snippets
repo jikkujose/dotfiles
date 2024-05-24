@@ -1,12 +1,6 @@
-snippet pv-import "PV Component Import" b
-import { ${1:Component} } from "./components/${1}.js"
-endsnippet
-
 snippet pv-component "PV Component" b
-export const Item = ({
-  handleClick = () => console.log("Item Click!"),
-} = {}) => {
-  const label = "Hello"
+export default ({ handleClick = () => console.log("Item Click!") } = {}) => {
+  const label = "Item"
 
   const $template = /* HTML */ \`
     <div class="">
