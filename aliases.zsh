@@ -36,7 +36,7 @@ alias h="http --follow"
 alias hb="http --body --follow"
 alias l="ls -Gurp"
 alias ll="ls -lGurp"
-alias lll="ls -laGurp"
+alias lll="ls -laGurph"
 
 alias np='unshare -rn nvim --clean -n -c "set nobackup noswapfile noundofile"'
 alias np='unshare -rn nvim --clean -n -c "set nobackup noswapfile noundofile"'
