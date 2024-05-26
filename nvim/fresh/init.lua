@@ -45,6 +45,10 @@ vim.g.python_host_prog = '/usr/bin/python2'
 vim.g.python2_host_prog = '/usr/bin/python'
 vim.g.python3_host_prog = home .. "/.asdf/shims/python3"
 
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "*.gemspec",
+  command = "set filetype=ruby",
+})
 
 vim.g.ctrlp_user_command = {
   '.git',
@@ -125,7 +129,7 @@ command! W w
 
 colorscheme Tomorrow-Night-Bright
 
-autocmd BufWritePre,InsertLeave *.js,*.mjs,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.md,*.html silent! Neoformat
+autocmd BufWritePre,InsertLeave *.js,*.mjs,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.md,*.html,.gemspec silent! Neoformat
 
 au BufRead,BufNewFile *.md setlocal textwidth=80
 
