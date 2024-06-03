@@ -1,6 +1,11 @@
 snippet pv-component "PV Component" b
-export default ({ handleClick = () => console.log("Item Click!") } = {}) => {
-  const label = "Item"
+export const args = {
+  label: "Petite Vue Rocks!",
+  handleClick: () => console.log("Click!"),
+}
+
+const Simplest = props => {
+  const { label = args.label, handleClick = args.handleClick } = props || {}
 
   const $template = /* HTML */ \`
     <div class="">
@@ -12,8 +17,11 @@ export default ({ handleClick = () => console.log("Item Click!") } = {}) => {
       </div>
     </div>
   \`
+
   return { $template, label, handleClick }
 }
+
+export default Simplest
 endsnippet
 
 
