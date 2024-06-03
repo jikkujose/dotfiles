@@ -62,7 +62,7 @@ alias nm_delete="find . -name 'node_modules' -type d -prune -print0 | xargs -0 r
 
 alias tb="nc termbin.com 9999"
 alias city="curl https://am.i.mullvad.net/city"
-alias yy="yt-dlp -f 22"
+alias yy="yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'"
 alias br="bun run"
 alias python="python3"
 alias lora="~/Projects/gpt4all/chat/gpt4all-lora-quantized-linux-x86  -m ~/Projects/gpt4all/chat/gpt4all-lora-unfiltered-quantized.bin"
