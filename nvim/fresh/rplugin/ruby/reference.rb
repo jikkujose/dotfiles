@@ -1,3 +1,11 @@
+# Instructions
+#
+# SetLine Command | :SetLine <STRING>
+#
+# Sum function | :echo Sum(2, 3)
+#
+# To change anything, make the change and explictly call `:UpdateRemotePlugins`
+
 Neovim.plugin do |plug|
   plug.command(:SetLine, nargs: 1) do |nvim, str|
     nvim.current.line = str
@@ -8,6 +16,6 @@ Neovim.plugin do |plug|
   end
 
   plug.autocmd(:BufEnter, pattern: "*.rb") do |nvim|
-    nvim.command("echom 'Ruby file, eh?'")
+    nvim.command("echom 'hello from Ruby plugins!'")
   end
 end
