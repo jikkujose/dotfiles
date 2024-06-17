@@ -4,7 +4,7 @@ export const args = {
   handleClick: () => console.log("Click!"),
 }
 
-const Simplest = props => {
+const Component = props => {
   const { label = args.label, handleClick = args.handleClick } = props || {}
 
   const $template = /* HTML */ \`
@@ -21,7 +21,7 @@ const Simplest = props => {
   return { $template, label, handleClick }
 }
 
-export default Simplest
+export default Component
 endsnippet
 
 

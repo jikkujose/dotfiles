@@ -1,6 +1,25 @@
 snippet runner "Add Runner" b
 class Runner
+  def self.pry
+    require "pry"
+    $VERBOSE = nil
+
+    Pry.commands.block_command "reset", "Reset" do
+      load __FILE__
+    end
+
+    binding.pry(quiet: true)
+  end
+
+  def self.init
+  end
+
   def self.run!
+    if DEBUG_MODE
+      pry
+    else
+      init
+    end
   end
 end
 
