@@ -24,7 +24,7 @@ bindkey -v
 
 clear
 
-export NODE_PATH=$(npm -g root)
+# export NODE_PATH=$(npm -g root)
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
