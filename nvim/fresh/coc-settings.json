@@ -1,3 +1,4 @@
 {
+  "tsserver.importModuleSpecifierEnding": "js",
   "snippets.ultisnips.pythonPrompt": false
-}No files specified
+}
