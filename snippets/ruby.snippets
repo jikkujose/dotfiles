@@ -1,5 +1,7 @@
 snippet runner "Add Runner" b
 class Runner
+  DEBUG_MODE = false
+
   def self.pry
     require "pry"
     $VERBOSE = nil
