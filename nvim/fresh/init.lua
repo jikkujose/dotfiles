@@ -119,9 +119,15 @@ vim.g.neoformat_javascript_prettier = {
   stdin = 1,
   try_node_exe = 1
 }
-
-
 vim.g.neoformat_enabled_javascript = {"prettier"}
+
+vim.g.neoformat_solidity_prettier = {
+  exe = "prettier",
+  args = {"--config", vim.fn.expand("~/.prettierrc"), "--plugin", "$(npm root -g)/prettier-plugin-solidity/src/index.js", '--stdin-filepath', '"%:p"'},
+  stdin = 1,
+  try_node_exe = 1
+}
+vim.g.neoformat_enabled_solidity = {"prettier"}
 
 
 vim.cmd[[
@@ -129,7 +135,7 @@ command! W w
 
 colorscheme Tomorrow-Night-Bright
 
-autocmd BufWritePre,InsertLeave *.js,*.mjs,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.py,*.md,*.html,.gemspec silent! Neoformat
+autocmd BufWritePre,InsertLeave *.js,*.mjs,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.py,*.md,*.html,.gemspec,*.sol silent! Neoformat
 
 au BufRead,BufNewFile *.md setlocal textwidth=80
 
