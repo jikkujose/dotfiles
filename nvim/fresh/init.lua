@@ -108,7 +108,7 @@ vim.call('plug#begin', '~/.fresh/plugged')
   Plug 'pangloss/vim-javascript'
   Plug 'tpope/vim-markdown'
   Plug 'nvim-lua/plenary.nvim'
-  Plug 'nvim-treesitter/nvim-treesitter'
+  Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
   Plug 'sbdchd/neoformat'
   Plug('neoclide/coc.nvim', {['branch'] = 'release'})
 vim.call('plug#end')
