@@ -14,6 +14,12 @@ class Runner
   end
 
   def self.init
+    if $stdin.tty?
+      arguments = ARGV
+      p arguments
+    else
+			p $stdin.read
+    end
   end
 
   def self.run!
