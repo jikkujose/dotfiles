@@ -87,10 +87,6 @@ end
 
 vim.api.nvim_set_keymap('n', 'gmv', ':lua RenameFile()<cr>', {noremap = true, silent = true})
 
-if vim.fn.executable('volta') == 1 then
-  vim.g.node_host_prog = vim.fn.system("volta which neovim-node-host"):gsub("^%s*(.-)%s*$", "%1")
-end
-
 local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.fresh/plugged')
   Plug 'dstein64/vim-startuptime'
