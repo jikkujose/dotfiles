@@ -1,0 +1,7 @@
+[window]
+decorations = "none"
+startup_mode = "Fullscreen"
+
+[window.dimensions]
+columns = 120
+lines = 30
