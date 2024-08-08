@@ -24,6 +24,7 @@ Refresh of my dotfiles.
 - [ ] Optimize performance
 - [ ] Mimic mac like fonts in Linux
 - [ ] Teak tmux session label length
+- [ ] Fix Ruby formatting using prettier
 
 ### Ubuntu
 
