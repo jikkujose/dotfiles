@@ -39,8 +39,7 @@ alias ll="ls -lGurp"
 alias lll="ls -laGurph"
 
 alias np='unshare -rn nvim --clean -n -c "set nobackup noswapfile noundofile"'
-alias np='unshare -rn nvim --clean -n -c "set nobackup noswapfile noundofile"'
-alias nn="unshare -rn nvim"
+alias nn="NVIM_APPNAME=nvimx unshare -rn nvim"
 alias ncode="nvim"
 
 alias r="ruby"
