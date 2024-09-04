@@ -104,10 +104,18 @@ vim.call('plug#begin', '~/.fresh/plugged')
   Plug 'pangloss/vim-javascript'
   Plug 'tpope/vim-markdown'
   Plug 'nvim-lua/plenary.nvim'
+  Plug 'stevearc/dressing.nvim'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'MunifTanjim/nui.nvim'
   Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
   Plug 'sbdchd/neoformat'
   Plug('neoclide/coc.nvim', {['branch'] = 'release'})
+  Plug('yetone/avante.nvim', {['branch'] = 'main', ['do'] = function() require('avante.api').build() end})
 vim.call('plug#end')
+
+require('avante').setup({
+  -- Your Avante configuration options here
+})
 
 vim.g.neoformat_javascript_prettier = {
   exe = "prettier",
@@ -161,3 +169,5 @@ if vim.fn.has('mac') == 1 then
 else
   vim.cmd('source ' .. path .. '/init/linux.vim')
 end
+
+require('avante_lib').load()
