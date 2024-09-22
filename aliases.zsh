@@ -68,6 +68,7 @@ alias br="bun run"
 alias python="python3"
 alias lora="~/Projects/gpt4all/chat/gpt4all-lora-quantized-linux-x86  -m ~/Projects/gpt4all/chat/gpt4all-lora-unfiltered-quantized.bin"
 alias server="ruby -rwebrick -e 'port = ARGV[0] || 8000; WEBrick::HTTPServer.new(:Port => port.to_i, :DocumentRoot => Dir.pwd).start' --"
+alias docker="podman"
 
 alias pp="xargs -0 echo -e"
 alias gallery="npx gallery-server --no-footer -p 2323 -t 2323 --folder ."
