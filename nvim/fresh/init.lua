@@ -117,6 +117,7 @@ require('avante').setup({
   -- Your Avante configuration options here
 })
 
+-- Neoformat configuration
 vim.g.neoformat_javascript_prettier = {
   exe = "prettier",
   args = {"--config", vim.fn.expand("~/.prettierrc"), '--stdin-filepath', '"%:p"'},
@@ -133,13 +134,17 @@ vim.g.neoformat_solidity_prettier = {
 }
 vim.g.neoformat_enabled_solidity = {"prettier"}
 
+-- ERB formatting configuration
+vim.g.neoformat_enabled_eruby = { "erbformat", "htmlbeautifier" }
+vim.g.neoformat_eruby_erbformat = { exe = "erb-format", args = { "--stdin" }, stdin = 1 }
+vim.g.neoformat_eruby_htmlbeautifier = { exe = "htmlbeautifier", args = { "--keep-blank-lines", '1' }, stdin = 1 }
 
 vim.cmd[[
 command! W w
 
 colorscheme Tomorrow-Night-Bright
 
-autocmd BufWritePre,InsertLeave *.js,*.mjs,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.py,*.md,*.html,.gemspec,*.sol silent! Neoformat
+autocmd BufWritePre,InsertLeave *.js,*.mjs,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.py,*.md,*.html,.gemspec,*.sol,*.erb silent! Neoformat
 
 au BufRead,BufNewFile *.md setlocal textwidth=80
 
