@@ -50,6 +50,12 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
   command = "set filetype=ruby",
 })
 
+vim.filetype.add({
+    extension = {
+        riot = 'html',
+    },
+})
+
 vim.g.ctrlp_user_command = {
   '.git',
   'cd %s && git ls-files . -co --exclude-standard',
