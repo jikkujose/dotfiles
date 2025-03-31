@@ -36,3 +36,8 @@ function expose() {
   local port=$1
   ssh -R 80:localhost:${port} nokey@localhost.run 2>&1 | awk '/https:\/\/[a-zA-Z0-9]+\.lhr\.life/ {print $NF; fflush(); exit}'
 }
+
+jq-analyze() {
+  local threshold=${1:-50}
+  jq "walk(if type == \"string\" and length > $threshold then \"[content truncated]\" else . end)"
+}
