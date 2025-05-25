@@ -52,4 +52,4 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   source ~/dotfiles/functions/mac.zsh
 fi
 
-conda deactivate
+# conda deactivate
