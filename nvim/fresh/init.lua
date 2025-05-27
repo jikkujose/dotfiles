@@ -19,12 +19,10 @@ vim.o.hlsearch = true
 vim.o.ignorecase = true
 vim.o.backup = false
 vim.o.writebackup = false
--- vim.o.spell = true
 vim.o.spelllang = "en_gb"
 
 vim.api.nvim_set_keymap('n', 'gn', ':%s///gn<cr>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', 'gr', ':%s///g<cr>', {noremap = true, silent = true})
-
 vim.api.nvim_set_keymap('n', '<leader><leader>', '<C-^>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', 'U', '<c-r>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('', '<leader>c', ':TComment<CR>', {noremap = true, silent = true})
@@ -50,10 +48,15 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
   command = "set filetype=ruby",
 })
 
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "*.md",
+  command = "set filetype=markdown",
+})
+
 vim.filetype.add({
-    extension = {
-        riot = 'html',
-    },
+  extension = {
+    riot = 'html',
+  },
 })
 
 vim.g.ctrlp_user_command = {
@@ -61,23 +64,23 @@ vim.g.ctrlp_user_command = {
   'cd %s && git ls-files . -co --exclude-standard',
   'find %s -type f'
 }
-
 vim.g.ctrlp_working_path_mode = '0'
 
-vim.g.vimwiki_list = {{syntax = 'markdown', ext = '.md'}}
+-- vim.g.vimwiki_list = {{syntax = 'markdown', ext = '.md'}}
+-- vim.g.vimwiki_key_mappings = {
+--   all_maps = 0,
+--   links = 1,
+--   global = 0,
+--   headers = 0,
+--   text_objs = 0,
+--   table_format = 0,
+--   table_mappings = 0,
+--   lists = 0,
+--   html = 0,
+--   mouse = 0
+-- }
 
-vim.g.vimwiki_key_mappings = {
-  all_maps = 1,
-  global = 1,
-  headers = 1,
-  text_objs = 1,
-  table_format = 1,
-  table_mappings = 0,
-  lists = 1,
-  links = 1,
-  html = 1,
-  mouse = 0
-}
+vim.g.markdown_fenced_languages = {'html', 'python', 'javascript', 'bash=sh', 'ruby', 'sql'}
 
 vim.g.loaded_perl_provider = 0
 
@@ -96,7 +99,7 @@ vim.api.nvim_set_keymap('n', 'gmv', ':lua RenameFile()<cr>', {noremap = true, si
 local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.fresh/plugged')
   Plug 'dstein64/vim-startuptime'
-  Plug 'vimwiki/vimwiki'
+  -- Plug 'vimwiki/vimwiki'
   Plug 'JikkuJose/lightline.vim'
   Plug 'kien/ctrlp.vim'
   Plug 'tomtom/tcomment_vim'
@@ -111,21 +114,14 @@ vim.call('plug#begin', '~/.fresh/plugged')
   Plug 'tpope/vim-markdown'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'stevearc/dressing.nvim'
-  Plug 'nvim-lua/plenary.nvim'
   Plug 'MunifTanjim/nui.nvim'
   Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
   Plug 'sbdchd/neoformat'
   Plug('neoclide/coc.nvim', {['branch'] = 'release'})
-  -- Plug('yetone/avante.nvim', {['branch'] = 'main', ['do'] = function() require('avante.api').build() end})
 vim.call('plug#end')
-
--- require('avante').setup({
---   -- Your Avante configuration options here
--- })
 
 require('plugins.xml_tag_wrapper')
 
--- Neoformat configuration
 vim.g.neoformat_javascript_prettier = {
   exe = "prettier",
   args = {"--config", vim.fn.expand("~/.prettierrc"), '--stdin-filepath', '"%:p"'},
@@ -142,18 +138,14 @@ vim.g.neoformat_solidity_prettier = {
 }
 vim.g.neoformat_enabled_solidity = {"prettier"}
 
--- ERB formatting configuration
 vim.g.neoformat_enabled_eruby = { "erbformat", "htmlbeautifier" }
 vim.g.neoformat_eruby_erbformat = { exe = "erb-format", args = { "--stdin" }, stdin = 1 }
 vim.g.neoformat_eruby_htmlbeautifier = { exe = "htmlbeautifier", args = { "--keep-blank-lines", '1' }, stdin = 1 }
 
 vim.cmd[[
 command! W w
-
 colorscheme Tomorrow-Night-Bright
-
-autocmd BufWritePre,InsertLeave *.js,*.mjs,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.py,*.md,*.html,.gemspec,*.sol,*.erb silent! Neoformat
-
+autocmd BufWritePre,InsertLeave *.js,*.mjs,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.py,*.md,*.html,*.gemspec,*.sol,*.erb silent! Neoformat
 au BufRead,BufNewFile *.md setlocal textwidth=80
 
 function! s:check_back_space() abort
@@ -168,19 +160,14 @@ inoremap <silent><expr> <TAB>
       \ coc#refresh()
 
 let g:coc_snippet_next = '<tab>'
-
 autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 nnoremap <leader>x :%!tidy -xml -q --show-errors 0 --show-warnings 0 --indent-attributes 1<CR>
-
 highlight CursorLineNr term=bold cterm=bold ctermfg=012 gui=bold
 ]]
 
 local path = vim.fn.stdpath('config')
-
 if vim.fn.has('mac') == 1 then
   vim.cmd('source ' .. path .. '/init/mac.vim')
 else
   vim.cmd('source ' .. path .. '/init/linux.vim')
 end
-
--- require('avante_lib').load()
