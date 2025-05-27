@@ -116,12 +116,12 @@ vim.call('plug#begin', '~/.fresh/plugged')
   Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
   Plug 'sbdchd/neoformat'
   Plug('neoclide/coc.nvim', {['branch'] = 'release'})
-  Plug('yetone/avante.nvim', {['branch'] = 'main', ['do'] = function() require('avante.api').build() end})
+  -- Plug('yetone/avante.nvim', {['branch'] = 'main', ['do'] = function() require('avante.api').build() end})
 vim.call('plug#end')
 
-require('avante').setup({
-  -- Your Avante configuration options here
-})
+-- require('avante').setup({
+--   -- Your Avante configuration options here
+-- })
 
 require('plugins.xml_tag_wrapper')
 
@@ -183,4 +183,4 @@ else
   vim.cmd('source ' .. path .. '/init/linux.vim')
 end
 
-require('avante_lib').load()
+-- require('avante_lib').load()
