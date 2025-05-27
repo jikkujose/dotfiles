@@ -123,6 +123,8 @@ require('avante').setup({
   -- Your Avante configuration options here
 })
 
+require('plugins.xml_tag_wrapper')
+
 -- Neoformat configuration
 vim.g.neoformat_javascript_prettier = {
   exe = "prettier",
