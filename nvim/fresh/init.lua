@@ -130,6 +130,14 @@ vim.g.neoformat_javascript_prettier = {
 }
 vim.g.neoformat_enabled_javascript = {"prettier"}
 
+vim.g.neoformat_javascriptreact_prettier = {
+  exe = "prettier",
+  args = {"--config", vim.fn.expand("~/.prettierrc"), '--stdin-filepath', '"%:p"'},
+  stdin = 1,
+  try_node_exe = 1
+}
+vim.g.neoformat_enabled_javascriptreact = {"prettier"}
+
 vim.g.neoformat_solidity_prettier = {
   exe = "prettier",
   args = {"--config", vim.fn.expand("~/.prettierrc"), "--plugin", "$(npm root -g)/prettier-plugin-solidity/src/index.js", '--stdin-filepath', '"%:p"'},

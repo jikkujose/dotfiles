@@ -2,6 +2,13 @@ take() {
     mkdir -p "$@" && cd "$@"
 }
 
+kimi() {
+ANTHROPIC_BASE_URL="$MOONSHOT_BASE_URL"
+ANTHROPIC_AUTH_TOKEN="$MOONSHOT_API_KEY"
+
+claude $1
+}
+
 function sss() {
   surge . "https://$1.surge.sh"
 }

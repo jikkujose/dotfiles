@@ -53,3 +53,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # conda deactivate
+
+# vince
+export VINCE_INSTALL="$HOME/.vince"
+export PATH="$VINCE_INSTALL/bin:$PATH"
