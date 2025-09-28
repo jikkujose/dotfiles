@@ -1,7 +1,7 @@
-nodejs 22.11.0
-ruby 3.3.0
-python 3.11.0
-rust 1.80.1
-deno 1.35.1
-golang 1.21.3
-bun 1.2.18
+nodejs 24.8.0
+ruby 3.4.6
+python 3.13.7t
+rust 1.90.0
+golang 1.25.1
+bun 1.2.22
+swift 5.7.1
