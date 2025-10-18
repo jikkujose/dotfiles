@@ -57,3 +57,8 @@ fi
 # vince
 export VINCE_INSTALL="$HOME/.vince"
 export PATH="$VINCE_INSTALL/bin:$PATH"
+
+autoload -U compinit; compinit
+
+
+. "$HOME/.local/bin/env"

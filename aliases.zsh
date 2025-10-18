@@ -78,3 +78,4 @@ alias v="cvlc"
 alias unstage="git reset --"
 alias zed="~/.local/bin/zed"
 alias ff="cat ~/vimwiki/fast/2024.md"
+alias podman-container-ls='podman container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Ports}}\t{{.Created}}"'
