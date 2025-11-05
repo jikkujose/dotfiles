@@ -19,6 +19,11 @@ then
   source ~/.private.zsh
 fi
 
+if [ -f ~/claude-modes.zsh ]
+then
+  source ~/claude-modes.zsh
+fi
+
 set -o vi
 bindkey -v
 
