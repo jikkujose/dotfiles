@@ -19,6 +19,8 @@ then
   source ~/.private.zsh
 fi
 
+source-folder ~/.zshrc.d
+
 set -o vi
 bindkey -v
 

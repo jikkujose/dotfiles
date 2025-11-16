@@ -48,3 +48,8 @@ jq-analyze() {
   local threshold=${1:-50}
   jq "walk(if type == \"string\" and length > $threshold then \"[content truncated]\" else . end)"
 }
+
+source-folder() {
+  [[ -d "$1" ]] || return 0  # silent skip
+  for f in "$1"/*.zsh(N); do source "$f"; done
+}
