@@ -59,3 +59,8 @@ fi
 # vince
 export VINCE_INSTALL="$HOME/.vince"
 export PATH="$VINCE_INSTALL/bin:$PATH"
+
+if [ -f ~/claude-modes.zsh ]
+then
+  source ~/claude-modes.zsh
+fi
