@@ -27,6 +27,17 @@ c-zai() {
     claude "$@"
 }
 
+c-zai-dangerous() {
+    _claude_clean_env
+    echo "✓ Mode: Z.AI GLM 4.6"
+    ANTHROPIC_AUTH_TOKEN="$ZAI_API_KEY" \
+    ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic" \
+    ANTHROPIC_DEFAULT_HAIKU_MODEL="glm-4.5-air" \
+    ANTHROPIC_DEFAULT_SONNET_MODEL="glm-4.6" \
+    ANTHROPIC_DEFAULT_OPUS_MODEL="glm-4.6" \
+    claude "$@"
+}
+
 # MiniMax Mode (M2)
 c-minimax() {
     _claude_clean_env
