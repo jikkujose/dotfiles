@@ -15,6 +15,13 @@ _claude_clean_env() {
 
 # === Claude Mode Functions ===
 
+# Anthropic Official Mode
+c-anthropic() {
+    _claude_clean_env
+    echo "✓ Mode: Anthropic Official"
+    claude "$@"
+}
+
 # Z.AI Mode (GLM 4.6)
 c-zai() {
     _claude_clean_env
