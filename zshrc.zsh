@@ -67,3 +67,4 @@ autoload -U compinit; compinit
 
 
 . "$HOME/.local/bin/env"
+source ~/Projects/testman/sandboxes/kodeman/kodeman-function.zsh
