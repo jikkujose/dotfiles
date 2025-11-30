@@ -69,7 +69,7 @@ alias ys="yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=mp4]' -S vcodec:h264"
 alias br="bun run"
 alias python="python3"
 alias lora="~/Projects/gpt4all/chat/gpt4all-lora-quantized-linux-x86  -m ~/Projects/gpt4all/chat/gpt4all-lora-unfiltered-quantized.bin"
-alias server="ruby -rwebrick -e 'port = ARGV[0] || 8000; WEBrick::HTTPServer.new(:Port => port.to_i, :DocumentRoot => Dir.pwd).start' --"
+alias server='python3 -m http.server'
 alias docker="podman"
 
 alias pp="xargs -0 echo -e"
@@ -78,3 +78,4 @@ alias v="cvlc"
 alias unstage="git reset --"
 alias zed="~/.local/bin/zed"
 alias ff="cat ~/vimwiki/fast/2024.md"
+alias podman-container-ls='podman container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Ports}}\t{{.Created}}"'
