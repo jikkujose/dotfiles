@@ -64,7 +64,7 @@ alias nm_delete="find . -name 'node_modules' -type d -prune -print0 | xargs -0 r
 
 alias tb="nc termbin.com 9999"
 alias city="curl https://am.i.mullvad.net/city"
-alias yy="yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' -S vcodec:h264"
+alias yy="yt-dlp --recode-video mp4 --postprocessor-args 'ffmpeg:-c:v libx264 -crf 20 -preset fast -c:a aac -movflags +faststart'"
 alias ys="yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=mp4]' -S vcodec:h264"
 alias br="bun run"
 alias python="python3"
