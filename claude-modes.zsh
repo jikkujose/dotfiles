@@ -15,11 +15,18 @@ _claude_clean_env() {
 
 # === Claude Mode Functions ===
 
-# Anthropic Official Mode
-c-anthropic() {
+ccc() {
     _claude_clean_env
-    echo "✓ Mode: Anthropic Official"
+    echo "✓ Mode: Claude"
+    ANTHROPIC_AUTH_TOKEN="$ANTHROPIC_API_KEY_SB" \
     claude "$@"
+}
+
+ccc-dangerous() {
+    _claude_clean_env
+    echo "✓ Mode: Claude in dangerous mode"
+    ANTHROPIC_AUTH_TOKEN="$ANTHROPIC_API_KEY_SB" \
+    claude --allow-dangerously-skip-permissions --dangerously-skip-permissions "$@"
 }
 
 # Z.AI Mode (GLM 4.6)
@@ -42,7 +49,7 @@ c-zai-dangerous() {
     ANTHROPIC_DEFAULT_HAIKU_MODEL="glm-4.5-air" \
     ANTHROPIC_DEFAULT_SONNET_MODEL="glm-4.6" \
     ANTHROPIC_DEFAULT_OPUS_MODEL="glm-4.6" \
-    claude "$@"
+    claude --allow-dangerously-skip-permissions --dangerously-skip-permissions "$@"
 }
 
 # MiniMax Mode (M2)
