@@ -12,3 +12,5 @@ export PATH=/usr/local/cuda/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+
+alias unlock='sudo cryptsetup open /dev/vdb crypt_projects && sudo mount /dev/mapper/crypt_projects ~/Projects && echo \"🔓 Vault Unlocked\"'
