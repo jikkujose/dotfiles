@@ -31,8 +31,9 @@ kodeman() {
     echo "  kodeman ~/Projects/myapp                          # Use specific directory" >&2
     echo "  kodeman ~/Projects/myapp --audit                  # With auditing" >&2
     echo "  kodeman ~/Projects/myapp --map-ports 3000,9090    # With port mapping" >&2
-    echo "  kodeman ~/Projects/myapp --include-agents claude,gemini,aider  # Select agents" >&2
-    echo "  kodeman ~/Projects/myapp --exclude-agents amp,forge             # Exclude agents" >&2
+    echo "  kodeman ~/Projects/myapp --headless               # Skip VNC/audio (faster)" >&2
+    echo "  kodeman ~/Projects/myapp --include-agents claude  # Select agents" >&2
+    echo "  kodeman ~/Projects/myapp --include-agents none    # No agents (fastest)" >&2
     echo "" >&2
     echo "Run 'kodeman --help' for full documentation" >&2
     return 1
@@ -60,7 +61,8 @@ _kodeman() {
     '--persist:Preserve config across runs'
     '--audit:Enable syscall auditing'
     '--map-ports:Mirror ports (comma-separated)'
-    '--include-agents:Install only these agents (comma-separated)'
+    '--headless:Skip VNC/audio services (faster startup)'
+    '--include-agents:Install only these agents (none/all/comma-separated)'
     '--exclude-agents:Skip these agents (comma-separated)'
     '--help:Show help message'
   )

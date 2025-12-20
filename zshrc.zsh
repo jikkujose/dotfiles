@@ -13,6 +13,7 @@ source ~/dotfiles/variables.zsh
 source ~/dotfiles/aliases.zsh
 source ~/dotfiles/functions.zsh
 source ~/dotfiles/conda.zsh
+source ~/dotfiles/kodeman-function.zsh
 
 if [ -f ~/.private.zsh ]
 then

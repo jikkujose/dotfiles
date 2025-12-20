@@ -18,14 +18,12 @@ _claude_clean_env() {
 ccc() {
     _claude_clean_env
     echo "✓ Mode: Claude"
-    ANTHROPIC_AUTH_TOKEN="$ANTHROPIC_API_KEY_SB" \
     claude "$@"
 }
 
 ccc-dangerous() {
     _claude_clean_env
     echo "✓ Mode: Claude in dangerous mode"
-    ANTHROPIC_AUTH_TOKEN="$ANTHROPIC_API_KEY_SB" \
     claude --allow-dangerously-skip-permissions --dangerously-skip-permissions "$@"
 }
 
