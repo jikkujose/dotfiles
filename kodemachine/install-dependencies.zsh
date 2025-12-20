@@ -1,7 +1,7 @@
-#!/bin/zsh
-# install-dependencies.zsh
+#!/bin/bash
+# install-dependencies.sh
 # Non-interactive dependency installer for kodemachine
-# Run: zsh install-dependencies.zsh [--headless]
+# Run: bash install-dependencies.sh [--headless]
 
 set -e
 
@@ -15,6 +15,9 @@ echo "▶ kodemachine dependencies"
 echo "▶ apt update..."
 sudo apt-get update -qq
 sudo apt-get upgrade -y -qq
+
+# Wireshark setuid for non-root capture
+echo "wireshark-common wireshark-common/install-setuid boolean true" | sudo debconf-set-selections
 
 # ─────────────────────────────────────────────────────────────
 # CORE PACKAGES
@@ -51,9 +54,9 @@ sudo apt-get install -y -qq \
     inotify-tools
 
 # Symlink bat/fd (Ubuntu uses different names)
-mkdir -p ~/.local/bin
-ln -sf /usr/bin/batcat ~/.local/bin/bat 2>/dev/null || true
-ln -sf /usr/bin/fdfind ~/.local/bin/fd 2>/dev/null || true
+mkdir -p "$HOME/.local/bin"
+ln -sf /usr/bin/batcat "$HOME/.local/bin/bat" 2>/dev/null || true
+ln -sf /usr/bin/fdfind "$HOME/.local/bin/fd" 2>/dev/null || true
 
 # ─────────────────────────────────────────────────────────────
 # GUI (skip if headless)
@@ -61,21 +64,61 @@ ln -sf /usr/bin/fdfind ~/.local/bin/fd 2>/dev/null || true
 if [[ "$1" != "--headless" ]]; then
     echo "▶ gui packages..."
     sudo apt-get install -y -qq \
-        xfce4 xfce4-goodies xfce4-terminal \
-        firefox chromium-browser
+        xfce4 xfce4-goodies xfce4-terminal
+
+    # ─────────────────────────────────────────────────────────
+    # BROWSERS (ARM64 compatible)
+    # ─────────────────────────────────────────────────────────
+    echo "▶ browsers (arm64)..."
+    
+    # Remove snap firefox if present
+    sudo snap remove firefox 2>/dev/null || true
+    
+    # Block snap firefox
+    cat <<SNAPBLOCK | sudo tee /etc/apt/preferences.d/firefox-no-snap
+Package: firefox*
+Pin: release o=Ubuntu*
+Pin-Priority: -1
+SNAPBLOCK
+
+    # Mozilla PPA (official, supports arm64)
+    sudo add-apt-repository -y ppa:mozillateam/ppa
+    
+    # Prioritize PPA over snap
+    cat <<MOZPRIO | sudo tee /etc/apt/preferences.d/mozilla-firefox
+Package: firefox*
+Pin: release o=LP-PPA-mozillateam
+Pin-Priority: 1001
+MOZPRIO
+
+    sudo apt-get update -qq
+    sudo apt-get install -y -qq firefox
+    
+    # Chromium - use Ubuntu's deb (arm64 available)
+    sudo apt-get install -y -qq chromium-browser
+    
+    # Brave - official repo (arm64 supported)
+    if [[ ! -f /usr/share/keyrings/brave-browser-archive-keyring.gpg ]]; then
+        sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg \
+            https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+        echo "deb [arch=arm64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | \
+            sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+        sudo apt-get update -qq
+    fi
+    sudo apt-get install -y -qq brave-browser
 
     # ─────────────────────────────────────────────────────────
     # NERD FONTS (CaskaydiaCove)
     # ─────────────────────────────────────────────────────────
     if [[ ! -d "$HOME/.local/share/fonts/CaskaydiaCove" ]]; then
         echo "▶ nerd fonts (CaskaydiaCove)..."
-        mkdir -p ~/.local/share/fonts/CaskaydiaCove
+        mkdir -p "$HOME/.local/share/fonts/CaskaydiaCove"
         cd /tmp
         wget -q https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/CascadiaCode.zip
-        unzip -q -o CascadiaCode.zip -d ~/.local/share/fonts/CaskaydiaCove
+        unzip -q -o CascadiaCode.zip -d "$HOME/.local/share/fonts/CaskaydiaCove"
         rm CascadiaCode.zip
         fc-cache -f
-        cd ~
+        cd "$HOME"
     else
         echo "▶ nerd fonts (exists)"
     fi
@@ -84,8 +127,8 @@ if [[ "$1" != "--headless" ]]; then
     # XFCE TERMINAL CONFIG
     # ─────────────────────────────────────────────────────────
     echo "▶ terminal config..."
-    mkdir -p ~/.config/xfce4/terminal
-    cat > ~/.config/xfce4/terminal/terminalrc << 'EOF'
+    mkdir -p "$HOME/.config/xfce4/terminal"
+    cat > "$HOME/.config/xfce4/terminal/terminalrc" << 'EOF'
 [Configuration]
 FontName=CaskaydiaCove Nerd Font 13
 MiscAlwaysShowTabs=FALSE
@@ -144,7 +187,7 @@ fi
 # ─────────────────────────────────────────────────────────────
 if [[ ! -d "$HOME/.asdf" ]]; then
     echo "▶ asdf..."
-    git clone https://github.com/asdf-vm/asdf.git ~/.asdf \
+    git clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf" \
         --branch v0.14.0 --quiet
 fi
 
@@ -154,7 +197,6 @@ source "$HOME/.asdf/asdf.sh"
 echo "▶ asdf plugins..."
 asdf plugin add python  2>/dev/null || true
 asdf plugin add nodejs  2>/dev/null || true
-asdf plugin add ruby    2>/dev/null || true
 asdf plugin add golang  2>/dev/null || true
 asdf plugin add rust    2>/dev/null || true
 asdf plugin add bun     2>/dev/null || true
@@ -175,7 +217,6 @@ install_runtime() {
 
 install_runtime python 3.12.4
 install_runtime nodejs 22.11.0
-install_runtime ruby   3.3.0
 install_runtime golang 1.23.4
 install_runtime rust   1.83.0
 install_runtime bun    1.1.38
@@ -200,13 +241,13 @@ fi
 # ─────────────────────────────────────────────────────────────
 if [[ ! -f "$HOME/.ssh/id_ed25519" ]]; then
     echo "▶ generating ssh key..."
-    mkdir -p ~/.ssh
+    mkdir -p "$HOME/.ssh"
     ssh-keygen -t ed25519 -C "kodeman@kodemachine" -N "" \
-        -f ~/.ssh/id_ed25519 -q
+        -f "$HOME/.ssh/id_ed25519" -q
     echo ""
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo "  ADD TO GITHUB:"
-    cat ~/.ssh/id_ed25519.pub
+    cat "$HOME/.ssh/id_ed25519.pub"
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 fi
 
@@ -230,7 +271,7 @@ fi
 # ZSHENV (persistent PATH for all shells)
 # ─────────────────────────────────────────────────────────────
 echo "▶ zshenv..."
-cat > ~/.zshenv << 'EOF'
+cat > "$HOME/.zshenv" << 'EOF'
 # PATH
 export PATH="$HOME/.local/bin:$HOME/.asdf/shims:$PATH"
 
@@ -252,7 +293,6 @@ echo ""
 echo "  runtimes:"
 echo "    python: $(python --version 2>&1 | cut -d' ' -f2)"
 echo "    node:   $(node --version 2>&1)"
-echo "    ruby:   $(ruby --version 2>&1 | cut -d' ' -f2)"
 echo "    go:     $(go version 2>&1 | cut -d' ' -f3)"
 echo "    rust:   $(rustc --version 2>&1 | cut -d' ' -f2)"
 echo "    bun:    $(bun --version 2>&1)"
@@ -264,7 +304,7 @@ echo "  manual steps remaining:"
 echo "    1. logout/login or: exec zsh"
 echo "    2. unlock & mount encrypted drive"
 echo "    3. link podman storage:"
-echo "       mkdir -p ~/Projects/podman-storage"
-echo "       rm -rf ~/.local/share/containers"
-echo "       ln -s ~/Projects/podman-storage ~/.local/share/containers"
+echo "       mkdir -p \$HOME/Projects/podman-storage"
+echo "       rm -rf \$HOME/.local/share/containers"
+echo "       ln -s \$HOME/Projects/podman-storage \$HOME/.local/share/containers"
 echo ""
