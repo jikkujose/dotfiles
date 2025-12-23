@@ -1,0 +1,25 @@
+add_newline = false
+
+[username]
+disabled = true
+
+[hostname]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[character]
+success_symbol = '[➜](bold green)'
+error_symbol = '[](bold red)'
+
+[ruby]
+symbol = ' '
+format = '[$symbol$version](bold red) '
+
+[nodejs]
+format = '[$symbol$version](bold green) '
+
+[directory]
+format = '[  ](bold white)[$path]($style)[$read_only]($read_only_style) '
+style = 'bold yellow'

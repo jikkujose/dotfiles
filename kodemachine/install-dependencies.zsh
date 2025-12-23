@@ -308,3 +308,8 @@ echo "       mkdir -p \$HOME/Projects/podman-storage"
 echo "       rm -rf \$HOME/.local/share/containers"
 echo "       ln -s \$HOME/Projects/podman-storage \$HOME/.local/share/containers"
 echo ""
+=======
+echo "       mkdir -p ~/Projects/podman-storage"
+echo "       rm -rf ~/.local/share/containers"
+echo "       ln -s ~/Projects/podman-storage ~/.local/share/containers"
+echo ""
