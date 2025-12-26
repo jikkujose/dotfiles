@@ -18,14 +18,12 @@ _claude_clean_env() {
 ccc() {
     _claude_clean_env
     echo "✓ Mode: Claude"
-    ANTHROPIC_AUTH_TOKEN="$ANTHROPIC_API_KEY_SB" \
     claude "$@"
 }
 
 ccc-dangerous() {
     _claude_clean_env
     echo "✓ Mode: Claude in dangerous mode"
-    ANTHROPIC_AUTH_TOKEN="$ANTHROPIC_API_KEY_SB" \
     claude --allow-dangerously-skip-permissions --dangerously-skip-permissions "$@"
 }
 
@@ -37,18 +35,18 @@ c-zai() {
     ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic" \
     ANTHROPIC_DEFAULT_HAIKU_MODEL="GLM-4.7" \
     ANTHROPIC_DEFAULT_SONNET_MODEL="GLM-4.7" \
-    ANTHROPIC_DEFAULT_OPUS_MODEL="glm-4.7" \
+    ANTHROPIC_DEFAULT_OPUS_MODEL="GLM-4.7" \
     claude "$@"
 }
 
 c-zai-dangerous() {
     _claude_clean_env
-    echo "✓ Mode: Z.AI GLM 4.6"
+    echo "✓ Mode: Z.AI GLM 4.7"
     ANTHROPIC_AUTH_TOKEN="$ZAI_API_KEY" \
     ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic" \
-    ANTHROPIC_DEFAULT_HAIKU_MODEL="glm-4.5-air" \
-    ANTHROPIC_DEFAULT_SONNET_MODEL="glm-4.6" \
-    ANTHROPIC_DEFAULT_OPUS_MODEL="glm-4.6" \
+    ANTHROPIC_DEFAULT_HAIKU_MODEL="GLM-4.7" \
+    ANTHROPIC_DEFAULT_SONNET_MODEL="GLM-4.7" \
+    ANTHROPIC_DEFAULT_OPUS_MODEL="GLM-4.7" \
     claude --allow-dangerously-skip-permissions --dangerously-skip-permissions "$@"
 }
 
