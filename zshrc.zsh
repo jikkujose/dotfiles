@@ -7,7 +7,6 @@ export EDITOR='nvim'
 
 setopt interactivecomments
 
-source ~/dotfiles/paths.zsh
 source ~/dotfiles/variables.zsh
 source ~/dotfiles/generated/aliases.zsh
 source ~/dotfiles/functions.zsh
