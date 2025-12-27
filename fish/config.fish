@@ -1,6 +1,9 @@
 # Fish shell configuration
 # v-2026: Cross-platform fish config
 
+# Disable history
+set -g fish_history ""
+
 set -gx LC_ALL en_US.UTF-8
 set -gx LANG en_US.UTF-8
 set -gx EDITOR nvim

@@ -6,7 +6,6 @@ export LANGUAGE="en_US.UTF-8"
 export EDITOR='nvim'
 
 setopt interactivecomments
-setopt HIST_IGNORE_SPACE
 
 source ~/dotfiles/paths.zsh
 source ~/dotfiles/variables.zsh

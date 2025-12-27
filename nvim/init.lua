@@ -1,6 +1,9 @@
 local home = os.getenv("HOME")
 vim.g.mapleader = " "
 
+-- Disable shada (history/marks/registers persistence)
+vim.o.shada = ""
+
 vim.g.lightline = {colorscheme = 'jiks'}
 
 vim.o.encoding = "utf-8"
