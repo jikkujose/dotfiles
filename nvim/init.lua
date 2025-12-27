@@ -100,7 +100,7 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.fresh/plugged')
   Plug 'dstein64/vim-startuptime'
   -- Plug 'vimwiki/vimwiki'
-  Plug 'JikkuJose/lightline.vim'
+  Plug 'itchyny/lightline.vim'
   Plug 'kien/ctrlp.vim'
   Plug 'tomtom/tcomment_vim'
   Plug 'tommcdo/vim-exchange'
