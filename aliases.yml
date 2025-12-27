@@ -24,7 +24,6 @@ shared:
   unstage: git reset --
 
   # Editors
-  nl: NVIM_APPNAME=nvim-lazy nvim
   ncode: nvim
 
   # File operations

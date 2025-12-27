@@ -5,7 +5,7 @@ rm -rf ~/.config/nvim
 
 ln -sf ~/dotfiles/zshrc.zsh ~/.zshrc
 ln -sf ~/dotfiles/tmux.conf ~/.tmux.conf
-ln -sf ~/dotfiles/nvim/fresh ~/.config/nvim
+ln -sf ~/dotfiles/nvim ~/.config/nvim
 ln -sf ~/dotfiles/tool-versions ~/.tool-versions
 
 if [[ "$IS_CONTAINER" == "yes"* ]]; then
