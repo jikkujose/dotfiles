@@ -49,7 +49,7 @@ The bootstrap script sets up a fresh machine.
 ### What It Does
 
 1. **Installs Homebrew** (macOS or Linuxbrew)
-2. **Installs packages** from Brewfile
+2. **Installs packages** (git, zsh, fish, tmux, neovim, mise, etc.)
 3. **Creates symlinks:**
    - `~/.zshrc` → `zshrc.zsh`
    - `~/.tmux.conf` → `tmux.conf`
@@ -59,6 +59,8 @@ The bootstrap script sets up a fresh machine.
 4. **Installs mise** (runtime version manager)
 5. **Installs Ruby** via mise (precompiled binaries)
 6. **Generates aliases** for zsh and fish
+7. **Installs Nerd Font** (Caskaydia Cove)
+8. **Loads iTerm2 preferences** (macOS only)
 
 ### Requirements
 
@@ -94,7 +96,8 @@ dotfiles/
 │
 ├── tmux.conf             # Tmux config
 ├── tool-versions         # mise runtime versions
-└── claude-modes.zsh      # Claude API mode switcher
+├── claude-modes.zsh      # Claude API mode switcher
+└── iterm2/               # iTerm2 preferences (macOS)
 ```
 
 ## Key Files

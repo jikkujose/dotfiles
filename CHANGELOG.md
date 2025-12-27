@@ -29,6 +29,13 @@ Complete overhaul of 10-year-old dotfiles.
   - Commands: `start`, `dry-run`
   - Installs Homebrew, packages, symlinks
   - Installs mise and Ruby with precompiled binaries
+  - Installs Nerd Font (Caskaydia Cove) on all platforms
+  - Loads iTerm2 preferences on macOS
+
+- **iTerm2 configuration**
+  - Exported preferences in `iterm2/com.googlecode.iterm2.plist`
+  - XML format (readable, git-friendly)
+  - Auto-loaded by bootstrap on macOS
 
 - **Stateless configuration**
   - No shell history (zsh, fish)

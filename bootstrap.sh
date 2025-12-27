@@ -160,6 +160,63 @@ install_linux_extras() {
     print_success "Linux extras installed"
 }
 
+# ============================================================================
+# Install Nerd Font (Caskaydia Cove)
+# ============================================================================
+install_font() {
+    print_step "Installing Nerd Font (Caskaydia Cove)..."
+
+    if [[ "$OS" == "mac" ]]; then
+        # macOS: Install via Homebrew cask
+        brew install --cask font-caskaydia-cove-nerd-font
+    else
+        # Linux: Download and install to local fonts
+        FONT_DIR="$HOME/.local/share/fonts"
+        FONT_NAME="CaskaydiaCove"
+
+        if ls "$FONT_DIR"/$FONT_NAME* &>/dev/null; then
+            print_success "Nerd Font already installed"
+            return
+        fi
+
+        mkdir -p "$FONT_DIR"
+        FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.zip"
+        TEMP_ZIP="/tmp/nerd-font.zip"
+
+        curl -fsSL "$FONT_URL" -o "$TEMP_ZIP"
+        unzip -o "$TEMP_ZIP" -d "$FONT_DIR" '*.ttf'
+        rm "$TEMP_ZIP"
+
+        # Rebuild font cache
+        fc-cache -fv &>/dev/null || true
+    fi
+
+    print_success "Nerd Font installed"
+}
+
+# ============================================================================
+# Setup iTerm2 preferences (macOS only)
+# ============================================================================
+setup_iterm2() {
+    if [[ "$OS" != "mac" ]]; then
+        return
+    fi
+
+    print_step "Setting up iTerm2 preferences..."
+
+    ITERM_PLIST="$DOTFILES_DIR/iterm2/com.googlecode.iterm2.plist"
+
+    if [[ ! -f "$ITERM_PLIST" ]]; then
+        print_warning "iTerm2 plist not found, skipping"
+        return
+    fi
+
+    # Import preferences
+    defaults import com.googlecode.iterm2 "$ITERM_PLIST"
+
+    print_success "iTerm2 preferences loaded"
+}
+
 # Verify dotfiles directory
 verify_dotfiles() {
     print_step "Verifying dotfiles at $DOTFILES_DIR..."
@@ -324,6 +381,15 @@ main() {
         print_dry "~/.config/fish/config.fish -> $DOTFILES_DIR/fish/config.fish"
 
         echo ""
+        print_step "Would install extras:"
+        if [[ "$OS" == "mac" ]]; then
+            print_dry "brew install --cask font-caskaydia-cove-nerd-font"
+            print_dry "defaults import com.googlecode.iterm2 (load preferences)"
+        else
+            print_dry "Download Nerd Font to ~/.local/share/fonts"
+        fi
+
+        echo ""
         print_dry "chsh -s $(which zsh)"
         echo ""
         return
@@ -346,6 +412,8 @@ main() {
     verify_dotfiles
     install_ruby_and_generate
     setup_symlinks
+    install_font
+    setup_iterm2
     set_default_shell
 
     echo ""
