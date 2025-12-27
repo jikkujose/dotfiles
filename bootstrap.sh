@@ -260,15 +260,21 @@ install_ruby_and_generate() {
     # Enable precompiled binaries (much faster than compiling from source)
     export MISE_EXPERIMENTAL=1
 
+    # Add mise shims to PATH
+    export PATH="$HOME/.local/share/mise/shims:$PATH"
+
     # Activate mise for this session
     eval "$(mise activate bash)"
 
     # Install Ruby (reads version from tool-versions)
     mise install ruby
 
-    # Generate aliases for zsh and fish
+    # Rehash to update shims
+    mise reshim
+
+    # Generate aliases using mise exec to ensure Ruby is found
     cd "$DOTFILES_DIR"
-    ruby generate-aliases.rb
+    mise exec ruby -- ruby generate-aliases.rb
     cd -
 
     print_success "Ruby installed and aliases generated"
