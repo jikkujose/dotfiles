@@ -8,7 +8,7 @@ set -gx EDITOR nvim
 # Paths
 set -gx PATH $HOME/.local/bin $PATH
 set -gx PATH $HOME/.bun/bin $PATH
-set -gx PATH $HOME/.asdf/shims $PATH
+set -gx PATH $HOME/.local/share/mise/shims $PATH
 
 # Vi mode
 fish_vi_key_bindings

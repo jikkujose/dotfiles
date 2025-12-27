@@ -1,10 +1,5 @@
 # Linux-specific fish configuration
 
-# asdf version manager
-if test -f $HOME/.asdf/asdf.fish
-    source $HOME/.asdf/asdf.fish
-end
-
 # CUDA paths
 if test -d /usr/local/cuda
     set -gx PATH /usr/local/cuda/bin $PATH

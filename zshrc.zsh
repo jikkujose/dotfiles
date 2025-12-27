@@ -35,7 +35,7 @@ clear
 
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-export PATH="$HOME/.asdf/shims:$PATH"
+export PATH="$HOME/.local/share/mise/shims:$PATH"
 export PATH="/opt/nvim-linux64/bin/:$PATH"
 
 # Simple prompt: ~/path (branch*) ❯

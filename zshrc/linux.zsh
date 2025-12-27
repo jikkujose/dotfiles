@@ -1,8 +1,3 @@
-. "$HOME/.asdf/asdf.sh"
-
-fpath=(${ASDF_DIR}/completions $fpath)
-autoload -Uz compinit && compinit -i 2>/dev/null || true
-
 export HOST_IP="$(ip route |awk '/^default/{print $3}')"
 
 export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
