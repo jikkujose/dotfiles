@@ -13,23 +13,38 @@ NC='\033[0m' # No Color
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DRY_RUN=false
 
-# Parse arguments
-for arg in "$@"; do
-    case $arg in
-        -n|--dry-run)
-            DRY_RUN=true
-            shift
-            ;;
-        -h|--help)
-            echo "Usage: bootstrap.sh [OPTIONS]"
-            echo ""
-            echo "Options:"
-            echo "  -n, --dry-run    Show what would be done without making changes"
-            echo "  -h, --help       Show this help message"
-            exit 0
-            ;;
-    esac
-done
+show_help() {
+    echo "Dotfiles Bootstrap"
+    echo ""
+    echo "Usage: ./bootstrap.sh <command>"
+    echo ""
+    echo "Commands:"
+    echo "  start      Run the bootstrap (install packages, create symlinks)"
+    echo "  dry-run    Show what would be done without making changes"
+    echo "  help       Show this help message"
+    echo ""
+    echo "Example:"
+    echo "  ./bootstrap.sh dry-run   # Preview changes"
+    echo "  ./bootstrap.sh start     # Run for real"
+}
+
+# Parse command
+case "${1:-}" in
+    start)
+        DRY_RUN=false
+        ;;
+    dry-run)
+        DRY_RUN=true
+        ;;
+    help|-h|--help)
+        show_help
+        exit 0
+        ;;
+    *)
+        show_help
+        exit 0
+        ;;
+esac
 
 print_step() { echo -e "${BLUE}==>${NC} $1"; }
 print_success() { echo -e "${GREEN}✓${NC} $1"; }
