@@ -148,14 +148,15 @@ install_packages() {
 }
 
 # ============================================================================
-# Linux-specific extras (xclip, etc. not in Homebrew)
+# Linux-specific extras (xclip, alacritty, etc. not in Homebrew)
 # ============================================================================
 install_linux_extras() {
     print_step "Installing Linux-specific packages via apt..."
 
     sudo apt install -y \
         xclip \
-        locales
+        locales \
+        alacritty
 
     print_success "Linux extras installed"
 }
@@ -244,6 +245,7 @@ setup_symlinks() {
     mkdir -p ~/.config
     mkdir -p ~/.config/fish/functions
     mkdir -p ~/.config/fish/conf.d
+    mkdir -p ~/.config/alacritty
 
     # Backup existing configs (only real files, not symlinks)
     for file in ~/.zshrc ~/.config/nvim ~/.tmux.conf ~/.config/fish/config.fish; do
@@ -279,6 +281,9 @@ setup_symlinks() {
 
     # tool-versions for mise
     ln -sf "$DOTFILES_DIR/tool-versions" ~/.tool-versions
+
+    # Alacritty
+    ln -sf "$DOTFILES_DIR/alacritty/alacritty.toml" ~/.config/alacritty/alacritty.toml
 
     print_success "Symlinks created"
 }
@@ -367,7 +372,7 @@ main() {
         print_dry "brew install git zsh fish tmux neovim mise bat ripgrep..."
 
         if [[ "$OS" == "linux" ]]; then
-            print_dry "sudo apt install xclip locales"
+            print_dry "sudo apt install xclip locales alacritty"
         fi
 
         print_dry "Verify dotfiles at $DOTFILES_DIR"
@@ -379,6 +384,7 @@ main() {
         print_dry "~/.tmux.conf -> $DOTFILES_DIR/tmux.conf"
         print_dry "~/.config/nvim -> $DOTFILES_DIR/nvim"
         print_dry "~/.config/fish/config.fish -> $DOTFILES_DIR/fish/config.fish"
+        print_dry "~/.config/alacritty/alacritty.toml -> $DOTFILES_DIR/alacritty/alacritty.toml"
 
         echo ""
         print_step "Would install extras:"

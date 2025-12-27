@@ -55,6 +55,7 @@ The bootstrap script sets up a fresh machine.
    - `~/.tmux.conf` → `tmux.conf`
    - `~/.config/nvim` → `nvim/`
    - `~/.config/fish` → `fish/`
+   - `~/.config/alacritty/` → `alacritty/`
    - `~/.tool-versions` → `tool-versions`
 4. **Installs mise** (runtime version manager)
 5. **Installs Ruby** via mise (precompiled binaries)
@@ -97,7 +98,8 @@ dotfiles/
 ├── tmux.conf             # Tmux config
 ├── tool-versions         # mise runtime versions
 ├── claude-modes.zsh      # Claude API mode switcher
-└── iterm2/               # iTerm2 preferences (macOS)
+├── iterm2/               # iTerm2 preferences (macOS)
+└── alacritty/            # Alacritty terminal config
 ```
 
 ## Key Files
