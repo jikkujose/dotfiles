@@ -9,9 +9,8 @@ BLUE='\033[0;34m'
 GRAY='\033[0;90m'
 NC='\033[0m' # No Color
 
-DOTFILES_REPO="https://github.com/jikkujose/dotfiles.git"
-DOTFILES_BRANCH="v-2026"
-DOTFILES_DIR="$HOME/dotfiles"
+# Detect dotfiles directory from script location
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DRY_RUN=false
 
 # Parse arguments
@@ -145,37 +144,24 @@ install_linux_extras() {
     print_success "Linux extras installed"
 }
 
-# Clone dotfiles
-clone_dotfiles() {
-    print_step "Cloning dotfiles..."
+# Verify dotfiles directory
+verify_dotfiles() {
+    print_step "Verifying dotfiles at $DOTFILES_DIR..."
 
-    if [[ -d "$DOTFILES_DIR" ]]; then
-        print_warning "Dotfiles directory exists, checking status..."
-        cd "$DOTFILES_DIR"
-
-        # Check for uncommitted changes
-        if [[ -n $(git status --porcelain 2>/dev/null) ]]; then
-            print_error "Uncommitted changes detected in $DOTFILES_DIR"
-            echo ""
-            echo "Please commit or stash your changes first:"
-            echo "  cd $DOTFILES_DIR"
-            echo "  git status"
-            echo "  git stash      # to temporarily save changes"
-            echo "  git commit -am 'Save changes'  # to commit"
-            echo ""
-            echo "Then re-run this bootstrap script."
-            exit 1
-        fi
-
-        git fetch origin
-        git checkout "$DOTFILES_BRANCH"
-        git pull origin "$DOTFILES_BRANCH"
-        cd -
-    else
-        git clone -b "$DOTFILES_BRANCH" "$DOTFILES_REPO" "$DOTFILES_DIR"
+    # Check required files exist
+    if [[ ! -f "$DOTFILES_DIR/zshrc.zsh" ]]; then
+        print_error "Not a valid dotfiles directory: $DOTFILES_DIR"
+        echo "Run this script from the cloned dotfiles repository."
+        exit 1
     fi
 
-    print_success "Dotfiles ready at $DOTFILES_DIR"
+    # Check for uncommitted changes
+    if [[ -d "$DOTFILES_DIR/.git" ]] && [[ -n $(git -C "$DOTFILES_DIR" status --porcelain 2>/dev/null) ]]; then
+        print_warning "Uncommitted changes detected in $DOTFILES_DIR"
+        echo "Consider committing or stashing before bootstrap."
+    fi
+
+    print_success "Dotfiles verified at $DOTFILES_DIR"
 }
 
 # Setup symlinks
@@ -311,12 +297,7 @@ main() {
             print_dry "sudo apt install xclip locales"
         fi
 
-        if [[ -d "$DOTFILES_DIR" ]]; then
-            print_dry "cd $DOTFILES_DIR && git checkout $DOTFILES_BRANCH && git pull"
-        else
-            print_dry "git clone -b $DOTFILES_BRANCH $DOTFILES_REPO $DOTFILES_DIR"
-        fi
-
+        print_dry "Verify dotfiles at $DOTFILES_DIR"
         print_dry "mise install ruby && ruby generate-aliases.rb"
 
         echo ""
@@ -348,7 +329,7 @@ main() {
         install_linux_extras
     fi
 
-    clone_dotfiles
+    verify_dotfiles
     install_ruby_and_generate
     setup_symlinks
     set_default_shell
