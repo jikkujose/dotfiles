@@ -6,16 +6,46 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
+GRAY='\033[0;90m'
 NC='\033[0m' # No Color
 
 DOTFILES_REPO="https://github.com/jikkujose/dotfiles.git"
 DOTFILES_BRANCH="v-2026"
 DOTFILES_DIR="$HOME/dotfiles"
+DRY_RUN=false
+
+# Parse arguments
+for arg in "$@"; do
+    case $arg in
+        -n|--dry-run)
+            DRY_RUN=true
+            shift
+            ;;
+        -h|--help)
+            echo "Usage: bootstrap.sh [OPTIONS]"
+            echo ""
+            echo "Options:"
+            echo "  -n, --dry-run    Show what would be done without making changes"
+            echo "  -h, --help       Show this help message"
+            exit 0
+            ;;
+    esac
+done
 
 print_step() { echo -e "${BLUE}==>${NC} $1"; }
 print_success() { echo -e "${GREEN}✓${NC} $1"; }
 print_warning() { echo -e "${YELLOW}!${NC} $1"; }
 print_error() { echo -e "${RED}✗${NC} $1"; }
+print_dry() { echo -e "${GRAY}[dry-run]${NC} $1"; }
+
+# Run command or show what would run
+run() {
+    if [[ "$DRY_RUN" == true ]]; then
+        print_dry "$*"
+    else
+        "$@"
+    fi
+}
 
 # Detect OS
 detect_os() {
@@ -247,9 +277,56 @@ main() {
     echo -e "${GREEN}╔════════════════════════════════════════╗${NC}"
     echo -e "${GREEN}║     Dotfiles Bootstrap v-2026          ║${NC}"
     echo -e "${GREEN}╚════════════════════════════════════════╝${NC}"
+    if [[ "$DRY_RUN" == true ]]; then
+        echo -e "${YELLOW}║           DRY RUN MODE                 ║${NC}"
+        echo -e "${GREEN}╚════════════════════════════════════════╝${NC}"
+    fi
     echo ""
 
     detect_os
+
+    if [[ "$DRY_RUN" == true ]]; then
+        echo ""
+        print_step "Would perform the following actions:"
+        echo ""
+
+        if [[ "$OS" == "linux" ]]; then
+            print_dry "sudo apt install build-essential curl git..."
+        fi
+
+        if command -v brew &> /dev/null; then
+            print_dry "brew install (skip - already installed)"
+        else
+            print_dry "Install Homebrew from https://brew.sh"
+        fi
+        print_dry "brew install git zsh fish tmux neovim mise bat ripgrep..."
+
+        if [[ "$OS" == "linux" ]]; then
+            print_dry "sudo apt install xclip locales"
+        fi
+
+        if [[ -d "$DOTFILES_DIR" ]]; then
+            print_dry "cd $DOTFILES_DIR && git checkout $DOTFILES_BRANCH && git pull"
+        else
+            print_dry "git clone -b $DOTFILES_BRANCH $DOTFILES_REPO $DOTFILES_DIR"
+        fi
+
+        print_dry "mise install ruby && ruby generate-aliases.rb"
+
+        echo ""
+        print_step "Would create symlinks:"
+        print_dry "~/.zshrc -> $DOTFILES_DIR/zshrc.zsh"
+        print_dry "~/.tmux.conf -> $DOTFILES_DIR/tmux.conf"
+        print_dry "~/.config/nvim -> $DOTFILES_DIR/nvim"
+        print_dry "~/.config/fish/config.fish -> $DOTFILES_DIR/fish/config.fish"
+
+        echo ""
+        print_dry "chsh -s $(which zsh)"
+
+        echo ""
+        print_success "Dry run complete. Run without -n to execute."
+        return
+    fi
 
     # Linux needs build deps before Homebrew
     if [[ "$OS" == "linux" ]]; then
