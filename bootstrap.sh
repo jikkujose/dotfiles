@@ -208,6 +208,24 @@ set_default_shell() {
     fi
 }
 
+# Install Ruby via mise and generate aliases
+install_ruby_and_generate() {
+    print_step "Installing Ruby via mise and generating aliases..."
+
+    # Activate mise for this session
+    eval "$(mise activate bash)"
+
+    # Install Ruby (reads version from tool-versions)
+    mise install ruby
+
+    # Generate aliases for zsh and fish
+    cd "$DOTFILES_DIR"
+    ruby generate-aliases.rb
+    cd -
+
+    print_success "Ruby installed and aliases generated"
+}
+
 # Main
 main() {
     echo ""
@@ -233,6 +251,7 @@ main() {
     fi
 
     clone_dotfiles
+    install_ruby_and_generate
     setup_symlinks
     set_default_shell
 
@@ -243,7 +262,7 @@ main() {
     echo ""
     echo "Next steps:"
     echo "  1. Log out and log back in (or run: exec zsh)"
-    echo "  2. Run 'mise install' to install Ruby/Node/Python"
+    echo "  2. Run 'mise install' to install Node/Python (Ruby already installed)"
     echo ""
     echo "To use fish instead: exec fish"
     echo "To make fish default: chsh -s \$(which fish)"
