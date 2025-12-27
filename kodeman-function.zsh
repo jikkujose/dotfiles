@@ -31,7 +31,8 @@ kodeman() {
     echo "  kodeman ~/Projects/myapp                          # Use specific directory" >&2
     echo "  kodeman ~/Projects/myapp --audit                  # With auditing" >&2
     echo "  kodeman ~/Projects/myapp --map-ports 3000,9090    # With port mapping" >&2
-    echo "  kodeman ~/Projects/myapp --headless               # Skip VNC/audio (faster)" >&2
+    echo "  kodeman ~/Projects/myapp --supabase               # Enable Supabase local" >&2
+    echo "  kodeman ~/Projects/myapp --headed                 # Enable VNC desktop & audio" >&2
     echo "  kodeman ~/Projects/myapp --include-agents claude  # Select agents" >&2
     echo "  kodeman ~/Projects/myapp --include-agents none    # No agents (fastest)" >&2
     echo "" >&2
@@ -59,9 +60,10 @@ _kodeman() {
   options=(
     '--name:Project name'
     '--persist:Preserve config across runs'
+    '--supabase:Enable Supabase local (podman-in-podman, implies --persist)'
     '--audit:Enable syscall auditing'
     '--map-ports:Mirror ports (comma-separated)'
-    '--headless:Skip VNC/audio services (faster startup)'
+    '--headed:Enable VNC desktop & audio (default: headless)'
     '--include-agents:Install only these agents (none/all/comma-separated)'
     '--exclude-agents:Skip these agents (comma-separated)'
     '--help:Show help message'
