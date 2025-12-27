@@ -13,6 +13,9 @@ set -gx PATH $HOME/.local/share/mise/shims $PATH
 # Vi mode
 fish_vi_key_bindings
 
+# Tab accepts autosuggestion, or completes if no suggestion
+bind -M insert \t accept-autosuggestion or complete
+
 # Source shared aliases/abbreviations
 if test -f ~/dotfiles/generated/aliases.fish
     source ~/dotfiles/generated/aliases.fish
