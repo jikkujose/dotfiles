@@ -1,0 +1,9 @@
+# Auto-generated Linux aliases
+alias c="xclip -selection clipboard"
+alias p="xclip -o -selection clipboard"
+alias ip="hostname -I"
+alias cat="batcat -p"
+alias nn="NVIM_APPNAME=nvimx unshare -rn nvim"
+alias np="unshare -rn nvim --clean -n -c \"set nobackup noswapfile noundofile\""
+alias tg-webui="python server.py --load-in-8bit --listen"
+alias rapid="cp -r ~/Projects/rapid/petite-vue/{.,}* ."

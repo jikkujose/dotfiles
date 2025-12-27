@@ -1,0 +1,112 @@
+# Single source of truth for shell aliases
+# Run `./generate-aliases.rb` to generate zsh and fish configs
+
+shared:
+  # Navigation
+  d: cd ~/Desktop
+  dw: cd ~/Downloads/
+  "..": cd ..
+  "...": cd ../..
+  rrr: cd ~/Ruby/scrap
+
+  # Git
+  ga: git add
+  gb: git branch --all
+  gc: git commit
+  gp: git push
+  gs: git status
+  gu: git pull
+  gd: git diff
+  gt: git log --oneline | head -n 1
+  gco: git checkout
+  gr: gs && ga . && gc -m 'Automated commit' && gp
+  gl: git log --graph --pretty=format:'%C(yellow)%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad)%Creset' --date=format:'%d-%b-%y'
+  unstage: git reset --
+
+  # Editors
+  nl: NVIM_APPNAME=nvim-lazy nvim
+  ncode: nvim
+
+  # File operations
+  l: ls -Gurp
+  ll: ls -lGurp
+  lll: ls -laGurph
+  rm: rm -i
+  rmrf: rm -rfi
+  tt: tree -N -I 'node_modules|dist|_site|archive|__pycache__'
+
+  # Search
+  ag: ag -i
+  grep: grep -i --extended-regex
+
+  # Ruby
+  r: ruby
+  rr: rerun -c ruby
+
+  # HTTP & Network
+  h: http --follow
+  hb: http --body --follow
+  tb: nc termbin.com 9999
+  city: curl https://am.i.mullvad.net/city
+  server: python3 -m http.server
+
+  # Media
+  yy: yt-dlp --recode-video mp4 --postprocessor-args 'ffmpeg:-c:v libx264 -crf 20 -preset fast -c:a aac -movflags +faststart'
+  ys: yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=mp4]' -S vcodec:h264
+  v: cvlc
+
+  # Tmux
+  ta: tmux attach
+
+  # Utils
+  e: echo
+  uu: date +%s
+  xx: logout
+  xxx: logout
+  pf: ps aux | ag
+  python: python3
+  br: bun run
+  docker: podman
+  zed: ~/.local/bin/zed
+
+  # Node
+  nm_weight: find . -name 'node_modules' -type d -prune -print0 | xargs -0 du -chs
+  nm_delete: find . -name 'node_modules' -type d -prune -print0 | xargs -0 rm -rf
+
+  # Misc
+  gallery: npx gallery-server --no-footer -p 2323 -t 2323 --folder .
+  sl: df -h / | tail -n 1 | ruby -e "puts STDIN.read.split(' ')[3].split('G')[0] + ' GB'"
+  ff: cat ~/vimwiki/fast/2024.md
+  podman-container-ls: podman container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Ports}}\t{{.Created}}"
+
+linux:
+  c: xclip -selection clipboard
+  p: xclip -o -selection clipboard
+  ip: hostname -I
+  cat: batcat -p
+  nn: NVIM_APPNAME=nvimx unshare -rn nvim
+  np: unshare -rn nvim --clean -n -c "set nobackup noswapfile noundofile"
+  tg-webui: python server.py --load-in-8bit --listen
+  rapid: cp -r ~/Projects/rapid/petite-vue/{.,}* .
+
+mac:
+  c: pbcopy
+  p: pbpaste
+  cat: ccat
+  nn: nvim
+  np: nvim --clean -n -c "set nobackup noswapfile noundofile"
+
+# Zsh-only aliases (not compatible with fish)
+zsh_only:
+  bs: source ~/.zshrc
+  ee: set -o emacs
+  vv: set -o vi
+  uf: p | c
+  fu: c | p
+  rp: echo 'Hello' | c
+  sp: switch_profile
+  wp: which_profile
+
+# Fish-only abbreviations
+fish_only:
+  bs: source ~/.config/fish/config.fish
