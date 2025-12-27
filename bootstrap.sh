@@ -120,8 +120,23 @@ clone_dotfiles() {
     print_step "Cloning dotfiles..."
 
     if [[ -d "$DOTFILES_DIR" ]]; then
-        print_warning "Dotfiles directory exists, pulling latest..."
+        print_warning "Dotfiles directory exists, checking status..."
         cd "$DOTFILES_DIR"
+
+        # Check for uncommitted changes
+        if [[ -n $(git status --porcelain 2>/dev/null) ]]; then
+            print_error "Uncommitted changes detected in $DOTFILES_DIR"
+            echo ""
+            echo "Please commit or stash your changes first:"
+            echo "  cd $DOTFILES_DIR"
+            echo "  git status"
+            echo "  git stash      # to temporarily save changes"
+            echo "  git commit -am 'Save changes'  # to commit"
+            echo ""
+            echo "Then re-run this bootstrap script."
+            exit 1
+        fi
+
         git fetch origin
         git checkout "$DOTFILES_BRANCH"
         git pull origin "$DOTFILES_BRANCH"
