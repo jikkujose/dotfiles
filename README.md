@@ -203,3 +203,38 @@ Edit `Brewfile`, then:
 ```bash
 brew bundle
 ```
+
+## Kodemachine Integration
+
+These dotfiles are designed to work with [kodemachine](https://github.com/you/kodemachine) for ephemeral Linux VMs on macOS.
+
+### How It Works
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ macOS Host                                                  │
+│                                                             │
+│   kodemachine create-base                                   │
+│         │                                                   │
+│         ├── Provisions Ubuntu VM                            │
+│         ├── Clones these dotfiles                           │
+│         ├── Runs bootstrap.sh                               │
+│         └── Creates golden image                            │
+│                                                             │
+│   kodemachine start myproject                               │
+│         │                                                   │
+│         └── APFS clone → instant VM with your config        │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Workflow
+
+1. **Once per Mac**: `kodemachine setup-host`
+2. **Every ~6 months**: `kodemachine create-base --dotfiles git@github.com:you/dotfiles.git`
+3. **Daily**: `kodemachine start myproject` (SSH with full dev environment)
+
+### Design Decisions
+
+- **bootstrap.sh stays portable**: No GUI dependencies - works on Mac, Linux, servers
+- **GUI lives in create-base.rb**: XFCE, browsers, fonts installed during base image build
+- **Stateless by default**: VMs are disposable; LUKS disk holds persistent data
