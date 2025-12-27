@@ -6,11 +6,10 @@ vim.o.shada = ""
 vim.o.swapfile = false
 vim.o.undofile = false
 
-vim.g.lightline = {colorscheme = 'jiks'}
+vim.g.lightline = {colorscheme = 'powerline'}
 
 vim.o.encoding = "utf-8"
 vim.o.incsearch = true
-vim.o.compatible = false
 vim.o.laststatus = 2
 vim.o.tabstop = 2
 vim.o.expandtab = true
@@ -44,24 +43,11 @@ vim.api.nvim_set_keymap('', '<leader><down>', '<c-w><down>', {noremap = true, si
 vim.api.nvim_set_keymap('', '<leader><left>', '<c-w><left>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('', '<leader><right>', '<c-w><right>', {noremap = true, silent = true})
 
-vim.g.python_host_prog = '/usr/bin/python2'
-vim.g.python2_host_prog = '/usr/bin/python'
-vim.g.python3_host_prog = home .. "/.asdf/shims/python3"
+vim.g.python3_host_prog = home .. "/.local/share/mise/shims/python3"
 
 vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
   pattern = "*.gemspec",
   command = "set filetype=ruby",
-})
-
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-  pattern = "*.md",
-  command = "set filetype=markdown",
-})
-
-vim.filetype.add({
-  extension = {
-    riot = 'html',
-  },
 })
 
 vim.g.ctrlp_user_command = {
@@ -70,20 +56,6 @@ vim.g.ctrlp_user_command = {
   'find %s -type f'
 }
 vim.g.ctrlp_working_path_mode = '0'
-
--- vim.g.vimwiki_list = {{syntax = 'markdown', ext = '.md'}}
--- vim.g.vimwiki_key_mappings = {
---   all_maps = 0,
---   links = 1,
---   global = 0,
---   headers = 0,
---   text_objs = 0,
---   table_format = 0,
---   table_mappings = 0,
---   lists = 0,
---   html = 0,
---   mouse = 0
--- }
 
 vim.g.markdown_fenced_languages = {'html', 'python', 'javascript', 'bash=sh', 'ruby', 'sql'}
 
@@ -102,9 +74,8 @@ end
 vim.api.nvim_set_keymap('n', 'gmv', ':lua RenameFile()<cr>', {noremap = true, silent = true})
 
 local Plug = vim.fn['plug#']
-vim.call('plug#begin', '~/.fresh/plugged')
+vim.call('plug#begin', '~/.local/share/nvim/plugged')
   Plug 'dstein64/vim-startuptime'
-  -- Plug 'vimwiki/vimwiki'
   Plug 'itchyny/lightline.vim'
   Plug 'kien/ctrlp.vim'
   Plug 'tomtom/tcomment_vim'
@@ -143,14 +114,6 @@ vim.g.neoformat_javascriptreact_prettier = {
 }
 vim.g.neoformat_enabled_javascriptreact = {"prettier"}
 
-vim.g.neoformat_solidity_prettier = {
-  exe = "prettier",
-  args = {"--config", vim.fn.expand("~/.prettierrc"), "--plugin", "$(npm root -g)/prettier-plugin-solidity/src/index.js", '--stdin-filepath', '"%:p"'},
-  stdin = 1,
-  try_node_exe = 1
-}
-vim.g.neoformat_enabled_solidity = {"prettier"}
-
 vim.g.neoformat_enabled_eruby = { "erbformat", "htmlbeautifier" }
 vim.g.neoformat_eruby_erbformat = { exe = "erb-format", args = { "--stdin" }, stdin = 1 }
 vim.g.neoformat_eruby_htmlbeautifier = { exe = "htmlbeautifier", args = { "--keep-blank-lines", '1' }, stdin = 1 }
@@ -158,7 +121,7 @@ vim.g.neoformat_eruby_htmlbeautifier = { exe = "htmlbeautifier", args = { "--kee
 vim.cmd[[
 command! W w
 colorscheme Tomorrow-Night-Bright
-autocmd BufWritePre,InsertLeave *.js,*.mjs,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.py,*.md,*.html,*.gemspec,*.sol,*.erb silent! Neoformat
+autocmd BufWritePre,InsertLeave *.js,*.mjs,*.jsx,*.ts,*.tsx,*.css,*.json,*.rb,*.py,*.md,*.html,*.gemspec,*.erb silent! Neoformat
 au BufRead,BufNewFile *.md setlocal textwidth=80
 
 function! s:check_back_space() abort
