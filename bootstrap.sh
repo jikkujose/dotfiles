@@ -208,19 +208,6 @@ set_default_shell() {
     fi
 }
 
-# Install tmux plugin manager
-install_tpm() {
-    print_step "Installing tmux plugin manager..."
-
-    TPM_DIR="$HOME/.tmux/plugins/tpm"
-    if [[ ! -d "$TPM_DIR" ]]; then
-        git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
-        print_success "TPM installed (press prefix + I in tmux to install plugins)"
-    else
-        print_success "TPM already installed"
-    fi
-}
-
 # Main
 main() {
     echo ""
@@ -247,7 +234,6 @@ main() {
 
     clone_dotfiles
     setup_symlinks
-    install_tpm
     set_default_shell
 
     echo ""
@@ -257,8 +243,7 @@ main() {
     echo ""
     echo "Next steps:"
     echo "  1. Log out and log back in (or run: exec zsh)"
-    echo "  2. In tmux, press \` + I to install plugins"
-    echo "  3. Run 'mise install' to install Ruby/Node/Python"
+    echo "  2. Run 'mise install' to install Ruby/Node/Python"
     echo ""
     echo "To use fish instead: exec fish"
     echo "To make fish default: chsh -s \$(which fish)"
