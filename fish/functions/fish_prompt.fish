@@ -6,7 +6,8 @@ function fish_prompt
     set -l git_dirty ""
 
     if test -n "$git_branch"
-        if test -n (git status --porcelain 2>/dev/null)
+        set -l porcelain (git status --porcelain 2>/dev/null)
+        if test -n "$porcelain"
             set git_dirty (set_color red)"*"(set_color normal)
         end
         set git_branch " "(set_color yellow)$git_branch(set_color normal)$git_dirty
