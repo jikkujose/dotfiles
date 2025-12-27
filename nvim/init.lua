@@ -1,8 +1,10 @@
 local home = os.getenv("HOME")
 vim.g.mapleader = " "
 
--- Disable shada (history/marks/registers persistence)
+-- Disable all persistent state
 vim.o.shada = ""
+vim.o.swapfile = false
+vim.o.undofile = false
 
 vim.g.lightline = {colorscheme = 'jiks'}
 

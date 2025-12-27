@@ -1,8 +1,13 @@
 # Fish shell configuration
 # v-2026: Cross-platform fish config
 
-# Disable history
+# Disable all history/state
 set -g fish_history ""
+set -gx LESSHISTFILE "-"
+set -gx PYTHON_HISTORY " "
+set -gx NODE_REPL_HISTORY ""
+set -gx IRB_HISTFILE "/dev/null"
+set -gx PRYRC "/dev/null"
 
 set -gx LC_ALL en_US.UTF-8
 set -gx LANG en_US.UTF-8

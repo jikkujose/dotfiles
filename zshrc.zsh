@@ -71,4 +71,5 @@ fi
 export VINCE_INSTALL="$HOME/.vince"
 export PATH="$VINCE_INSTALL/bin:$PATH"
 
-autoload -U compinit; compinit
+# Completion without dump file
+autoload -U compinit; compinit -d /dev/null
