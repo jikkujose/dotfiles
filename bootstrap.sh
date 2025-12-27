@@ -325,9 +325,7 @@ main() {
 
         echo ""
         print_dry "chsh -s $(which zsh)"
-
         echo ""
-        print_success "Dry run complete. Run without -n to execute."
         return
     fi
 
