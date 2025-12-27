@@ -27,13 +27,62 @@ detect_os() {
     print_success "Detected OS: $OS"
 }
 
-# Install packages on Linux
-install_linux_packages() {
-    print_step "Installing packages via apt..."
+# ============================================================================
+# MAC: Everything via Homebrew (maximum safety - no curl|bash)
+# ============================================================================
+install_mac() {
+    print_step "Setting up Mac (brew only - no curl installs)..."
+
+    # Install Homebrew if not present (this is the only curl, but it's unavoidable)
+    if ! command -v brew &> /dev/null; then
+        print_step "Installing Homebrew (required for all other installs)..."
+        print_warning "This is the only curl|bash - Homebrew is the standard Mac package manager"
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+        # Add brew to PATH for this session
+        if [[ -d "/opt/homebrew" ]]; then
+            eval "$(/opt/homebrew/bin/brew shellenv)"
+        else
+            eval "$(/usr/local/bin/brew shellenv)"
+        fi
+    fi
+
+    print_step "Installing packages via brew..."
+
+    # All packages in one brew install - all from official Homebrew repos
+    brew install \
+        git \
+        zsh \
+        fish \
+        tmux \
+        neovim \
+        starship \
+        mise \
+        bat \
+        ripgrep \
+        the_silver_searcher \
+        fd \
+        httpie \
+        tree \
+        htop \
+        openssl \
+        readline \
+        libyaml \
+        gmp
+
+    print_success "All packages installed via brew"
+}
+
+# ============================================================================
+# LINUX: apt + curl installs (for VMs, less strict)
+# ============================================================================
+install_linux() {
+    print_step "Setting up Linux..."
 
     sudo apt update
 
-    # Core packages (always installed)
+    # Core packages from apt (official Ubuntu repos)
+    print_step "Installing apt packages..."
     sudo apt install -y \
         curl \
         git \
@@ -44,9 +93,15 @@ install_linux_packages() {
         htop \
         unzip \
         xclip \
-        locales
+        locales \
+        bat \
+        ripgrep \
+        silversearcher-ag \
+        fd-find \
+        httpie \
+        software-properties-common
 
-    # Build dependencies (required for mise to compile Ruby/Python)
+    # Build dependencies for mise to compile Ruby/Python
     sudo apt install -y \
         build-essential \
         rustc \
@@ -61,100 +116,27 @@ install_linux_packages() {
         libgmp-dev \
         tk-dev
 
-    # Nice-to-have tools
-    sudo apt install -y \
-        bat \
-        ripgrep \
-        silversearcher-ag \
-        fd-find \
-        httpie \
-        software-properties-common
+    print_success "apt packages installed"
 
-    print_success "Packages installed"
-}
-
-# Install packages on Mac
-install_mac_packages() {
-    print_step "Installing packages via Homebrew..."
-
-    # Install Homebrew if not present
-    if ! command -v brew &> /dev/null; then
-        print_step "Installing Homebrew..."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-        # Add brew to PATH for this session
-        if [[ -d "/opt/homebrew" ]]; then
-            eval "$(/opt/homebrew/bin/brew shellenv)"
-        else
-            eval "$(/usr/local/bin/brew shellenv)"
-        fi
-    fi
-
-    # Core packages
-    brew install \
-        curl \
-        git \
-        zsh \
-        fish \
-        tmux \
-        tree \
-        htop \
-        unzip
-
-    # Build dependencies
-    brew install \
-        openssl \
-        readline \
-        libyaml \
-        gmp \
-        rust
-
-    # Nice-to-have tools
-    brew install \
-        bat \
-        ripgrep \
-        the_silver_searcher \
-        fd \
-        httpie
-
-    print_success "Packages installed"
-}
-
-# Install Neovim
-install_neovim() {
-    print_step "Installing Neovim..."
-
-    if [[ "$OS" == "linux" ]]; then
-        # Use AppImage for latest version
-        NVIM_VERSION="v0.10.2"
-        curl -LO "https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}/nvim-linux64.tar.gz"
-        sudo rm -rf /opt/nvim-linux64
-        sudo tar -C /opt -xzf nvim-linux64.tar.gz
-        rm nvim-linux64.tar.gz
-        sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
-    else
-        brew install neovim
-    fi
-
+    # Neovim (AppImage - official GitHub release)
+    print_step "Installing Neovim from GitHub releases..."
+    NVIM_VERSION="v0.10.2"
+    curl -LO "https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}/nvim-linux64.tar.gz"
+    sudo rm -rf /opt/nvim-linux64
+    sudo tar -C /opt -xzf nvim-linux64.tar.gz
+    rm nvim-linux64.tar.gz
+    sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
     print_success "Neovim installed"
-}
 
-# Install Starship prompt
-install_starship() {
-    print_step "Installing Starship prompt..."
+    # Starship (curl install)
+    print_step "Installing Starship..."
     curl -sS https://starship.rs/install.sh | sh -s -- -y
     print_success "Starship installed"
-}
 
-# Install mise (runtime version manager)
-install_mise() {
+    # mise (curl install)
     print_step "Installing mise..."
     curl https://mise.run | sh
-
-    # Add mise to current shell
     export PATH="$HOME/.local/bin:$PATH"
-    eval "$(~/.local/bin/mise activate bash)"
-
     print_success "mise installed"
 }
 
@@ -168,6 +150,7 @@ clone_dotfiles() {
         git fetch origin
         git checkout "$DOTFILES_BRANCH"
         git pull origin "$DOTFILES_BRANCH"
+        cd -
     else
         git clone -b "$DOTFILES_BRANCH" "$DOTFILES_REPO" "$DOTFILES_DIR"
     fi
@@ -183,7 +166,7 @@ setup_symlinks() {
     mkdir -p ~/.config/fish/functions
     mkdir -p ~/.config/fish/conf.d
 
-    # Backup existing configs
+    # Backup existing configs (only real files, not symlinks)
     for file in ~/.zshrc ~/.config/nvim ~/.tmux.conf ~/.config/fish/config.fish; do
         if [[ -e "$file" && ! -L "$file" ]]; then
             mv "$file" "${file}.backup.$(date +%s)"
@@ -216,13 +199,8 @@ setup_symlinks() {
         ln -sf "$f" ~/.config/fish/conf.d/
     done
 
-    # Starship
-    if [[ "$OS" == "linux" ]]; then
-        ln -sf "$DOTFILES_DIR/starship/linux.toml" ~/.config/starship.toml
-    else
-        ln -sf "$DOTFILES_DIR/starship/mac.toml" ~/.config/starship.toml 2>/dev/null || \
-        ln -sf "$DOTFILES_DIR/starship/linux.toml" ~/.config/starship.toml
-    fi
+    # Starship config
+    ln -sf "$DOTFILES_DIR/starship/linux.toml" ~/.config/starship.toml
 
     # tool-versions for mise
     ln -sf "$DOTFILES_DIR/tool-versions" ~/.tool-versions
@@ -236,8 +214,8 @@ set_default_shell() {
 
     ZSH_PATH=$(which zsh)
 
-    # Add zsh to /etc/shells if not present
-    if ! grep -q "$ZSH_PATH" /etc/shells; then
+    # Add zsh to /etc/shells if not present (Linux only, Mac has it)
+    if [[ "$OS" == "linux" ]] && ! grep -q "$ZSH_PATH" /etc/shells; then
         echo "$ZSH_PATH" | sudo tee -a /etc/shells
     fi
 
@@ -273,16 +251,14 @@ main() {
 
     detect_os
 
-    if [[ "$OS" == "linux" ]]; then
-        install_linux_packages
+    # OS-specific installation
+    if [[ "$OS" == "mac" ]]; then
+        install_mac
     else
-        install_mac_packages
+        install_linux
     fi
 
     clone_dotfiles
-    install_neovim
-    install_starship
-    install_mise
     setup_symlinks
     install_tpm
     set_default_shell
