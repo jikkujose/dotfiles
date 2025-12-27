@@ -238,6 +238,23 @@ verify_dotfiles() {
     print_success "Dotfiles verified at $DOTFILES_DIR"
 }
 
+# Install nvim plugins via vim-plug
+install_nvim_plugins() {
+    print_step "Installing nvim plugins..."
+
+    # Install vim-plug if not present
+    PLUG_FILE="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim"
+    if [[ ! -f "$PLUG_FILE" ]]; then
+        curl -fLo "$PLUG_FILE" --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    fi
+
+    # Install plugins headlessly
+    nvim --headless +PlugInstall +qall 2>/dev/null
+
+    print_success "nvim plugins installed"
+}
+
 # Setup symlinks
 setup_symlinks() {
     print_step "Setting up symlinks..."
@@ -377,6 +394,7 @@ main() {
 
         print_dry "Verify dotfiles at $DOTFILES_DIR"
         print_dry "mise install ruby && ruby generate-aliases.rb"
+        print_dry "nvim --headless +PlugInstall +qall"
 
         echo ""
         print_step "Would create symlinks:"
@@ -418,6 +436,7 @@ main() {
     verify_dotfiles
     install_ruby_and_generate
     setup_symlinks
+    install_nvim_plugins
     install_font
     setup_iterm2
     set_default_shell
