@@ -52,7 +52,7 @@ alias nm_delete="find . -name 'node_modules' -type d -prune -print0 | xargs -0 r
 alias gallery="npx gallery-server --no-footer -p 2323 -t 2323 --folder ."
 alias sl="df -h / | tail -n 1 | ruby -e \"puts STDIN.read.split(' ')[3].split('G')[0] + ' GB'\""
 alias ff="cat ~/vimwiki/fast/2024.md"
-alias podman-container-ls="podman container ls -a --format \"table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Ports}}\t{{.Created}}\""
+alias podman-container-ls="podman container ls -a --format \"table {{.ID}}\\t{{.Names}}\\t{{.Status}}\\t{{.Ports}}\\t{{.Created}}\""
 
 # Zsh-only
 alias bs="source ~/.zshrc"

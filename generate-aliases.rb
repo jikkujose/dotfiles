@@ -6,21 +6,32 @@ require 'yaml'
 DOTFILES = File.dirname(__FILE__)
 CONFIG = YAML.load_file(File.join(DOTFILES, 'aliases.yml'))
 
-def escape_for_shell(cmd)
-  # Don't double-escape already quoted strings
+# Escape for zsh double-quoted strings
+def escape_zsh(cmd)
   cmd.to_s
+     .gsub('\\', '\\\\\\\\')  # Escape backslashes first
+     .gsub('"', '\\"')         # Escape double quotes
+     .gsub('$', '\\$')         # Escape dollar signs
+     .gsub('`', '\\\\`')       # Escape backticks
+end
+
+# Escape for fish single-quoted strings
+def escape_fish(cmd)
+  # Fish single quotes: only escape single quotes with \'
+  cmd.to_s.gsub("'", "\\\\'")
 end
 
 def generate_zsh_aliases(aliases, file)
+  return unless aliases
   aliases.each do |name, cmd|
-    file.puts %(alias #{name}="#{escape_for_shell(cmd)}")
+    file.puts %(alias #{name}="#{escape_zsh(cmd)}")
   end
 end
 
 def generate_fish_aliases(aliases, file)
+  return unless aliases
   aliases.each do |name, cmd|
-    # Fish uses abbr for better UX (expands inline) or alias
-    file.puts %(abbr -a #{name} '#{escape_for_shell(cmd)}')
+    file.puts %(abbr -a #{name} '#{escape_fish(cmd)}')
   end
 end
 
