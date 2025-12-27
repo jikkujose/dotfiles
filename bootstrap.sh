@@ -255,7 +255,10 @@ set_default_shell() {
 
 # Install Ruby via mise and generate aliases
 install_ruby_and_generate() {
-    print_step "Installing Ruby via mise and generating aliases..."
+    print_step "Installing Ruby via mise (precompiled binaries)..."
+
+    # Enable precompiled binaries (much faster than compiling from source)
+    export MISE_EXPERIMENTAL=1
 
     # Activate mise for this session
     eval "$(mise activate bash)"
