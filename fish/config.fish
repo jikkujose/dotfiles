@@ -49,6 +49,10 @@ if test -f ~/.private.fish
     source ~/.private.fish
 end
 
+# Claude mode functions
+if test -f ~/dotfiles/fish/functions/claude-modes.fish
+    source ~/dotfiles/fish/functions/claude-modes.fish
+end
 
 # Bun completions
 if test -f $HOME/.bun/_bun.fish

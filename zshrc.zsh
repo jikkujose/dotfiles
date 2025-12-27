@@ -18,9 +18,9 @@ then
   source ~/.private.zsh
 fi
 
-if [ -f ~/claude-modes.zsh ]
+if [ -f ~/dotfiles/claude-modes.zsh ]
 then
-  source ~/claude-modes.zsh
+  source ~/dotfiles/claude-modes.zsh
 fi
 
 set -o vi
