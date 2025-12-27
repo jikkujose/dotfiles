@@ -12,7 +12,6 @@ source ~/dotfiles/paths.zsh
 source ~/dotfiles/variables.zsh
 source ~/dotfiles/aliases.zsh
 source ~/dotfiles/functions.zsh
-source ~/dotfiles/conda.zsh
 
 if [ -f ~/.private.zsh ]
 then
@@ -37,7 +36,6 @@ clear
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$HOME/.asdf/shims:$PATH"
-export PATH="$HOME/miniconda3/bin:$PATH"
 export PATH="/opt/nvim-linux64/bin/:$PATH"
 
 # Simple prompt: ~/path (branch*) ❯
@@ -69,8 +67,6 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   source ~/dotfiles/zshrc/mac.zsh
   source ~/dotfiles/functions/mac.zsh
 fi
-
-# conda deactivate
 
 # vince
 export VINCE_INSTALL="$HOME/.vince"
