@@ -49,10 +49,6 @@ if test -f ~/.private.fish
     source ~/.private.fish
 end
 
-# Starship prompt
-if type -q starship
-    starship init fish | source
-end
 
 # Bun completions
 if test -f $HOME/.bun/_bun.fish

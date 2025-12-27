@@ -28,35 +28,61 @@ detect_os() {
 }
 
 # ============================================================================
-# MAC: Everything via Homebrew (maximum safety - no curl|bash)
+# Install Homebrew (works on both Mac and Linux)
 # ============================================================================
-install_mac() {
-    print_step "Setting up Mac (brew only - no curl installs)..."
+install_homebrew() {
+    if command -v brew &> /dev/null; then
+        print_success "Homebrew already installed"
+        return
+    fi
 
-    # Install Homebrew if not present (this is the only curl, but it's unavoidable)
-    if ! command -v brew &> /dev/null; then
-        print_step "Installing Homebrew (required for all other installs)..."
-        print_warning "This is the only curl|bash - Homebrew is the standard Mac package manager"
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    print_step "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-        # Add brew to PATH for this session
+    # Add brew to PATH for this session
+    if [[ "$OS" == "mac" ]]; then
         if [[ -d "/opt/homebrew" ]]; then
             eval "$(/opt/homebrew/bin/brew shellenv)"
         else
             eval "$(/usr/local/bin/brew shellenv)"
         fi
+    else
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     fi
 
+    print_success "Homebrew installed"
+}
+
+# ============================================================================
+# Install build dependencies (Linux only - needed before Linuxbrew)
+# ============================================================================
+install_linux_build_deps() {
+    print_step "Installing build dependencies via apt..."
+
+    sudo apt update
+    sudo apt install -y \
+        build-essential \
+        curl \
+        file \
+        git \
+        procps
+
+    print_success "Build dependencies installed"
+}
+
+# ============================================================================
+# Install packages via Homebrew (same for Mac and Linux)
+# ============================================================================
+install_packages() {
     print_step "Installing packages via brew..."
 
-    # All packages in one brew install - all from official Homebrew repos
+    # Core packages - all from official Homebrew repos
     brew install \
         git \
         zsh \
         fish \
         tmux \
         neovim \
-        starship \
         mise \
         bat \
         ripgrep \
@@ -64,7 +90,10 @@ install_mac() {
         fd \
         httpie \
         tree \
-        htop \
+        htop
+
+    # Build dependencies for mise to compile Ruby/Python
+    brew install \
         openssl \
         readline \
         libyaml \
@@ -74,70 +103,16 @@ install_mac() {
 }
 
 # ============================================================================
-# LINUX: apt + curl installs (for VMs, less strict)
+# Linux-specific extras (xclip, etc. not in Homebrew)
 # ============================================================================
-install_linux() {
-    print_step "Setting up Linux..."
+install_linux_extras() {
+    print_step "Installing Linux-specific packages via apt..."
 
-    sudo apt update
-
-    # Core packages from apt (official Ubuntu repos)
-    print_step "Installing apt packages..."
     sudo apt install -y \
-        curl \
-        git \
-        zsh \
-        fish \
-        tmux \
-        tree \
-        htop \
-        unzip \
         xclip \
-        locales \
-        bat \
-        ripgrep \
-        silversearcher-ag \
-        fd-find \
-        httpie \
-        software-properties-common
+        locales
 
-    # Build dependencies for mise to compile Ruby/Python
-    sudo apt install -y \
-        build-essential \
-        rustc \
-        libssl-dev \
-        libyaml-dev \
-        libreadline-dev \
-        libbz2-dev \
-        libffi-dev \
-        liblzma-dev \
-        libsqlite3-dev \
-        zlib1g-dev \
-        libgmp-dev \
-        tk-dev
-
-    print_success "apt packages installed"
-
-    # Neovim (AppImage - official GitHub release)
-    print_step "Installing Neovim from GitHub releases..."
-    NVIM_VERSION="v0.10.2"
-    curl -LO "https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}/nvim-linux64.tar.gz"
-    sudo rm -rf /opt/nvim-linux64
-    sudo tar -C /opt -xzf nvim-linux64.tar.gz
-    rm nvim-linux64.tar.gz
-    sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
-    print_success "Neovim installed"
-
-    # Starship (curl install)
-    print_step "Installing Starship..."
-    curl -sS https://starship.rs/install.sh | sh -s -- -y
-    print_success "Starship installed"
-
-    # mise (curl install)
-    print_step "Installing mise..."
-    curl https://mise.run | sh
-    export PATH="$HOME/.local/bin:$PATH"
-    print_success "mise installed"
+    print_success "Linux extras installed"
 }
 
 # Clone dotfiles
@@ -179,7 +154,6 @@ setup_symlinks() {
     rm -f ~/.zshrc
     rm -f ~/.tmux.conf
     rm -f ~/.config/fish/config.fish
-    rm -f ~/.config/starship.toml
 
     # Zsh
     ln -sf "$DOTFILES_DIR/zshrc.zsh" ~/.zshrc
@@ -199,9 +173,6 @@ setup_symlinks() {
         ln -sf "$f" ~/.config/fish/conf.d/
     done
 
-    # Starship config
-    ln -sf "$DOTFILES_DIR/starship/linux.toml" ~/.config/starship.toml
-
     # tool-versions for mise
     ln -sf "$DOTFILES_DIR/tool-versions" ~/.tool-versions
 
@@ -212,10 +183,19 @@ setup_symlinks() {
 set_default_shell() {
     print_step "Setting zsh as default shell..."
 
-    ZSH_PATH=$(which zsh)
+    # Use brew's zsh
+    if [[ "$OS" == "mac" ]]; then
+        ZSH_PATH="/opt/homebrew/bin/zsh"
+        [[ ! -f "$ZSH_PATH" ]] && ZSH_PATH="/usr/local/bin/zsh"
+    else
+        ZSH_PATH="/home/linuxbrew/.linuxbrew/bin/zsh"
+    fi
 
-    # Add zsh to /etc/shells if not present (Linux only, Mac has it)
-    if [[ "$OS" == "linux" ]] && ! grep -q "$ZSH_PATH" /etc/shells; then
+    # Fallback to system zsh
+    [[ ! -f "$ZSH_PATH" ]] && ZSH_PATH=$(which zsh)
+
+    # Add zsh to /etc/shells if not present
+    if ! grep -q "$ZSH_PATH" /etc/shells 2>/dev/null; then
         echo "$ZSH_PATH" | sudo tee -a /etc/shells
     fi
 
@@ -251,11 +231,18 @@ main() {
 
     detect_os
 
-    # OS-specific installation
-    if [[ "$OS" == "mac" ]]; then
-        install_mac
-    else
-        install_linux
+    # Linux needs build deps before Homebrew
+    if [[ "$OS" == "linux" ]]; then
+        install_linux_build_deps
+    fi
+
+    # Homebrew for both platforms
+    install_homebrew
+    install_packages
+
+    # Linux extras not in Homebrew
+    if [[ "$OS" == "linux" ]]; then
+        install_linux_extras
     fi
 
     clone_dotfiles

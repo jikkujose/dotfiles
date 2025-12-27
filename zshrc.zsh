@@ -40,7 +40,20 @@ export PATH="$HOME/.asdf/shims:$PATH"
 export PATH="$HOME/miniconda3/bin:$PATH"
 export PATH="/opt/nvim-linux64/bin/:$PATH"
 
-eval "$(starship init zsh)"
+# Simple prompt: ~/path (branch*) ❯
+# * = dirty, nothing = clean
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats ' %F{yellow}%b%f'
+zstyle ':vcs_info:git:*' actionformats ' %F{yellow}%b%f %F{red}%a%f'
+setopt PROMPT_SUBST
+
+# Check for uncommitted changes
+git_dirty() {
+  [[ -n $(git status --porcelain 2>/dev/null) ]] && echo '%F{red}*%f'
+}
+
+PROMPT='%F{blue}%~%f${vcs_info_msg_0_}$(git_dirty) %F{green}❯%f '
 
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
