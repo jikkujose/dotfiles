@@ -10,7 +10,7 @@ setopt HIST_IGNORE_SPACE
 
 source ~/dotfiles/paths.zsh
 source ~/dotfiles/variables.zsh
-source ~/dotfiles/aliases.zsh
+source ~/dotfiles/generated/aliases.zsh
 source ~/dotfiles/functions.zsh
 
 if [ -f ~/.private.zsh ]
@@ -56,14 +56,14 @@ PROMPT='%F{blue}%~%f${vcs_info_msg_0_}$(git_dirty) %F{green}❯%f '
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   source ~/dotfiles/zshrc/linux.zsh
-  source ~/dotfiles/aliases/linux.zsh
+  source ~/dotfiles/generated/aliases-linux.zsh
   source ~/dotfiles/functions/linux.zsh
 
   if [[ -e ~/.wsl ]]; then
-    source ~/dotfiles/aliases/wsl.zsh
+    source ~/dotfiles/generated/aliases-wsl.zsh
   fi
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  source ~/dotfiles/aliases/mac.zsh
+  source ~/dotfiles/generated/aliases-mac.zsh
   source ~/dotfiles/zshrc/mac.zsh
   source ~/dotfiles/functions/mac.zsh
 fi

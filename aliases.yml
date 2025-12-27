@@ -95,6 +95,12 @@ mac:
   nn: nvim
   np: nvim --clean -n -c "set nobackup noswapfile noundofile"
 
+wsl:
+  c: xsel --clipboard --input
+  p: xsel --clipboard --output
+  d: cd /mnt/c/Users/Admin/Desktop
+  dw: cd /mnt/c/Users/Admin/Downloads/
+
 # Zsh-only aliases (not compatible with fish)
 zsh_only:
   bs: source ~/.zshrc

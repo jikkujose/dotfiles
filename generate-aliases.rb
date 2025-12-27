@@ -47,6 +47,11 @@ File.open(File.join(DOTFILES, 'generated', 'aliases-mac.zsh'), 'w') do |f|
   generate_zsh_aliases(CONFIG['mac'], f)
 end
 
+File.open(File.join(DOTFILES, 'generated', 'aliases-wsl.zsh'), 'w') do |f|
+  f.puts "# Auto-generated WSL aliases"
+  generate_zsh_aliases(CONFIG['wsl'], f)
+end
+
 # Generate Fish files
 puts "Generating Fish abbreviations..."
 
