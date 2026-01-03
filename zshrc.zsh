@@ -36,41 +36,8 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$HOME/.local/share/mise/shims:$PATH"
 export PATH="/opt/nvim-linux64/bin/:$PATH"
 
-# Simple prompt: ~/path (branch: * | ↑2)
-setopt PROMPT_SUBST
-
-git_prompt_info() {
-  local branch=$(git symbolic-ref --short HEAD 2>/dev/null)
-  [[ -z "$branch" ]] && return
-
-  local dirty=""
-  [[ -n $(git status --porcelain 2>/dev/null) ]] && dirty="%F{red}*%f"
-
-  local unpushed=""
-  local ahead=$(git rev-list @{u}.. 2>/dev/null | wc -l | tr -d ' ')
-  if [[ $ahead -gt 1 ]]; then
-    unpushed="%F{green}↑%f%F{blue}${ahead}%f"
-  elif [[ $ahead -eq 1 ]]; then
-    unpushed="%F{green}↑%f"
-  fi
-
-  local result="%F{white}(%f%F{yellow}${branch}%f"
-  if [[ -n "$dirty" || -n "$unpushed" ]]; then
-    result+="%F{white}:%f"
-    if [[ -n "$dirty" && -n "$unpushed" ]]; then
-      result+=" ${dirty} %F{white}|%f ${unpushed}"
-    elif [[ -n "$dirty" ]]; then
-      result+=" ${dirty}"
-    else
-      result+=" ${unpushed}"
-    fi
-  fi
-  result+="%F{white})%f"
-  echo "$result"
-}
-
-PROMPT='%F{blue}%~%f $(git_prompt_info)
-%F{green}❯%f '
+# Prompt
+source ~/dotfiles/prompts/lino.zsh
 
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
