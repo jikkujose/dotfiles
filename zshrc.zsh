@@ -36,26 +36,40 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$HOME/.local/share/mise/shims:$PATH"
 export PATH="/opt/nvim-linux64/bin/:$PATH"
 
-# Simple prompt: ~/path (branch*) ❯
-# * = dirty, nothing = clean
-autoload -Uz vcs_info
-precmd() { vcs_info }
-zstyle ':vcs_info:git:*' formats ' %F{yellow}%b%f'
-zstyle ':vcs_info:git:*' actionformats ' %F{yellow}%b%f %F{red}%a%f'
+# Simple prompt: ~/path (branch: * | ↑2)
 setopt PROMPT_SUBST
 
-# Check for uncommitted changes
-git_dirty() {
-  [[ -n $(git status --porcelain 2>/dev/null) ]] && echo '%F{red}*%f'
-}
+git_prompt_info() {
+  local branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+  [[ -z "$branch" ]] && return
 
-# Check for unpushed commits
-git_unpushed() {
+  local dirty=""
+  [[ -n $(git status --porcelain 2>/dev/null) ]] && dirty="%F{red}*%f"
+
+  local unpushed=""
   local ahead=$(git rev-list @{u}.. 2>/dev/null | wc -l | tr -d ' ')
-  [[ $ahead -gt 0 ]] && echo "%F{magenta}↑${ahead}%f"
+  if [[ $ahead -gt 1 ]]; then
+    unpushed="%F{green}↑%f%F{blue}${ahead}%f"
+  elif [[ $ahead -eq 1 ]]; then
+    unpushed="%F{green}↑%f"
+  fi
+
+  local result="%F{white}(%f%F{yellow}${branch}%f"
+  if [[ -n "$dirty" || -n "$unpushed" ]]; then
+    result+="%F{white}:%f"
+    if [[ -n "$dirty" && -n "$unpushed" ]]; then
+      result+=" ${dirty} %F{white}|%f ${unpushed}"
+    elif [[ -n "$dirty" ]]; then
+      result+=" ${dirty}"
+    else
+      result+=" ${unpushed}"
+    fi
+  fi
+  result+="%F{white})%f"
+  echo "$result"
 }
 
-PROMPT='%F{blue}%~%f${vcs_info_msg_0_}$(git_dirty)$(git_unpushed)
+PROMPT='%F{blue}%~%f $(git_prompt_info)
 %F{green}❯%f '
 
 
