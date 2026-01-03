@@ -49,7 +49,14 @@ git_dirty() {
   [[ -n $(git status --porcelain 2>/dev/null) ]] && echo '%F{red}*%f'
 }
 
-PROMPT='%F{blue}%~%f${vcs_info_msg_0_}$(git_dirty) %F{green}❯%f '
+# Check for unpushed commits
+git_unpushed() {
+  local ahead=$(git rev-list @{u}.. 2>/dev/null | wc -l | tr -d ' ')
+  [[ $ahead -gt 0 ]] && echo "%F{magenta}↑${ahead}%f"
+}
+
+PROMPT='%F{blue}%~%f${vcs_info_msg_0_}$(git_dirty)$(git_unpushed)
+%F{green}❯%f '
 
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
