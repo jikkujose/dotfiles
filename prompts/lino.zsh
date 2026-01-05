@@ -74,4 +74,4 @@ git_prompt_info() {
 }
 
 PROMPT='%F{blue}%~%f $(git_prompt_info)
-%F{green}❯%f '
+%F{green}➜%f '

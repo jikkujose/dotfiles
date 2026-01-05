@@ -31,7 +31,7 @@ end
 def generate_fish_aliases(aliases, file)
   return unless aliases
   aliases.each do |name, cmd|
-    file.puts %(abbr -a #{name} '#{escape_fish(cmd)}')
+    file.puts %(alias #{name} '#{escape_fish(cmd)}')
   end
 end
 
@@ -64,7 +64,7 @@ File.open(File.join(DOTFILES, 'generated', 'aliases-wsl.zsh'), 'w') do |f|
 end
 
 # Generate Fish files
-puts "Generating Fish abbreviations..."
+puts "Generating Fish aliases..."
 
 File.open(File.join(DOTFILES, 'generated', 'aliases.fish'), 'w') do |f|
   f.puts "# Auto-generated from aliases.yml - do not edit directly"
@@ -77,12 +77,12 @@ File.open(File.join(DOTFILES, 'generated', 'aliases.fish'), 'w') do |f|
 end
 
 File.open(File.join(DOTFILES, 'generated', 'aliases-linux.fish'), 'w') do |f|
-  f.puts "# Auto-generated Linux abbreviations"
+  f.puts "# Auto-generated Linux aliases"
   generate_fish_aliases(CONFIG['linux'], f)
 end
 
 File.open(File.join(DOTFILES, 'generated', 'aliases-mac.fish'), 'w') do |f|
-  f.puts "# Auto-generated Mac abbreviations"
+  f.puts "# Auto-generated Mac aliases"
   generate_fish_aliases(CONFIG['mac'], f)
 end
 

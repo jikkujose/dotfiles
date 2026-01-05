@@ -50,7 +50,7 @@ shared:
   server: python3 -m http.server
 
   # Media
-  yy: yt-dlp --recode-video mp4 --postprocessor-args 'ffmpeg:-c:v libx264 -crf 20 -preset fast -c:a aac -movflags +faststart'
+  yy: yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' -S vcodec:h264 -o '%(id)s.%(ext)s'
   ys: yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=mp4]' -S vcodec:h264
   v: cvlc
 
