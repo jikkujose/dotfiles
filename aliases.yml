@@ -47,7 +47,6 @@ shared:
   hb: http --body --follow
   tb: nc termbin.com 9999
   city: curl https://am.i.mullvad.net/city
-  server: python3 -m http.server
 
   # Media
   yy: yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' -S vcodec:h264 -o '%(id)s.%(ext)s'
