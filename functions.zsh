@@ -48,19 +48,3 @@ jq-analyze() {
   local threshold=${1:-50}
   jq "walk(if type == \"string\" and length > $threshold then \"[content truncated]\" else . end)"
 }
-
-server() {
-    local port=${1:-8000}
-    python3 -c "
-from http.server import SimpleHTTPRequestHandler, HTTPServer
-from datetime import datetime
-class Q(SimpleHTTPRequestHandler):
-    def handle(self):
-        try: super().handle()
-        except BrokenPipeError: pass
-    def log_message(self, format, *args):
-        print(f'{self.client_address[0]} - {datetime.now().strftime(\"%H:%M:%S\")} - {args[0].split()[1]}')
-print('Serving on http://0.0.0.0:$port')
-HTTPServer(('0.0.0.0', $port), Q).serve_forever()
-"
-}
