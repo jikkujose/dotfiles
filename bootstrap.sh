@@ -169,6 +169,10 @@ install_font() {
 
     if [[ "$OS" == "mac" ]]; then
         # macOS: Install via Homebrew cask
+        if ls ~/Library/Fonts/CaskaydiaCove* &>/dev/null; then
+            print_success "Nerd Font already installed"
+            return
+        fi
         brew install --cask font-caskaydia-cove-nerd-font
     else
         # Linux: Download and install to local fonts
