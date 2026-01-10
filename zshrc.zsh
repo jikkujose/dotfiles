@@ -35,6 +35,7 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$HOME/.local/share/mise/shims:$PATH"
 export PATH="/opt/nvim-linux64/bin/:$PATH"
+export PATH="$HOME/commands/:$PATH"
 
 # Prompt
 source ~/dotfiles/prompts/lino.zsh
