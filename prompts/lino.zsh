@@ -13,6 +13,9 @@ git_prompt_info() {
   local branch=$(git symbolic-ref --short HEAD 2>/dev/null)
   [[ -z "$branch" ]] && return
 
+  # Get repo name (folder name of repo root)
+  local repo=$(basename "$(git rev-parse --show-toplevel 2>/dev/null)")
+
   local status_output=$(git status --porcelain 2>/dev/null)
 
   # Staged changes (lines with non-space in first column, excluding untracked)
@@ -57,8 +60,8 @@ git_prompt_info() {
   [[ -n "$behind_indicator" && -n "$ahead_indicator" ]] && remote_status+=" "
   [[ -n "$ahead_indicator" ]] && remote_status+="$ahead_indicator"
 
-  # Combine
-  local result="%F{white}(%f%F{yellow}${branch}%f"
+  # Combine: repo/branch
+  local result="%F{white}(%f%F{cyan}${repo}%F{white}/%f%F{yellow}${branch}%f"
   if [[ -n "$local_status" || -n "$remote_status" ]]; then
     result+="%F{white}:%f"
     if [[ -n "$local_status" && -n "$remote_status" ]]; then
