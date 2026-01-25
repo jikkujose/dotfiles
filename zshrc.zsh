@@ -55,10 +55,6 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   source ~/dotfiles/functions/mac.zsh
 fi
 
-# vince
-export VINCE_INSTALL="$HOME/.vince"
-export PATH="$VINCE_INSTALL/bin:$PATH"
-
 # Completion without dump file
 autoload -U compinit; compinit -d /dev/null
 
