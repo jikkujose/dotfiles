@@ -61,3 +61,5 @@ export PATH="$VINCE_INSTALL/bin:$PATH"
 
 # Completion without dump file
 autoload -U compinit; compinit -d /dev/null
+
+export PATH="$HOME/.local/bin:$PATH"
