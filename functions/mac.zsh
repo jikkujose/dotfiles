@@ -5,7 +5,7 @@ ip(){
 }
 
 # iOS-safe H.264 (libx264). HW=1 to use h264_videotoolbox.
-convert-to-x264() {
+tx-to-x264() {
   emulate -L zsh
   set -o noglob  # prevent ? globbing in -map 0:a?
 
