@@ -65,6 +65,7 @@ shared:
   br: bun run
   docker: podman
   zed: ~/.local/bin/zed
+  cx: codex --dangerously-bypass-approvals-and-sandbox
 
   # Node
   nm_weight: find . -name 'node_modules' -type d -prune -print0 | xargs -0 du -chs
