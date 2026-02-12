@@ -48,13 +48,3 @@ jq-analyze() {
   local threshold=${1:-50}
   jq "walk(if type == \"string\" and length > $threshold then \"[content truncated]\" else . end)"
 }
-
-yy() {
-  if [[ "$1" == *"tiktok.com"* ]]; then
-    # TikTok: prefer h264 (iOS compatible), best resolution
-    yt-dlp -f 'b[vcodec^=h264]' -S 'res' -o '%(id)s.%(ext)s' "$@"
-  else
-    # Original behavior for other sites
-    yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' -S vcodec:h264 -o '%(id)s.%(ext)s' "$@"
-  fi
-}

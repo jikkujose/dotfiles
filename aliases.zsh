@@ -1,6 +1,3 @@
-# Auto-generated from aliases.yml - do not edit directly
-# Run: ruby generate-aliases.rb
-
 alias d="cd ~/Desktop"
 alias dw="cd ~/Downloads/"
 alias ..="cd .."

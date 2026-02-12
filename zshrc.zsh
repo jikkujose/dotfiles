@@ -8,7 +8,7 @@ export EDITOR='nvim'
 setopt interactivecomments
 
 source ~/dotfiles/variables.zsh
-source ~/dotfiles/generated/aliases.zsh
+source ~/dotfiles/aliases.zsh
 source ~/dotfiles/functions.zsh
 
 if [ -f ~/.private.zsh ]
@@ -43,14 +43,14 @@ source ~/dotfiles/prompts/lino.zsh
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   source ~/dotfiles/zshrc/linux.zsh
-  source ~/dotfiles/generated/aliases-linux.zsh
+  source ~/dotfiles/aliases-linux.zsh
   source ~/dotfiles/functions/linux.zsh
 
   if [[ -e ~/.wsl ]]; then
-    source ~/dotfiles/generated/aliases-wsl.zsh
+    source ~/dotfiles/aliases-wsl.zsh
   fi
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  source ~/dotfiles/generated/aliases-mac.zsh
+  source ~/dotfiles/aliases-mac.zsh
   source ~/dotfiles/zshrc/mac.zsh
   source ~/dotfiles/functions/mac.zsh
 fi

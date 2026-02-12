@@ -16,7 +16,7 @@ DRY_RUN=false
 show_help() {
     echo ""
     echo -e "${BLUE}Dotfiles Bootstrap${NC}"
-    echo "Sets up zsh, fish, tmux, neovim via Homebrew. Idempotent & safe to re-run."
+    echo "Sets up zsh, tmux, neovim via Homebrew. Idempotent & safe to re-run."
     echo "Review the code first: less bootstrap.sh"
     echo ""
     echo -e "${YELLOW}Usage:${NC} ./bootstrap.sh <command>"
@@ -125,7 +125,6 @@ install_packages() {
     brew install \
         git \
         zsh \
-        fish \
         tmux \
         neovim \
         mise \
@@ -264,12 +263,10 @@ setup_symlinks() {
     print_step "Setting up symlinks..."
 
     mkdir -p ~/.config
-    mkdir -p ~/.config/fish/functions
-    mkdir -p ~/.config/fish/conf.d
     mkdir -p ~/.config/alacritty
 
     # Backup existing configs (only real files, not symlinks)
-    for file in ~/.zshrc ~/.config/nvim ~/.tmux.conf ~/.config/fish/config.fish; do
+    for file in ~/.zshrc ~/.config/nvim ~/.tmux.conf; do
         if [[ -e "$file" && ! -L "$file" ]]; then
             mv "$file" "${file}.backup.$(date +%s)"
             print_warning "Backed up existing $file"
@@ -280,7 +277,6 @@ setup_symlinks() {
     rm -rf ~/.config/nvim
     rm -f ~/.zshrc
     rm -f ~/.tmux.conf
-    rm -f ~/.config/fish/config.fish
 
     # Zsh
     ln -sf "$DOTFILES_DIR/zshrc.zsh" ~/.zshrc
@@ -290,15 +286,6 @@ setup_symlinks() {
 
     # Neovim
     ln -sf "$DOTFILES_DIR/nvim" ~/.config/nvim
-
-    # Fish
-    ln -sf "$DOTFILES_DIR/fish/config.fish" ~/.config/fish/config.fish
-    for f in "$DOTFILES_DIR"/fish/functions/*.fish; do
-        ln -sf "$f" ~/.config/fish/functions/
-    done
-    for f in "$DOTFILES_DIR"/fish/conf.d/*.fish; do
-        ln -sf "$f" ~/.config/fish/conf.d/
-    done
 
     # tool-versions for mise
     ln -sf "$DOTFILES_DIR/tool-versions" ~/.tool-versions
@@ -338,30 +325,6 @@ set_default_shell() {
     fi
 }
 
-# Install Ruby via mise and generate aliases
-install_ruby_and_generate() {
-    print_step "Installing Ruby via mise (precompiled binaries)..."
-
-    # Enable precompiled binaries (much faster than compiling from source)
-    mise settings experimental=true
-
-    # Add mise shims to PATH
-    export PATH="$HOME/.local/share/mise/shims:$PATH"
-
-    # Install Ruby (reads version from tool-versions - must be 3.3.0+ for precompiled)
-    mise install ruby
-
-    # Rehash to update shims
-    mise reshim
-
-    # Generate aliases
-    cd "$DOTFILES_DIR"
-    ruby generate-aliases.rb
-    cd -
-
-    print_success "Ruby installed and aliases generated"
-}
-
 # Main
 main() {
     echo ""
@@ -390,14 +353,13 @@ main() {
         else
             print_dry "Install Homebrew from https://brew.sh"
         fi
-        print_dry "brew install git zsh fish tmux neovim mise bat ripgrep..."
+        print_dry "brew install git zsh tmux neovim mise bat ripgrep..."
 
         if [[ "$OS" == "linux" ]]; then
             print_dry "sudo apt install xclip locales alacritty"
         fi
 
         print_dry "Verify dotfiles at $DOTFILES_DIR"
-        print_dry "mise install ruby && ruby generate-aliases.rb"
         print_dry "nvim --headless +PlugInstall +qall"
 
         echo ""
@@ -405,7 +367,6 @@ main() {
         print_dry "~/.zshrc -> $DOTFILES_DIR/zshrc.zsh"
         print_dry "~/.tmux.conf -> $DOTFILES_DIR/tmux.conf"
         print_dry "~/.config/nvim -> $DOTFILES_DIR/nvim"
-        print_dry "~/.config/fish/config.fish -> $DOTFILES_DIR/fish/config.fish"
         print_dry "~/.config/alacritty/alacritty.toml -> $DOTFILES_DIR/alacritty/alacritty.toml"
 
         echo ""
@@ -438,7 +399,6 @@ main() {
     fi
 
     verify_dotfiles
-    install_ruby_and_generate
     setup_symlinks
     install_nvim_plugins
     install_font
@@ -452,10 +412,7 @@ main() {
     echo ""
     echo "Next steps:"
     echo "  1. Log out and log back in (or run: exec zsh)"
-    echo "  2. Run 'mise install' to install Node/Python (Ruby already installed)"
-    echo ""
-    echo "To use fish instead: exec fish"
-    echo "To make fish default: chsh -s \$(which fish)"
+    echo "  2. Run 'mise install' to install Node/Python"
     echo ""
 }
 

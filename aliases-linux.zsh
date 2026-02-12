@@ -1,4 +1,3 @@
-# Auto-generated Linux aliases
 alias c="xclip -selection clipboard"
 alias p="xclip -o -selection clipboard"
 alias ip="hostname -I"

@@ -1,4 +1,3 @@
-# Auto-generated Mac aliases
 alias c="pbcopy"
 alias p="pbpaste"
 alias cat="ccat"
