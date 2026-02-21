@@ -38,7 +38,7 @@ export PATH="/opt/nvim-linux64/bin/:$PATH"
 export PATH="$HOME/commands:$PATH"
 
 # Prompt
-source ~/dotfiles/prompts/lino.zsh
+source ~/dotfiles/prompts/lino/index.zsh
 
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
