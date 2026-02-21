@@ -48,3 +48,29 @@ jq-analyze() {
   local threshold=${1:-50}
   jq "walk(if type == \"string\" and length > $threshold then \"[content truncated]\" else . end)"
 }
+
+# git worktree add with relative paths (portable when renaming container)
+gwa() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: gwa <path> [branch]"
+    echo "       gwa ../feature-branch feature-branch"
+    return 1
+  fi
+
+  local wt_path="$1"
+  local branch="${2:-$(basename "$wt_path")}"
+
+  # Create the worktree
+  git worktree add "$wt_path" -b "$branch" || return $?
+
+  # Get the actual gitdir path (includes worktrees/<branch>)
+  local wt_gitdir=$(cd "$wt_path" && git rev-parse --git-dir)
+  local wt_abs=$(cd "$wt_path" && pwd)
+
+  # Calculate relative path from worktree to its gitdir
+  local rel_path=$(realpath --relative-to="$wt_abs" "$wt_gitdir" 2>/dev/null || \
+                   python3 -c "import os.path; print(os.path.relpath('$wt_gitdir', '$wt_abs'))")
+
+  echo "gitdir: $rel_path" > "$wt_abs/.git"
+  echo "Created worktree with relative path: $wt_path"
+}
