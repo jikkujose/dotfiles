@@ -9,7 +9,7 @@ Personal development environment configuration.
 - **No personal identifiers.** No usernames, emails, or repo URLs.
 - **No secrets in repo.** API keys live in `~/.private.zsh` (not tracked).
 - **Stateless operation.** All tools configured to leave zero trace:
-  - No shell history (zsh, fish)
+  - No shell history (zsh)
   - No REPL history (python, node, irb)
   - No editor state (nvim swap, undo, shada)
   - No completion caches
@@ -17,13 +17,13 @@ Personal development environment configuration.
 ### Multi-Platform
 
 - Works on macOS and Linux (including WSL).
-- Single alias source (`aliases.yml`) generates shell-specific files.
+- Platform-specific aliases and functions loaded at runtime.
 - Platform detection at runtime for OS-specific paths and tools.
 
 ### Simplicity
 
 - Minimal dependencies. No plugin managers for tmux or zsh.
-- Custom prompts instead of frameworks (no oh-my-zsh, starship).
+- Custom prompt instead of frameworks (no oh-my-zsh, starship).
 - Prefer built-in features over plugins.
 
 ## Quick Start
@@ -49,19 +49,17 @@ The bootstrap script sets up a fresh machine.
 ### What It Does
 
 1. **Installs Homebrew** (macOS or Linuxbrew)
-2. **Installs packages** (git, zsh, fish, tmux, neovim, mise, etc.)
+2. **Installs packages** (git, zsh, tmux, neovim, mise, etc.)
 3. **Creates symlinks:**
    - `~/.zshrc` → `zshrc.zsh`
    - `~/.tmux.conf` → `tmux.conf`
    - `~/.config/nvim` → `nvim/`
-   - `~/.config/fish` → `fish/`
    - `~/.config/alacritty/` → `alacritty/`
    - `~/.tool-versions` → `tool-versions`
 4. **Installs mise** (runtime version manager)
 5. **Installs Ruby** via mise (precompiled binaries)
-6. **Generates aliases** for zsh and fish
-7. **Installs Nerd Font** (Caskaydia Cove)
-8. **Loads iTerm2 preferences** (macOS only)
+6. **Installs Nerd Font** (Caskaydia Cove)
+7. **Loads iTerm2 preferences** (macOS only)
 
 ### Requirements
 
@@ -74,9 +72,6 @@ The bootstrap script sets up a fresh machine.
 ```
 dotfiles/
 ├── bootstrap.sh          # Setup script
-├── aliases.yml           # Alias definitions (single source)
-├── generate-aliases.rb   # Generates shell-specific aliases
-├── generated/            # Auto-generated alias files
 │
 ├── zshrc.zsh             # Main zsh config
 ├── variables.zsh         # Environment variables
@@ -85,42 +80,33 @@ dotfiles/
 │   ├── linux.zsh
 │   └── mac.zsh
 │
-├── fish/                 # Fish shell config
-│   ├── config.fish
-│   ├── conf.d/           # Platform-specific
-│   └── functions/        # Fish functions
+├── aliases.zsh           # Shared aliases
+├── aliases-linux.zsh     # Linux-specific aliases
+├── aliases-mac.zsh       # macOS-specific aliases
+├── aliases-wsl.zsh       # WSL-specific aliases
+│
+├── functions/            # Platform-specific functions
+│   ├── linux.zsh
+│   └── mac.zsh
+│
+├── prompts/              # Custom prompts
+│   └── lino.zsh          # Lino prompt
 │
 ├── nvim/                 # Neovim config
 │   ├── init.lua          # Main config
+│   ├── init/             # Platform-specific
 │   ├── colors/           # Color schemes
-│   └── lua/plugins/      # Custom plugins
+│   └── autoload/         # vim-plug
 │
 ├── tmux.conf             # Tmux config
 ├── tool-versions         # mise runtime versions
 ├── claude-modes.zsh      # Claude API mode switcher
+├── prettierrc.json       # Prettier config
 ├── iterm2/               # iTerm2 preferences (macOS)
 └── alacritty/            # Alacritty terminal config
 ```
 
 ## Key Files
-
-### aliases.yml
-
-Single source of truth for all shell aliases.
-
-```yaml
-shared:
-  g: git
-  v: nvim
-
-linux:
-  pbcopy: "xclip -selection clipboard"
-
-mac:
-  flushdns: "sudo dscacheutil -flushcache"
-```
-
-Run `ruby generate-aliases.rb` after changes.
 
 ### tool-versions
 
@@ -130,6 +116,10 @@ Runtime versions managed by mise:
 nodejs 24.8.0
 ruby 3.3.0
 python 3.12.0
+rust 1.90.0
+golang 1.25.1
+bun 1.2.22
+swift 5.7.1
 ```
 
 ### claude-modes.zsh
@@ -161,7 +151,6 @@ All tools are configured to avoid writing state:
 | Tool   | Disabled                          |
 |--------|-----------------------------------|
 | zsh    | HISTFILE, SAVEHIST, zcompdump     |
-| fish   | fish_history                      |
 | nvim   | shada, swapfile, undofile         |
 | tmux   | history-file                      |
 | less   | LESSHISTFILE                      |
@@ -169,24 +158,7 @@ All tools are configured to avoid writing state:
 | node   | NODE_REPL_HISTORY                 |
 | irb    | IRB_HISTFILE                      |
 
-## Shell Support
-
-Both zsh and fish are supported with feature parity:
-
-- Same aliases (generated from aliases.yml)
-- Same prompt style (path + git branch + dirty indicator)
-- Same Claude mode functions
-- Vi keybindings
-
-Switch temporarily: just type `fish` or `zsh`.
-
 ## Maintenance
-
-### Regenerate Aliases
-
-```bash
-ruby generate-aliases.rb
-```
 
 ### Update Runtime Versions
 
@@ -198,15 +170,15 @@ mise install
 
 ### Add New Packages
 
-Edit `Brewfile`, then:
+Install via Homebrew:
 
 ```bash
-brew bundle
+brew install <package>
 ```
 
 ## Kodemachine Integration
 
-These dotfiles are designed to work with [kodemachine](https://github.com/you/kodemachine) for ephemeral Linux VMs on macOS.
+These dotfiles are designed to work with kodemachine for ephemeral Linux VMs on macOS.
 
 ### How It Works
 
@@ -230,7 +202,7 @@ These dotfiles are designed to work with [kodemachine](https://github.com/you/ko
 ### Workflow
 
 1. **Once per Mac**: `kodemachine setup-host`
-2. **Every ~6 months**: `kodemachine create-base --dotfiles git@github.com:you/dotfiles.git`
+2. **Every ~6 months**: `kodemachine create-base --dotfiles <repo-url>`
 3. **Daily**: `kodemachine start myproject` (SSH with full dev environment)
 
 ### Design Decisions
