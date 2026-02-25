@@ -44,8 +44,13 @@ _lino_worktree_branch() {
     dirty="%F{red}*%f"
   fi
 
+  # Resolve upstream: prefer @{u}, fall back to origin/<branch>
+  local upstream
+  upstream=$(git rev-parse --verify --quiet @{u} 2>/dev/null) \
+    || upstream=$(git rev-parse --verify --quiet "origin/${branch}" 2>/dev/null)
+
   local behind_indicator=""
-  local behind=$(git rev-list HEAD..@{u} 2>/dev/null | wc -l | tr -d ' ')
+  local behind=$(git rev-list HEAD..$upstream 2>/dev/null | wc -l | tr -d ' ')
   if [[ $behind -gt 1 ]]; then
     behind_indicator="%F{magenta}↓%f%F{blue}${behind}%f"
   elif [[ $behind -eq 1 ]]; then
@@ -53,7 +58,7 @@ _lino_worktree_branch() {
   fi
 
   local ahead_indicator=""
-  local ahead=$(git rev-list @{u}..HEAD 2>/dev/null | wc -l | tr -d ' ')
+  local ahead=$(git rev-list $upstream..HEAD 2>/dev/null | wc -l | tr -d ' ')
   if [[ $ahead -gt 1 ]]; then
     ahead_indicator="%F{green}↑%f%F{blue}${ahead}%f"
   elif [[ $ahead -eq 1 ]]; then
