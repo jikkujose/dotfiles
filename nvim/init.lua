@@ -1,6 +1,9 @@
 local home = os.getenv("HOME")
 vim.g.mapleader = " "
 
+-- Disable unused providers
+vim.g.loaded_ruby_provider = 0
+
 -- Disable all persistent state
 vim.o.shada = ""
 vim.o.swapfile = false
