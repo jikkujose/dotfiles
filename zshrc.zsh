@@ -21,6 +21,11 @@ then
   source ~/dotfiles/claude-modes.zsh
 fi
 
+if [ -f ~/dotfiles/codex-modes.zsh ]
+then
+  source ~/dotfiles/codex-modes.zsh
+fi
+
 set -o vi
 bindkey -v
 
