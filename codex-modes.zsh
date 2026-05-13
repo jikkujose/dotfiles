@@ -114,22 +114,45 @@ cx-azure() {
     emulate -L zsh
     _codex_require_cli || return
 
-    local home_dir key_env base_url model
+    local home_dir key_env base_url model service_tier
+    local -a codex_args
+    service_tier="flex"
+    codex_args=()
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --fast)
+                service_tier="fast"
+                shift
+                ;;
+            --)
+                shift
+                codex_args+=("$@")
+                break
+                ;;
+            *)
+                codex_args+=("$1")
+                shift
+                ;;
+        esac
+    done
+
     home_dir="$(_codex_home "${CODEX_AZURE_HOME:-$HOME/.codex-azure}")" || return
     key_env="$(_codex_azure_key_env)" || return
     base_url="$(_codex_azure_base_url)" || return
     model="$(_codex_azure_model)" || return
 
-    echo "Mode: Codex Azure OpenAI (${model})"
+    echo "Mode: Codex Azure OpenAI (${model}, service_tier=${service_tier})"
     CODEX_HOME="$home_dir" env -u OPENAI_API_KEY \
         codex --dangerously-bypass-approvals-and-sandbox \
         --model "$model" \
         --config "model_provider=$(_codex_toml_string "azure")" \
+        --config "service_tier=$(_codex_toml_string "$service_tier")" \
         --config "model_providers.azure.name=$(_codex_toml_string "Azure OpenAI")" \
         --config "model_providers.azure.base_url=$(_codex_toml_string "$base_url")" \
         --config "model_providers.azure.env_key=$(_codex_toml_string "$key_env")" \
         --config "model_providers.azure.wire_api=$(_codex_toml_string "responses")" \
-        "$@"
+        "${codex_args[@]}"
 }
 
 cx-azure-status() {
@@ -143,6 +166,7 @@ cx-azure-status() {
     echo "Azure key env: ${key_env}"
     echo "Azure base URL: ${base_url}"
     echo "Azure model/deployment: ${model}"
+    echo "Default service tier: flex (use cx-azure --fast for priority processing)"
 }
 
 unalias cx 2>/dev/null
