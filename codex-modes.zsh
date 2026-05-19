@@ -77,6 +77,86 @@ _codex_azure_model() {
     print -r -- "$model"
 }
 
+_codex_azure_alt_model() {
+    local model="${CODEX_AZURE_ALT_MODEL:-${CODEX_AZURE_ALT_DEPLOYMENT:-${AZURE_OPENAI_ALT_DEPLOYMENT:-${AZURE_OPENAI_ALT_DEPLOYMENT_NAME:-}}}}"
+
+    if [[ -n "$model" ]]; then
+        print -r -- "$model"
+        return
+    fi
+
+    _codex_azure_model
+}
+
+_codex_azure_alt_resource() {
+    print -r -- "${CODEX_AZURE_ALT_RESOURCE:-${AZURE_OPENAI_ALT_RESOURCE:-vishak}}"
+}
+
+_codex_azure_alt_resource_group() {
+    print -r -- "${CODEX_AZURE_ALT_RESOURCE_GROUP:-${AZURE_OPENAI_ALT_RESOURCE_GROUP:-storybrain}}"
+}
+
+_codex_azure_alt_base_url() {
+    local base_url="${CODEX_AZURE_ALT_BASE_URL:-${AZURE_OPENAI_ALT_BASE_URL:-}}"
+    local endpoint="${CODEX_AZURE_ALT_ENDPOINT:-${AZURE_OPENAI_ALT_ENDPOINT:-}}"
+    local resource
+
+    if [[ -n "$base_url" ]]; then
+        print -r -- "${base_url%/}"
+        return
+    fi
+
+    if [[ -n "$endpoint" ]]; then
+        endpoint="${endpoint%/}"
+        case "$endpoint" in
+            */openai/v1) print -r -- "$endpoint" ;;
+            */openai) print -r -- "$endpoint/v1" ;;
+            *) print -r -- "$endpoint/openai/v1" ;;
+        esac
+        return
+    fi
+
+    resource="$(_codex_azure_alt_resource)" || return
+    resource="${resource#https://}"
+    resource="${resource#http://}"
+    resource="${resource%%/*}"
+    resource="${resource%.openai.azure.com}"
+    print -r -- "https://${resource}.openai.azure.com/openai/v1"
+}
+
+_codex_azure_alt_key_value() {
+    if [[ -n "${CODEX_AZURE_ALT_API_KEY:-}" ]]; then
+        print -r -- "$CODEX_AZURE_ALT_API_KEY"
+        return
+    fi
+
+    if [[ -n "${AZURE_OPENAI_ALT_API_KEY:-}" ]]; then
+        print -r -- "$AZURE_OPENAI_ALT_API_KEY"
+        return
+    fi
+
+    local resource resource_group key
+    resource="$(_codex_azure_alt_resource)" || return
+    resource_group="$(_codex_azure_alt_resource_group)" || return
+
+    if ! command -v az >/dev/null 2>&1; then
+        echo "cx-azure-alt: set CODEX_AZURE_ALT_API_KEY or AZURE_OPENAI_ALT_API_KEY; az not found for key lookup." >&2
+        return 1
+    fi
+
+    key="$(az cognitiveservices account keys list --name "$resource" --resource-group "$resource_group" --query key1 -o tsv 2>/dev/null)" || {
+        echo "cx-azure-alt: could not retrieve key for ${resource_group}/${resource}; set CODEX_AZURE_ALT_API_KEY." >&2
+        return 1
+    }
+
+    if [[ -z "$key" ]]; then
+        echo "cx-azure-alt: empty key for ${resource_group}/${resource}; set CODEX_AZURE_ALT_API_KEY." >&2
+        return 1
+    fi
+
+    print -r -- "$key"
+}
+
 cx-subscription-login() {
     emulate -L zsh
     _codex_require_cli || return
@@ -153,6 +233,17 @@ cx-azure() {
         "${codex_args[@]}"
 }
 
+cx-azure-alt() {
+    emulate -L zsh
+
+    local base_url key model
+    base_url="$(_codex_azure_alt_base_url)" || return
+    key="$(_codex_azure_alt_key_value)" || return
+    model="$(_codex_azure_alt_model)" || return
+
+    CODEX_AZURE_API_KEY="$key" CODEX_AZURE_BASE_URL="$base_url" CODEX_AZURE_MODEL="$model" cx-azure "$@"
+}
+
 cx-azure-status() {
     emulate -L zsh
 
@@ -165,6 +256,20 @@ cx-azure-status() {
     echo "Azure base URL: ${base_url}"
     echo "Azure model/deployment: ${model}"
     echo "Priority control: Azure deployment setting; Codex service_tier is not sent"
+}
+
+cx-azure-alt-status() {
+    emulate -L zsh
+
+    local base_url key model resource resource_group
+    resource="$(_codex_azure_alt_resource)" || return
+    resource_group="$(_codex_azure_alt_resource_group)" || return
+    base_url="$(_codex_azure_alt_base_url)" || return
+    key="$(_codex_azure_alt_key_value)" || return
+    model="$(_codex_azure_alt_model)" || return
+
+    echo "Azure alt resource: ${resource_group}/${resource}"
+    CODEX_AZURE_API_KEY="$key" CODEX_AZURE_BASE_URL="$base_url" CODEX_AZURE_MODEL="$model" cx-azure-status "$@"
 }
 
 unalias cx 2>/dev/null

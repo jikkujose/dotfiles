@@ -26,6 +26,11 @@ then
   source ~/dotfiles/codex-modes.zsh
 fi
 
+if [ -f ~/dotfiles/opencode-modes.zsh ]
+then
+  source ~/dotfiles/opencode-modes.zsh
+fi
+
 set -o vi
 bindkey -v
 
