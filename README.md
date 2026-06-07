@@ -108,6 +108,18 @@ dotfiles/
 
 ## Key Files
 
+### Alacritty themes
+
+Alacritty imports the default dark theme plus a user-state theme file. Switch without restarting:
+
+```bash
+alacritty-theme light
+alacritty-theme dark
+# or: alacritty-light / alacritty-dark
+```
+
+The selected theme is written to `~/.local/state/alacritty/theme.toml` and live-reloaded by Alacritty.
+
 ### tool-versions
 
 Runtime versions managed by mise:

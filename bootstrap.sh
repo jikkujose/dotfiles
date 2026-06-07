@@ -263,10 +263,9 @@ setup_symlinks() {
     print_step "Setting up symlinks..."
 
     mkdir -p ~/.config
-    mkdir -p ~/.config/alacritty
 
-    # Backup existing configs (only real files, not symlinks)
-    for file in ~/.zshrc ~/.config/nvim ~/.tmux.conf; do
+    # Backup existing configs (only real files/dirs, not symlinks)
+    for file in ~/.zshrc ~/.config/nvim ~/.config/alacritty ~/.tmux.conf; do
         if [[ -e "$file" && ! -L "$file" ]]; then
             mv "$file" "${file}.backup.$(date +%s)"
             print_warning "Backed up existing $file"
@@ -275,6 +274,7 @@ setup_symlinks() {
 
     # Remove existing symlinks
     rm -rf ~/.config/nvim
+    rm -rf ~/.config/alacritty
     rm -f ~/.zshrc
     rm -f ~/.tmux.conf
 
@@ -291,7 +291,7 @@ setup_symlinks() {
     ln -sf "$DOTFILES_DIR/tool-versions" ~/.tool-versions
 
     # Alacritty
-    ln -sf "$DOTFILES_DIR/alacritty/alacritty.toml" ~/.config/alacritty/alacritty.toml
+    ln -sf "$DOTFILES_DIR/alacritty" ~/.config/alacritty
 
     print_success "Symlinks created"
 }
@@ -367,7 +367,7 @@ main() {
         print_dry "~/.zshrc -> $DOTFILES_DIR/zshrc.zsh"
         print_dry "~/.tmux.conf -> $DOTFILES_DIR/tmux.conf"
         print_dry "~/.config/nvim -> $DOTFILES_DIR/nvim"
-        print_dry "~/.config/alacritty/alacritty.toml -> $DOTFILES_DIR/alacritty/alacritty.toml"
+        print_dry "~/.config/alacritty -> $DOTFILES_DIR/alacritty"
 
         echo ""
         print_step "Would install extras:"

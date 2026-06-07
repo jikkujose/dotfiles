@@ -74,3 +74,49 @@ gwa() {
   echo "gitdir: $rel_path" > "$wt_abs/.git"
   echo "Created worktree with relative path: $wt_path"
 }
+
+alacritty-theme() {
+  local theme="${1:-}"
+  local config_dir="$HOME/.config/alacritty"
+  local state_dir="$HOME/.local/state/alacritty"
+  local dest="$state_dir/theme.toml"
+
+  case "$theme" in
+    dark|night)
+      theme="dark"
+      ;;
+    light|day)
+      theme="light"
+      ;;
+    reset|default)
+      rm -f "$dest"
+      touch "$config_dir/alacritty.toml" 2>/dev/null || true
+      echo "Alacritty theme reset to default dark"
+      return 0
+      ;;
+    ""|-h|--help)
+      echo "Usage: alacritty-theme <dark|light|reset>"
+      echo "Aliases: alacritty-dark, alacritty-light"
+      return 0
+      ;;
+    *)
+      echo "Unknown Alacritty theme: $theme"
+      echo "Available: dark, light, reset"
+      return 1
+      ;;
+  esac
+
+  local source="$config_dir/themes/$theme.toml"
+  if [[ ! -f "$source" ]]; then
+    echo "Theme file not found: $source"
+    echo "Expected ~/.config/alacritty to point at the dotfiles alacritty directory."
+    return 1
+  fi
+
+  mkdir -p "$state_dir" || return 1
+  cp "$source" "$dest" || return 1
+
+  # Nudge Alacritty's live config reload. No restart required.
+  touch "$config_dir/alacritty.toml" 2>/dev/null || true
+  echo "Alacritty theme: $theme"
+}

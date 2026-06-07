@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES="${DOTFILES:-$HOME/dotfiles}"
+STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+ALACRITTY_STATE="$STATE_HOME/alacritty/theme.toml"
+TMUX_STATE="$STATE_HOME/tmux/theme.conf"
+
+mkdir -p "$(dirname "$ALACRITTY_STATE")" "$(dirname "$TMUX_STATE")"
+
+if cmp -s "$ALACRITTY_STATE" "$DOTFILES/alacritty/themes/light.toml"; then
+  theme="dark"
+else
+  theme="light"
+fi
+
+cp "$DOTFILES/alacritty/themes/$theme.toml" "$ALACRITTY_STATE"
+cp "$DOTFILES/tmux/themes/$theme.conf" "$TMUX_STATE"
+
+# Alacritty usually watches imported files, but touching the root config forces reload
+# in case the state override file appeared after Alacritty started.
+touch "$DOTFILES/alacritty/alacritty.toml"
+
+if command -v tmux >/dev/null 2>&1 && [ -n "${TMUX:-}" ]; then
+  tmux source-file "$TMUX_STATE"
+  tmux display-message "Theme: $theme"
+fi

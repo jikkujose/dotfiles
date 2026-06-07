@@ -1,6 +1,13 @@
 # Alacritty Configuration
 # Cross-platform terminal config matching iTerm2/nvim setup
 
+[general]
+live_config_reload = true
+import = [
+  "themes/dark.toml",
+  "~/.local/state/alacritty/theme.toml",
+]
+
 [env]
 TERM = "xterm-256color"
 
@@ -43,38 +50,19 @@ vi_mode_style = { shape = "Block", blinking = "On" }
 [selection]
 save_to_clipboard = true
 
-# Tomorrow Night Bright color scheme (matches nvim)
-[colors.primary]
-background = "#000000"
-foreground = "#eaeaea"
+# URL/link handling
+# Enables opening plain URLs and OSC 8 hyperlinks from terminal output.
+[hints]
+alphabet = "jfkdls;ahgurieowpq"
 
-[colors.cursor]
-text = "#000000"
-cursor = "#eaeaea"
-
-[colors.selection]
-text = "#eaeaea"
-background = "#424242"
-
-[colors.normal]
-black   = "#000000"
-red     = "#d54e53"
-green   = "#b9ca4a"
-yellow  = "#e7c547"
-blue    = "#7aa6da"
-magenta = "#c397d8"
-cyan    = "#70c0b1"
-white   = "#eaeaea"
-
-[colors.bright]
-black   = "#969896"
-red     = "#d54e53"
-green   = "#b9ca4a"
-yellow  = "#e7c547"
-blue    = "#7aa6da"
-magenta = "#c397d8"
-cyan    = "#70c0b1"
-white   = "#ffffff"
+[[hints.enabled]]
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\\u0000-\\u001F\\u007F-\\u009F<>\"\\s{-}\\^⟨⟩`]+"
+hyperlinks = true
+post_processing = true
+persist = false
+command = { program = "sh", args = ["-c", "case \"$(uname -s)\" in Darwin) open \"$1\" ;; *) xdg-open \"$1\" >/dev/null 2>&1 ;; esac", "alacritty-open"] }
+mouse = { enabled = true, mods = "None" }
+binding = { key = "U", mods = "Control|Shift" }
 
 # Keybindings (similar to iTerm2/tmux)
 [[keyboard.bindings]]
