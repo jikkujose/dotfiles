@@ -26,6 +26,11 @@ then
   source ~/dotfiles/codex-modes.zsh
 fi
 
+if [ -f ~/dotfiles/pi-modes.zsh ]
+then
+  source ~/dotfiles/pi-modes.zsh
+fi
+
 if [ -f ~/dotfiles/opencode-modes.zsh ]
 then
   source ~/dotfiles/opencode-modes.zsh
