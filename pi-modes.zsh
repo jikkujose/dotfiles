@@ -283,6 +283,7 @@ pi-zyt() {
   [[ "$model_display" != *:* ]] && model_display="${model_display}:${thinking}"
   print -r -- "Mode: Pi via Foundry ZYT (${provider}, ${model_display}, $(_pi_zyt_base_url))"
 
+  PI_MODE_LABEL=pi-zyt \
   FOUNDRY_API_KEY="$FOUNDRY_API_KEY" \
     command pi "${prefix[@]}" "$@"
 }
