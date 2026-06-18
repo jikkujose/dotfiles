@@ -156,14 +156,43 @@ const costs = {
   'gpt-5.1-codex-mini': { input: 0.25, output: 2, cacheRead: 0.025, cacheWrite: 0 },
   'gpt-5.2': { input: 1.75, output: 14, cacheRead: 0.175, cacheWrite: 0 },
   'gpt-5.2-codex': { input: 1.75, output: 14, cacheRead: 0.175, cacheWrite: 0 },
+  'gpt-5.3-chat': { input: 5, output: 30, cacheRead: 0.5, cacheWrite: 0 },
   'gpt-5.3-codex': { input: 1.75, output: 14, cacheRead: 0.175, cacheWrite: 0 },
   'gpt-5.4': { input: 2.5, output: 15, cacheRead: 0.25, cacheWrite: 0 },
   'gpt-5.4-mini': { input: 0.75, output: 4.5, cacheRead: 0.075, cacheWrite: 0 },
   'gpt-5.4-nano': { input: 0.2, output: 1.25, cacheRead: 0.02, cacheWrite: 0 },
   'gpt-5.4-pro': { input: 30, output: 180, cacheRead: 0, cacheWrite: 0 },
-  'gpt-5.5': { input: 5, output: 30, cacheRead: 0.5, cacheWrite: 0 }
+  'gpt-5.5': { input: 5, output: 30, cacheRead: 0.5, cacheWrite: 0 },
+  'gpt-chat-latest': { input: 5, output: 30, cacheRead: 0.5, cacheWrite: 0 }
 }
-for (const model of models) if (costs[model.id]) model.cost = costs[model.id]
+const thinkingLevelMaps = {
+  // Pi only exposes/sends xhigh when a model explicitly maps that level.
+  // Mirror Pi/OpenAI model metadata for Foundry aliases so gpt-5.5:xhigh
+  // reaches the Responses API as reasoning.effort = "xhigh" instead of
+  // being clamped to high locally.
+  'gpt-5': { off: null },
+  'gpt-5-mini': { off: null },
+  'gpt-5-nano': { off: null },
+  'gpt-5-pro': { off: null },
+  'gpt-5-codex': { off: null },
+  'gpt-5.1': { off: 'none' },
+  'gpt-5.1-codex': { off: null },
+  'gpt-5.1-codex-max': { off: null },
+  'gpt-5.1-codex-mini': { off: null },
+  'gpt-5.2': { off: 'none', xhigh: 'xhigh' },
+  'gpt-5.2-codex': { off: null, xhigh: 'xhigh' },
+  'gpt-5.3-codex': { off: 'none', xhigh: 'xhigh' },
+  'gpt-5.4': { off: 'none', xhigh: 'xhigh' },
+  'gpt-5.4-mini': { off: 'none', xhigh: 'xhigh' },
+  'gpt-5.4-nano': { off: 'none', xhigh: 'xhigh' },
+  'gpt-5.4-pro': { off: null, xhigh: 'xhigh' },
+  'gpt-5.5': { off: 'none', xhigh: 'xhigh', minimal: null }
+}
+
+for (const model of models) {
+  if (costs[model.id]) model.cost = costs[model.id]
+  if (thinkingLevelMaps[model.id]) model.thinkingLevelMap = thinkingLevelMaps[model.id]
+}
 
 const provider = {
   name: 'Foundry ZYT (Responses)',
