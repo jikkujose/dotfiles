@@ -140,9 +140,13 @@ Functions for switching Claude API providers:
 
 - `ccc` - Default Claude
 - `ccc-dangerous` - Skip permissions
-- `c-zai` - ZAI provider
-- `c-minimax` - Minimax provider
-- `c-moonshot` - Moonshot provider
+- `c-zai` / `c-zai-dangerous` - ZAI provider
+- `c-minimax` / `c-minimax-dangerous` - Minimax provider
+- `c-moonshot` / `c-moonshot-dangerous` - Moonshot provider
+- `c-openrouter` / `c-openrouter-dangerous` - OpenRouter through `deep-claude` (Podman wrapper preferred; configured free-only)
+- `c-or` / `c-or-dangerous` - Short aliases for OpenRouter
+- `c-free` / `c-free-dangerous` - OpenRouter free default through `deep-claude`
+- `c-owl` / `c-owl-dangerous` - OpenRouter Owl Alpha free through `deep-claude`
 
 ## Private Configuration
 
