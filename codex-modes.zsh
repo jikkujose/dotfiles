@@ -20,6 +20,54 @@ _codex_home() {
     print -r -- "$home_dir"
 }
 
+_codex_zyt_provider() {
+    print -r -- "${CODEX_ZYT_PROVIDER:-foundry-zyt}"
+}
+
+_codex_zyt_base_url() {
+    print -r -- "${CODEX_ZYT_BASE_URL:-${PI_ZYT_BASE_URL:-${FOUNDRY_BASE_URL:-https://foundry.zyt.app/v1}}}"
+}
+
+_codex_zyt_env_file() {
+    print -r -- "${CODEX_ZYT_ENV_FILE:-${PI_ZYT_ENV_FILE:-$HOME/.foundry-zyt.env}}"
+}
+
+_codex_zyt_load_env() {
+    [[ -n "${FOUNDRY_API_KEY:-}" ]] && return 0
+
+    local env_file line value
+    env_file="$(_codex_zyt_env_file)" || return
+    [[ -f "$env_file" ]] || return 0
+
+    line="$(command grep -m 1 '^FOUNDRY_API_KEY=' "$env_file" 2>/dev/null)" || return 0
+    value="${line#FOUNDRY_API_KEY=}"
+    value="${value%$'\r'}"
+    value="${value#\"}"
+    value="${value%\"}"
+    value="${value#\'}"
+    value="${value%\'}"
+
+    [[ -n "$value" ]] && export FOUNDRY_API_KEY="$value"
+}
+
+_codex_zyt_require_key() {
+    _codex_zyt_load_env
+
+    if [[ -z "${FOUNDRY_API_KEY:-}" ]]; then
+        echo "cx-zyt: set FOUNDRY_API_KEY first, for example in ~/.private.zsh or $(_codex_zyt_env_file):" >&2
+        echo "  FOUNDRY_API_KEY=fnd_<12-char-key-id>_<secret>" >&2
+        return 1
+    fi
+}
+
+_codex_zyt_model() {
+    print -r -- "${CODEX_ZYT_MODEL:-${PI_ZYT_MODEL:-gpt-5.5}}"
+}
+
+_codex_zyt_reasoning() {
+    print -r -- "${CODEX_ZYT_REASONING:-${PI_ZYT_THINKING:-xhigh}}"
+}
+
 _codex_azure_key_env() {
     if [[ -n "${CODEX_AZURE_API_KEY:-}" ]]; then
         print -r -- "CODEX_AZURE_API_KEY"
@@ -155,6 +203,81 @@ _codex_azure_alt_key_value() {
     fi
 
     print -r -- "$key"
+}
+
+cx-zyt-status() {
+    emulate -L zsh
+
+    _codex_zyt_load_env
+
+    local key_state="missing"
+    [[ -n "${FOUNDRY_API_KEY:-}" ]] && key_state="set"
+
+    local model reasoning
+    model="$(_codex_zyt_model)" || return
+    reasoning="$(_codex_zyt_reasoning)" || return
+    if [[ "$model" == *:* ]]; then
+        [[ -z "${CODEX_ZYT_REASONING:-}" ]] && reasoning="${model##*:}"
+        model="${model%%:*}"
+    fi
+
+    echo "provider=$(_codex_zyt_provider)"
+    echo "base_url=$(_codex_zyt_base_url)"
+    echo "model=${model}"
+    echo "reasoning=${reasoning}"
+    echo "api_key=$key_state (FOUNDRY_API_KEY)"
+    echo "env_file=$(_codex_zyt_env_file)"
+    echo "codex_home=${CODEX_ZYT_HOME:-$HOME/.codex-zyt}"
+}
+
+cx-zyt() {
+    emulate -L zsh
+    _codex_require_cli || return
+    _codex_zyt_require_key || return
+
+    local home_dir provider base_url model reasoning model_display
+    local has_model=0
+    local arg
+
+    for arg in "$@"; do
+        case "$arg" in
+            --model|-m|--model=*|-m=*) has_model=1 ;;
+        esac
+    done
+
+    home_dir="$(_codex_home "${CODEX_ZYT_HOME:-$HOME/.codex-zyt}")" || return
+    provider="$(_codex_zyt_provider)" || return
+    base_url="$(_codex_zyt_base_url)" || return
+    model="$(_codex_zyt_model)" || return
+    reasoning="$(_codex_zyt_reasoning)" || return
+
+    if [[ "$model" == *:* ]]; then
+        [[ -z "${CODEX_ZYT_REASONING:-}" ]] && reasoning="${model##*:}"
+        model="${model%%:*}"
+    fi
+
+    local -a model_args reasoning_args
+    model_args=()
+    reasoning_args=()
+    (( has_model == 0 )) && model_args+=(--model "$model")
+    if [[ -n "$reasoning" && "$reasoning" != "default" ]]; then
+        reasoning_args+=(--config "model_reasoning_effort=$(_codex_toml_string "$reasoning")")
+    fi
+
+    model_display="$model"
+    [[ -n "$reasoning" && "$reasoning" != "default" ]] && model_display="${model_display}:${reasoning}"
+    echo "Mode: Codex via Foundry ZYT (${provider}, ${model_display}, ${base_url})"
+
+    CODEX_HOME="$home_dir" FOUNDRY_API_KEY="$FOUNDRY_API_KEY" env -u OPENAI_API_KEY -u AZURE_OPENAI_API_KEY -u AZURE_OPENAI_KEY \
+        codex --dangerously-bypass-approvals-and-sandbox \
+        "${model_args[@]}" \
+        --config "model_provider=$(_codex_toml_string "$provider")" \
+        --config "model_providers.${provider}.name=$(_codex_toml_string "Foundry ZYT")" \
+        --config "model_providers.${provider}.base_url=$(_codex_toml_string "$base_url")" \
+        --config "model_providers.${provider}.env_key=$(_codex_toml_string "FOUNDRY_API_KEY")" \
+        --config "model_providers.${provider}.wire_api=$(_codex_toml_string "responses")" \
+        "${reasoning_args[@]}" \
+        "$@"
 }
 
 cx-subscription-login() {
