@@ -13,6 +13,7 @@ _claude_clean_env() {
     unset ANTHROPIC_DEFAULT_SONNET_MODEL
     unset ANTHROPIC_DEFAULT_OPUS_MODEL
     unset ANTHROPIC_DEFAULT_HAIKU_MODEL
+    unset CLAUDE_CODE_AUTO_COMPACT_WINDOW
     unset CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY
     unset CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS
 }
@@ -83,26 +84,34 @@ ccc-dangerous() {
     _claude_run --permissive "$@"
 }
 
-# Z.AI Mode (GLM 5)
+# Z.AI Mode (GLM mapped)
+# Claude Code model mapping:
+#   Haiku -> glm-4.7-flash
+#   Sonnet -> glm-5-turbo
+#   Opus -> glm-5.2[1m]
 c-zai() {
     _claude_clean_env
-    echo "✓ Mode: Z.AI GLM 5"
+    echo "✓ Mode: Z.AI GLM mapped"
     ANTHROPIC_AUTH_TOKEN="$ZAI_API_KEY" \
     ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic" \
-    ANTHROPIC_DEFAULT_HAIKU_MODEL="GLM-5" \
-    ANTHROPIC_DEFAULT_SONNET_MODEL="GLM-5" \
-    ANTHROPIC_DEFAULT_OPUS_MODEL="GLM-5" \
+    CLAUDE_CODE_AUTO_COMPACT_WINDOW="1000000" \
+    ANTHROPIC_SMALL_FAST_MODEL="glm-4.7-flash" \
+    ANTHROPIC_DEFAULT_HAIKU_MODEL="glm-4.7-flash" \
+    ANTHROPIC_DEFAULT_SONNET_MODEL="glm-5-turbo" \
+    ANTHROPIC_DEFAULT_OPUS_MODEL="glm-5.2[1m]" \
     _claude_run "$@"
 }
 
 c-zai-dangerous() {
     _claude_clean_env
-    echo "✓ Mode: Z.AI GLM 5 (permissive)"
+    echo "✓ Mode: Z.AI GLM mapped (permissive)"
     ANTHROPIC_AUTH_TOKEN="$ZAI_API_KEY" \
     ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic" \
-    ANTHROPIC_DEFAULT_HAIKU_MODEL="GLM-5" \
-    ANTHROPIC_DEFAULT_SONNET_MODEL="GLM-5" \
-    ANTHROPIC_DEFAULT_OPUS_MODEL="GLM-5" \
+    CLAUDE_CODE_AUTO_COMPACT_WINDOW="1000000" \
+    ANTHROPIC_SMALL_FAST_MODEL="glm-4.7-flash" \
+    ANTHROPIC_DEFAULT_HAIKU_MODEL="glm-4.7-flash" \
+    ANTHROPIC_DEFAULT_SONNET_MODEL="glm-5-turbo" \
+    ANTHROPIC_DEFAULT_OPUS_MODEL="glm-5.2[1m]" \
     _claude_run --permissive "$@"
 }
 

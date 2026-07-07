@@ -316,3 +316,294 @@ pi-zyt() {
   FOUNDRY_API_KEY="$FOUNDRY_API_KEY" \
     command pi "${prefix[@]}" "$@"
 }
+
+# === Pi OpenRouter Mode ===
+# Uses PI_OR_API_KEY internally because ~/commands/pi intentionally scrubs
+# OPENROUTER_API_KEY before launching pi.
+#
+# Secrets stay outside dotfiles. Export OPENROUTER_API_KEY/PI_OR_API_KEY in your
+# shell, or put a plain assignment in ${PI_OR_ENV_FILE:-$HOME/.openrouter.env}:
+#   OPENROUTER_API_KEY=sk-or-v1-...
+#
+# Optional overrides:
+#   PI_OR_ENV_FILE=/path/to/env-file
+#   PI_OR_PROVIDER=openrouter-free
+#   PI_OR_BASE_URL=https://openrouter.ai/api/v1
+#   PI_OR_MODEL=tencent/hy3:free
+#   PI_OR_THINKING=off
+#   PI_OR_TOOLS=read,bash,edit,write,grep,find,ls
+
+_pi_or_require_cli() {
+  if ! command -v pi >/dev/null 2>&1; then
+    print -u2 "pi-or: pi command not found."
+    return 1
+  fi
+}
+
+_pi_or_provider() {
+  print -r -- "${PI_OR_PROVIDER:-openrouter-free}"
+}
+
+_pi_or_base_url() {
+  print -r -- "${PI_OR_BASE_URL:-https://openrouter.ai/api/v1}"
+}
+
+_pi_or_env_file() {
+  print -r -- "${PI_OR_ENV_FILE:-$HOME/.openrouter.env}"
+}
+
+_pi_or_load_env() {
+  [[ -n "${PI_OR_API_KEY:-}" ]] && return 0
+
+  if [[ -n "${OPENROUTER_API_KEY:-}" ]]; then
+    export PI_OR_API_KEY="$OPENROUTER_API_KEY"
+    return 0
+  fi
+
+  local env_file line value
+  env_file="$(_pi_or_env_file)" || return
+  [[ -f "$env_file" ]] || return 0
+
+  line="$(command grep -m 1 '^PI_OR_API_KEY=' "$env_file" 2>/dev/null)"
+  if [[ -z "$line" ]]; then
+    line="$(command grep -m 1 '^OPENROUTER_API_KEY=' "$env_file" 2>/dev/null)"
+  fi
+  [[ -n "$line" ]] || return 0
+
+  value="${line#PI_OR_API_KEY=}"
+  value="${value#OPENROUTER_API_KEY=}"
+  value="${value%$'\r'}"
+  value="${value#\"}"
+  value="${value%\"}"
+  value="${value#\'}"
+  value="${value%\'}"
+
+  [[ -n "$value" ]] && export PI_OR_API_KEY="$value"
+}
+
+_pi_or_model() {
+  print -r -- "${PI_OR_MODEL:-tencent/hy3:free}"
+}
+
+_pi_or_thinking() {
+  print -r -- "${PI_OR_THINKING:-off}"
+}
+
+_pi_or_tools() {
+  print -r -- "${PI_OR_TOOLS:-read,bash,edit,write,grep,find,ls}"
+}
+
+_pi_or_models_json() {
+  print -r -- "${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}/models.json"
+}
+
+_pi_or_require_key() {
+  _pi_or_load_env
+
+  if [[ -z "${PI_OR_API_KEY:-}" ]]; then
+    print -u2 "pi-or: set OPENROUTER_API_KEY or PI_OR_API_KEY first, for example in ~/.private.zsh or $(_pi_or_env_file):"
+    print -u2 "  OPENROUTER_API_KEY=sk-or-v1-..."
+    return 1
+  fi
+}
+
+_pi_or_ensure_provider() {
+  emulate -L zsh
+
+  local agent_dir models_json provider base_url
+  agent_dir="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
+  models_json="$agent_dir/models.json"
+  provider="$(_pi_or_provider)" || return
+  base_url="$(_pi_or_base_url)" || return
+
+  mkdir -p "$agent_dir" || return 1
+
+  PI_OR_MODELS_JSON="$models_json" \
+  PI_OR_PROVIDER_VALUE="$provider" \
+  PI_OR_BASE_URL_VALUE="$base_url" \
+    node <<'NODE'
+const fs = require('fs')
+const path = require('path')
+
+const file = process.env.PI_OR_MODELS_JSON
+const providerName = process.env.PI_OR_PROVIDER_VALUE || 'openrouter-free'
+const baseUrl = process.env.PI_OR_BASE_URL_VALUE || 'https://openrouter.ai/api/v1'
+const dir = path.dirname(file)
+
+let data = { providers: {} }
+try {
+  if (fs.existsSync(file)) data = JSON.parse(fs.readFileSync(file, 'utf8'))
+} catch (err) {
+  throw new Error(`${file} is not valid JSON: ${err.message}`)
+}
+if (!data || typeof data !== 'object' || Array.isArray(data)) data = { providers: {} }
+if (!data.providers || typeof data.providers !== 'object' || Array.isArray(data.providers)) data.providers = {}
+
+const provider = {
+  name: 'OpenRouter Free (Chat Completions)',
+  baseUrl,
+  api: 'openai-completions',
+  apiKey: '$PI_OR_API_KEY',
+  headers: {
+    'HTTP-Referer': 'https://github.com/earendil-works/pi-coding-agent',
+    'X-Title': 'pi-openrouter-free'
+  },
+  compat: {
+    supportsDeveloperRole: false,
+    maxTokensField: 'max_tokens',
+    thinkingFormat: 'openrouter',
+    openRouterRouting: {
+      max_price: { prompt: 0, completion: 0 }
+    }
+  },
+  models: [
+    {
+      id: 'tencent/hy3:free',
+      name: 'Tencent Hy3 Free (OpenRouter)',
+      reasoning: true,
+      input: ['text'],
+      contextWindow: 262144,
+      maxTokens: 262144,
+      cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
+      thinkingLevelMap: { xhigh: null }
+    }
+  ]
+}
+
+if (JSON.stringify(data.providers[providerName]) !== JSON.stringify(provider)) {
+  fs.mkdirSync(dir, { recursive: true })
+  if (fs.existsSync(file) && !fs.existsSync(`${file}.pi-or.bak`)) {
+    fs.copyFileSync(file, `${file}.pi-or.bak`)
+  }
+  data.providers[providerName] = provider
+  fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`)
+}
+NODE
+}
+
+pi-or-status() {
+  emulate -L zsh
+
+  _pi_or_load_env
+
+  local key_state="missing"
+  [[ -n "${PI_OR_API_KEY:-}" ]] && key_state="set"
+
+  print -r -- "provider=$(_pi_or_provider)"
+  print -r -- "base_url=$(_pi_or_base_url)"
+  print -r -- "model=$(_pi_or_model)"
+  print -r -- "thinking=$(_pi_or_thinking)"
+  print -r -- "tools=$(_pi_or_tools)"
+  print -r -- "api_key=$key_state (OPENROUTER_API_KEY -> PI_OR_API_KEY)"
+  print -r -- "env_file=$(_pi_or_env_file)"
+  print -r -- "models_json=$(_pi_or_models_json)"
+}
+
+pi-or-models() {
+  emulate -L zsh
+
+  _pi_or_require_cli || return
+  _pi_or_require_key || return
+  _pi_or_ensure_provider || return
+
+  local search="$(_pi_or_provider)"
+  if (( $# > 0 )); then
+    search="${search} $*"
+  fi
+
+  PI_OR_API_KEY="$PI_OR_API_KEY" \
+    command pi --list-models "$search"
+}
+
+pi-or-smoke() {
+  emulate -L zsh
+
+  _pi_or_require_cli || return
+  _pi_or_require_key || return
+  _pi_or_ensure_provider || return
+
+  PI_OR_API_KEY="$PI_OR_API_KEY" \
+    command pi \
+      --provider "$(_pi_or_provider)" \
+      --model "$(_pi_or_model)" \
+      --thinking "$(_pi_or_thinking)" \
+      --no-context-files \
+      --no-tools \
+      --no-session \
+      --print "Reply with exactly: pi-or ok"
+}
+
+pi-or() {
+  emulate -L zsh
+
+  _pi_or_require_cli || return
+  _pi_or_require_key || return
+  _pi_or_ensure_provider || return
+
+  local provider model thinking tools
+  provider="$(_pi_or_provider)" || return
+  model="$(_pi_or_model)" || return
+  thinking="$(_pi_or_thinking)" || return
+  tools="$(_pi_or_tools)" || return
+
+  local -a list_search
+  local list_models=0
+  local i=1
+  while (( i <= $# )); do
+    case "${argv[i]}" in
+      --list-models)
+        list_models=1
+        list_search=("${argv[@]:$((i + 1))}")
+        break
+        ;;
+      --list-models=*)
+        list_models=1
+        list_search=("${argv[i]#--list-models=}")
+        break
+        ;;
+    esac
+    (( i++ ))
+  done
+  if (( list_models )); then
+    pi-or-models "${list_search[@]}"
+    return
+  fi
+
+  local has_provider=0
+  local has_model=0
+  local has_thinking=0
+  local has_tools=0
+  local has_approval=0
+  local arg
+
+  for arg in "$@"; do
+    case "$arg" in
+      --provider|--provider=*) has_provider=1 ;;
+      --model|--model=*) has_model=1 ;;
+      --thinking|--thinking=*) has_thinking=1 ;;
+      --tools|-t|--tools=*|-t=*) has_tools=1 ;;
+      --no-tools|-nt|--no-builtin-tools|-nbt) has_tools=1 ;;
+      --approve|-a|--no-approve|-na) has_approval=1 ;;
+    esac
+  done
+
+  local -a prefix
+  prefix=()
+  (( has_provider == 0 )) && prefix+=(--provider "$provider")
+  (( has_model == 0 )) && prefix+=(--model "$model")
+  if (( has_thinking == 0 )) && [[ -n "$thinking" && "$thinking" != "default" ]]; then
+    prefix+=(--thinking "$thinking")
+  fi
+  if (( has_tools == 0 )) && [[ -n "$tools" && "$tools" != "default" ]]; then
+    prefix+=(--tools "$tools")
+  fi
+  (( has_approval == 0 )) && prefix+=(--approve)
+
+  local model_display="$model"
+  [[ -n "$thinking" && "$thinking" != "default" ]] && model_display="${model_display} (thinking=${thinking})"
+  print -r -- "Mode: Pi via OpenRouter (${provider}, ${model_display}, $(_pi_or_base_url))"
+
+  PI_MODE_LABEL=pi-or \
+  PI_OR_API_KEY="$PI_OR_API_KEY" \
+    command pi "${prefix[@]}" "$@"
+}
