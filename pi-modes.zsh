@@ -7,8 +7,9 @@
 # Optional overrides:
 #   PI_ZYT_ENV_FILE=/path/to/env-file
 #   PI_ZYT_BASE_URL=https://foundry.zyt.app/v1
-#   PI_ZYT_MODEL=gpt-5.5
-#   PI_ZYT_THINKING=xhigh
+#   PI_ZYT_MODEL=gpt-5.6-sol
+#   PI_ZYT_THINKING=max
+#   PI_ZYT_MODELS=foundry-zyt/gpt-5.6-*
 #   PI_ZYT_TOOLS=read,bash,edit,write,grep,find,ls
 
 _pi_zyt_require_cli() {
@@ -49,15 +50,19 @@ _pi_zyt_load_env() {
 }
 
 _pi_zyt_model() {
-  print -r -- "${PI_ZYT_MODEL:-gpt-5.5}"
+  print -r -- "${PI_ZYT_MODEL:-gpt-5.6-sol}"
 }
 
 _pi_zyt_thinking() {
-  print -r -- "${PI_ZYT_THINKING:-xhigh}"
+  print -r -- "${PI_ZYT_THINKING:-max}"
 }
 
 _pi_zyt_tools() {
   print -r -- "${PI_ZYT_TOOLS:-read,bash,edit,write,grep,find,ls}"
+}
+
+_pi_zyt_model_scope() {
+  print -r -- "${PI_ZYT_MODELS:-$(_pi_zyt_provider)/gpt-5.6-*}"
 }
 
 _pi_zyt_models_json() {
@@ -136,7 +141,11 @@ const models = [
   { id: 'gpt-5.4-nano', reasoning: true, contextWindow: 400000, maxTokens: 32768 },
   { id: 'gpt-5.4-pro', reasoning: true, contextWindow: 1048576, maxTokens: 32768 },
 
-  { id: 'gpt-5.5', reasoning: true, contextWindow: 1048576, maxTokens: 32768 }
+  { id: 'gpt-5.5', reasoning: true, contextWindow: 1048576, maxTokens: 32768 },
+
+  { id: 'gpt-5.6-luna', reasoning: true, input: ['text', 'image'], contextWindow: 1050000, maxTokens: 128000 },
+  { id: 'gpt-5.6-sol', reasoning: true, input: ['text', 'image'], contextWindow: 1050000, maxTokens: 128000 },
+  { id: 'gpt-5.6-terra', reasoning: true, input: ['text', 'image'], contextWindow: 1050000, maxTokens: 128000 }
 ]
 
 const costs = {
@@ -163,6 +172,9 @@ const costs = {
   'gpt-5.4-nano': { input: 0.2, output: 1.25, cacheRead: 0.02, cacheWrite: 0 },
   'gpt-5.4-pro': { input: 30, output: 180, cacheRead: 0, cacheWrite: 0 },
   'gpt-5.5': { input: 5, output: 30, cacheRead: 0.5, cacheWrite: 0 },
+  'gpt-5.6-luna': { input: 1, output: 6, cacheRead: 0.1, cacheWrite: 1.25 },
+  'gpt-5.6-sol': { input: 5, output: 30, cacheRead: 0.5, cacheWrite: 6.25 },
+  'gpt-5.6-terra': { input: 2.5, output: 15, cacheRead: 0.25, cacheWrite: 3.125 },
   'gpt-chat-latest': { input: 5, output: 30, cacheRead: 0.5, cacheWrite: 0 }
 }
 const thinkingLevelMaps = {
@@ -186,7 +198,10 @@ const thinkingLevelMaps = {
   'gpt-5.4-mini': { off: 'none', xhigh: 'xhigh' },
   'gpt-5.4-nano': { off: 'none', xhigh: 'xhigh' },
   'gpt-5.4-pro': { off: null, xhigh: 'xhigh' },
-  'gpt-5.5': { off: 'none', xhigh: 'xhigh', minimal: null }
+  'gpt-5.5': { off: 'none', xhigh: 'xhigh', minimal: null },
+  'gpt-5.6-luna': { off: null, xhigh: 'xhigh', max: 'max' },
+  'gpt-5.6-sol': { off: null, xhigh: 'xhigh', max: 'max' },
+  'gpt-5.6-terra': { off: null, xhigh: 'xhigh', max: 'max' }
 }
 
 for (const model of models) {
@@ -225,6 +240,7 @@ pi-zyt-status() {
   print -r -- "base_url=$(_pi_zyt_base_url)"
   print -r -- "model=$(_pi_zyt_model)"
   print -r -- "thinking=$(_pi_zyt_thinking)"
+  print -r -- "model_scope=$(_pi_zyt_model_scope)"
   print -r -- "tools=$(_pi_zyt_tools)"
   print -r -- "api_key=$key_state (FOUNDRY_API_KEY)"
   print -r -- "env_file=$(_pi_zyt_env_file)"
@@ -272,24 +288,36 @@ pi-zyt() {
   _pi_zyt_require_key || return
   _pi_zyt_ensure_provider || return
 
-  local provider model thinking tools
+  local provider model thinking tools model_scope
   provider="$(_pi_zyt_provider)" || return
   model="$(_pi_zyt_model)" || return
   thinking="$(_pi_zyt_thinking)" || return
   tools="$(_pi_zyt_tools)" || return
+  model_scope="$(_pi_zyt_model_scope)" || return
 
   local has_provider=0
   local has_model=0
   local has_thinking=0
   local has_tools=0
+  local has_models=0
   local has_approval=0
-  local arg
+  local arg next display_provider display_model display_thinking
+  display_provider="$provider"
+  display_model="$model"
+  display_thinking="$thinking"
 
-  for arg in "$@"; do
+  local i
+  for (( i = 1; i <= $#; i++ )); do
+    arg="${argv[i]}"
+    next="${argv[i+1]:-}"
     case "$arg" in
-      --provider|--provider=*) has_provider=1 ;;
-      --model|--model=*) has_model=1 ;;
-      --thinking|--thinking=*) has_thinking=1 ;;
+      --provider) has_provider=1; [[ -n "$next" ]] && display_provider="$next" ;;
+      --provider=*) has_provider=1; display_provider="${arg#--provider=}" ;;
+      --model) has_model=1; [[ -n "$next" ]] && display_model="$next" ;;
+      --model=*) has_model=1; display_model="${arg#--model=}" ;;
+      --thinking) has_thinking=1; [[ -n "$next" ]] && display_thinking="$next" ;;
+      --thinking=*) has_thinking=1; display_thinking="${arg#--thinking=}" ;;
+      --models|--models=*) has_models=1 ;;
       --tools|-t|--tools=*|-t=*) has_tools=1 ;;
       --no-tools|-nt|--no-builtin-tools|-nbt) has_tools=1 ;;
       --approve|-a|--no-approve|-na) has_approval=1 ;;
@@ -303,14 +331,17 @@ pi-zyt() {
   if (( has_thinking == 0 )) && [[ "$model" != *:* ]]; then
     prefix+=(--thinking "$thinking")
   fi
+  if (( has_models == 0 )) && [[ -n "$model_scope" && "$model_scope" != "default" ]]; then
+    prefix+=(--models "$model_scope")
+  fi
   if (( has_tools == 0 )) && [[ -n "$tools" && "$tools" != "default" ]]; then
     prefix+=(--tools "$tools")
   fi
   (( has_approval == 0 )) && prefix+=(--approve)
 
-  local model_display="$model"
-  [[ "$model_display" != *:* ]] && model_display="${model_display}:${thinking}"
-  print -r -- "Mode: Pi via Foundry ZYT (${provider}, ${model_display}, $(_pi_zyt_base_url))"
+  local model_display="$display_model"
+  [[ "$model_display" != *:* ]] && model_display="${model_display}:${display_thinking}"
+  print -r -- "Mode: Pi via Foundry ZYT (${display_provider}, ${model_display}, $(_pi_zyt_base_url))"
 
   PI_MODE_LABEL=pi-zyt \
   FOUNDRY_API_KEY="$FOUNDRY_API_KEY" \
