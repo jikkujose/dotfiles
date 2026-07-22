@@ -4,12 +4,14 @@
 # shell, or put a plain assignment in ${PI_ZYT_ENV_FILE:-$HOME/.foundry-zyt.env}:
 #   FOUNDRY_API_KEY=fnd_<12-char-key-id>_<secret>
 #
+# Sakana Fugu models use SAKANA_API_KEY and become available when it is exported.
+#
 # Optional overrides:
 #   PI_ZYT_ENV_FILE=/path/to/env-file
 #   PI_ZYT_BASE_URL=https://foundry.zyt.app/v1
 #   PI_ZYT_MODEL=gpt-5.6-sol
 #   PI_ZYT_THINKING=max
-#   PI_ZYT_MODELS=foundry-zyt/gpt-5.6-*
+#   PI_ZYT_MODELS=foundry-zyt/gpt-5.6-*,sakana/*
 #   PI_ZYT_TOOLS=read,bash,edit,write,grep,find,ls
 
 _pi_zyt_require_cli() {
@@ -62,7 +64,7 @@ _pi_zyt_tools() {
 }
 
 _pi_zyt_model_scope() {
-  print -r -- "${PI_ZYT_MODELS:-$(_pi_zyt_provider)/gpt-5.6-*}"
+  print -r -- "${PI_ZYT_MODELS:-$(_pi_zyt_provider)/gpt-5.6-*,sakana/*}"
 }
 
 _pi_zyt_models_json() {
@@ -217,12 +219,49 @@ const provider = {
   models
 }
 
-if (JSON.stringify(data.providers[providerName]) !== JSON.stringify(provider)) {
+// The API catalog omits limits and pricing, so use conservative Pi defaults
+// and zero-cost placeholders until Sakana publishes authoritative metadata.
+const sakanaThinkingLevelMap = {
+  off: null,
+  minimal: null,
+  low: null,
+  medium: null,
+  high: 'high',
+  xhigh: 'xhigh',
+  max: 'max'
+}
+const sakanaModelDefaults = {
+  reasoning: true,
+  input: ['text'],
+  contextWindow: 128000,
+  maxTokens: 16384,
+  cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
+  thinkingLevelMap: sakanaThinkingLevelMap
+}
+const sakanaProvider = {
+  name: 'Sakana AI (Chat Completions)',
+  baseUrl: 'https://api.sakana.ai/v1',
+  api: 'openai-completions',
+  apiKey: '$SAKANA_API_KEY',
+  compat: {
+    maxTokensField: 'max_tokens'
+  },
+  models: [
+    { id: 'fugu', name: 'Fugu', ...sakanaModelDefaults },
+    { id: 'fugu-ultra', name: 'Fugu Ultra', ...sakanaModelDefaults },
+    { id: 'fugu-ultra-20260615', name: 'Fugu Ultra (2026-06-15)', ...sakanaModelDefaults }
+  ]
+}
+
+const providerChanged = JSON.stringify(data.providers[providerName]) !== JSON.stringify(provider)
+const sakanaChanged = JSON.stringify(data.providers.sakana) !== JSON.stringify(sakanaProvider)
+if (providerChanged || sakanaChanged) {
   fs.mkdirSync(dir, { recursive: true })
   if (fs.existsSync(file) && !fs.existsSync(`${file}.pi-zyt.bak`)) {
     fs.copyFileSync(file, `${file}.pi-zyt.bak`)
   }
   data.providers[providerName] = provider
+  data.providers.sakana = sakanaProvider
   fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`)
 }
 NODE
@@ -234,7 +273,9 @@ pi-zyt-status() {
   _pi_zyt_load_env
 
   local key_state="missing"
+  local sakana_key_state="missing"
   [[ -n "${FOUNDRY_API_KEY:-}" ]] && key_state="set"
+  [[ -n "${SAKANA_API_KEY:-}" ]] && sakana_key_state="set"
 
   print -r -- "provider=$(_pi_zyt_provider)"
   print -r -- "base_url=$(_pi_zyt_base_url)"
@@ -243,6 +284,7 @@ pi-zyt-status() {
   print -r -- "model_scope=$(_pi_zyt_model_scope)"
   print -r -- "tools=$(_pi_zyt_tools)"
   print -r -- "api_key=$key_state (FOUNDRY_API_KEY)"
+  print -r -- "sakana_api_key=$sakana_key_state (SAKANA_API_KEY)"
   print -r -- "env_file=$(_pi_zyt_env_file)"
   print -r -- "models_json=$(_pi_zyt_models_json)"
 }
@@ -254,13 +296,18 @@ pi-zyt-models() {
   _pi_zyt_require_key || return
   _pi_zyt_ensure_provider || return
 
-  local search="$(_pi_zyt_provider)"
+  local -a searches
   if (( $# > 0 )); then
-    search="${search} $*"
+    searches=("$*")
+  else
+    searches=("$(_pi_zyt_provider)" "sakana")
   fi
 
-  FOUNDRY_API_KEY="$FOUNDRY_API_KEY" \
-    command pi --list-models "$search"
+  local search
+  for search in "${searches[@]}"; do
+    FOUNDRY_API_KEY="$FOUNDRY_API_KEY" \
+      command pi --list-models "$search" || return
+  done
 }
 
 pi-zyt-smoke() {
