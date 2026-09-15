@@ -2,6 +2,14 @@
 
 All notable changes to this dotfiles repository.
 
+## 2026-09-15 - Portable Terminal Clipboard
+
+### Added
+
+- Shared `c` and `p` functions using native macOS/Linux clipboards locally.
+- OSC 52 copy and permission-gated paste support for headless SSH/tmux sessions.
+- Platform-independent tmux copy-mode integration through OSC 52.
+
 ## 2025-12-27 - Major Refresh
 
 Complete overhaul of 10-year-old dotfiles.

@@ -76,6 +76,7 @@ dotfiles/
 ├── zshrc.zsh             # Main zsh config
 ├── variables.zsh         # Environment variables
 ├── functions.zsh         # Shell functions
+├── functions/clipboard.zsh # Portable local and SSH clipboard bridge
 ├── zshrc/                # Platform-specific zsh
 │   ├── linux.zsh
 │   └── mac.zsh
@@ -119,6 +120,18 @@ alacritty-theme dark
 ```
 
 The selected theme is written to `~/.local/state/alacritty/theme.toml` and live-reloaded by Alacritty.
+
+### Portable clipboard
+
+The shared `c` and `p` functions use native clipboard tools on macOS and graphical Linux, then fall back to OSC 52 for headless SSH sessions:
+
+```bash
+command | c   # copy stdin
+p             # print clipboard contents
+p | command   # use clipboard contents in a pipeline
+```
+
+Inside tmux, clipboard traffic is bridged to the attached terminal. Clipboard reads are permission-gated by the terminal; keep iTerm2 set to ask each time unless every process in the terminal may be trusted with clipboard access.
 
 ### tool-versions
 

@@ -1,5 +1,3 @@
-alias c="xclip -selection clipboard"
-alias p="xclip -o -selection clipboard"
 alias ip="hostname -I"
 alias cat="batcat -p"
 alias nn="NVIM_APPNAME=nvimx unshare -rn nvim"

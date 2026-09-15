@@ -10,6 +10,7 @@ setopt interactivecomments
 source ~/dotfiles/variables.zsh
 source ~/dotfiles/aliases.zsh
 source ~/dotfiles/functions.zsh
+source ~/dotfiles/functions/clipboard.zsh
 
 if [ -f ~/.private.zsh ]
 then
