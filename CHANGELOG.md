@@ -2,6 +2,13 @@
 
 All notable changes to this dotfiles repository.
 
+## 2026-09-21 - Reliable Remote Clipboard Routing
+
+### Fixed
+
+- Prefer the attached terminal's OSC 52 clipboard in SSH sessions, even when a stale or forwarded `DISPLAY` exists.
+- Stop hard-coding `DISPLAY`, which incorrectly sent headless clipboard commands to an unavailable X server.
+
 ## 2026-09-15 - Portable Terminal Clipboard
 
 ### Added

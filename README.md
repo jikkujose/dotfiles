@@ -123,7 +123,7 @@ The selected theme is written to `~/.local/state/alacritty/theme.toml` and live-
 
 ### Portable clipboard
 
-The shared `c` and `p` functions use native clipboard tools on macOS and graphical Linux, then fall back to OSC 52 for headless SSH sessions:
+The shared `c` and `p` functions use native clipboard tools on macOS and graphical Linux, then fall back to OSC 52 for SSH sessions. Remote shells deliberately ignore `DISPLAY`, so stale values or X forwarding cannot redirect clipboard operations away from the terminal on the host Mac:
 
 ```bash
 command | c   # copy stdin

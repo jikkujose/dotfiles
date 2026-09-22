@@ -2,7 +2,8 @@ COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_TITLE="true"
 DISABLE_AUTO_UPDATE="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
-DISPLAY=:0
+# Graphical sessions and SSH forwarding must supply their own DISPLAY value.
+# A hard-coded display breaks headless tools and remote clipboard routing.
 # Disable all history/state
 HISTSIZE=0
 SAVEHIST=0
@@ -17,4 +18,3 @@ RUBYOPT=""
 
 OLLAMA_HOST="0.0.0.0"
 OLLAMA_BASE_URL="http://localhost:11434"
-DISPLAY=:1

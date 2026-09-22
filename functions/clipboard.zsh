@@ -10,6 +10,12 @@ _clipboard_backend() {
   emulate -L zsh
   local operation="$1"
 
+  # Remote shells should target the clipboard of the terminal running SSH,
+  # even when X forwarding or dotfiles leave a DISPLAY value behind.
+  if [[ -n "${SSH_CONNECTION:-}${SSH_CLIENT:-}${SSH_TTY:-}" ]]; then
+    return 1
+  fi
+
   case "$(uname -s)" in
     Darwin)
       if [[ "$operation" == copy ]] && command -v pbcopy >/dev/null 2>&1; then
